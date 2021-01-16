@@ -6,6 +6,7 @@ import GameBoard from "../modules/Game/GameBoard.js";
 import ScoreBoard from "../modules/Game/ScoreBoard.js";
 
 import "./Game.css";
+import { Socket } from "socket.io-client";
 
 class Game extends Component {
   constructor(props) {
@@ -19,14 +20,21 @@ class Game extends Component {
     };
   }
 
+    update = (data) => {
+      this.setState({
+          roomName: data.roomName,
+          roomCode: data.roomCode,
+          board: data.board,
+          players: data.players,
+      })
+    }
+
     componentDidMount() {
         get("/api/checkGame", {_id: this.props.gameId}).then((data) => {
             if (data) {
-                this.setState({
-                    roomName: data.roomName,
-                    roomCode: data.roomCode,
-                    board: data.board,
-                    players: data.players,
+                this.update(data)
+                Socket.on("updateBoard", (game) => {
+                  this.update(game)
                 })
             }
         }).catch((err) => console.log(err));
