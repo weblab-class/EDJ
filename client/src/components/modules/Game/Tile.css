@@ -14,39 +14,48 @@
 }
 
 .Right-mirror {
-  background-color: rgb(177, 143, 207);
-  background-image: url("./RightMirror.png");
-  height: 90%;
-  width: 90%;
+  width: 96px;
+  height: 0px;
+  border-bottom: 6px solid rgb(154, 210, 255);
+  transform: rotate(45deg);
+  position: relative;
+  top: 33px;
+  right: 10px;
   border-radius: 4px;
-  box-shadow: 2px 3px 5px #3f3f3f;
+  box-shadow: 1px 3px 2px 0px #3f3f3f;
 }
 
 .Left-mirror {
-  background-color: rgb(177, 143, 207);
-  background-image: url("./LeftMirror.png");
-  height: 90%;
-  width: 90%;
+  width: 96px;
+  height: 0px;
+  border-bottom: 6px solid rgb(154, 210, 255);
+  transform: rotate(-45deg);
+  position: relative;
+  top: 33px;
+  right: 10px;
   border-radius: 4px;
-  box-shadow: 2px 3px 5px #3f3f3f;
+  box-shadow: 2px 3px 1px 0px #3f3f3f;
 }
 
 .Vert-wall {
-  background-color: rgb(177, 143, 207);
-  background-image: url("./WallVertical.png");
-  height: 90%;
-  width: 90%;
+  width: 72x;
+  height: 0px;
+  border-bottom: 6px solid rgb(85, 72, 72);
+  transform: rotate(90deg);
+  position: relative;
+  top: 33px;
   border-radius: 4px;
-  box-shadow: 2px 3px 5px #3f3f3f;
+  box-shadow: 1px 3px 2px 0px #3f3f3f;
 }
 
 .Hor-wall {
-  background-color: rgb(177, 143, 207);
-  background-image: url("./WallHorizontal.png");
-  height: 90%;
-  width: 90%;
+  width: 72x;
+  height: 0px;
+  border-bottom: 6px solid rgb(85, 72, 72);
+  position: relative;
+  top: 33px;
   border-radius: 4px;
-  box-shadow: 2px 3px 5px #3f3f3f;
+  box-shadow: 1px 3px 2px 0px #3f3f3f;
 }
 
 .empty {
