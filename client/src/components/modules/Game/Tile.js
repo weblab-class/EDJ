@@ -7,11 +7,22 @@ class Tile extends Component {
     super(props);
   }
 
+  checkClass = () => {
+    let tileClass = "";
+    if (this.props.isHorWall) {
+      tileClass = "Hor-wall";
+    }
+    if (this.props.isVertWall) {
+      tileClass = "Vert-wall";
+    }
+    return tileClass;
+  };
+
   render() {
     return (
       <div className="Tile-container u-flex u-flex-justifyCenter u-flex-alignCenter">
         <div className="Tile-body">
-          <div className=".empty"></div>
+          <div className={this.checkClass()}></div>
         </div>
       </div>
     );
