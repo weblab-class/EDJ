@@ -29,16 +29,15 @@ class JoinGame extends Component {
   };
 
   handleClick = (event) => {
-    post("/api/joinGame", {code: this.state.code}).then((data) => {
-      console.log(data)
+    post("/api/joinGame", { code: this.state.code }).then((data) => {
+      console.log(data);
       if (!(Object.keys(data).length === 0 && data.constructor === Object)) {
-        navigate("/game/" + String(data._id))
+        navigate("/game/" + String(data._id));
+      } else {
+        alert("No valid games found.");
       }
-      else {
-        alert("No valid games found")
-      }
-    })
-  }
+    });
+  };
 
   render() {
     return (

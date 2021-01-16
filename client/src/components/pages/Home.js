@@ -13,14 +13,20 @@ class Home extends Component {
   }
 
   validateHost = () => {
-    if (this.props.userId) {navigate("/host")}
-    else {alert("You must be logged in to host or join a game")}
-  }
+    if (this.props.userId) {
+      navigate("/host");
+    } else {
+      alert("You must be logged in to host or join a game.");
+    }
+  };
 
   validateJoin = () => {
-    if (this.props.userId) {navigate("/join")}
-    else {alert("You must be logged in to host or join a game")}
-  }
+    if (this.props.userId) {
+      navigate("/join");
+    } else {
+      alert("You must be logged in to host or join a game.");
+    }
+  };
 
   render() {
     return (
@@ -48,12 +54,6 @@ class Home extends Component {
           <div className="u-button u-link" onClick={this.validateJoin}>
             Join game
           </div>
-          {/*<Link to="/host" className="u-button u-link">
-            Host game
-          </Link>
-          <Link to="/join" className="u-button u-link">
-            Join game
-        </Link>*/}
         </div>
       </div>
     );
