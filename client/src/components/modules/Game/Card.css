@@ -1,0 +1,20 @@
+.Card-container {
+    height: auto;
+    width: 100%;
+    margin: var(--s) 0px var(--s) 0px;
+}
+
+.field {
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+}
+
+.value {
+    text-align: center;
+    font-size: large;
+}
+
+hr {
+    width: 75%;
+}

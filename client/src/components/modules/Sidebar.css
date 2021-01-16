@@ -1,0 +1,33 @@
+.Sidebar-container {
+  background-color: rgb(73, 72, 80);
+  height: 100vh;
+  width: 20vw;
+  float: left;
+  color: white;
+}
+
+.SideBar-link{
+  color:var(--white);
+  font-size:32px;
+  text-decoration: none;
+}
+.SideBar-link:hover {
+  opacity: 0.6;
+}
+
+h1 {
+  padding: 30px;
+  font-size: 30pt;
+  font-family: "Ubuntu", sans-serif;
+}
+h2 {
+  padding: 20px 30px;
+  font-size: 30pt;
+  font-family: "Ubuntu", sans-serif;
+}
+
+h3 {
+  padding: 30px;
+  font-size: 12pt;
+  font-family: "Ubuntu", sans-serif;
+}

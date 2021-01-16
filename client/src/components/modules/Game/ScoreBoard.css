@@ -1,0 +1,12 @@
+.ScoreBoard-container {
+    height: 100%;
+    width: 100%;
+}
+
+.outer {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 2px 3px 5px #3f3f3f;
+}

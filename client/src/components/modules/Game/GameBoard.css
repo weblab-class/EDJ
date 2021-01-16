@@ -1,0 +1,8 @@
+.GameBoard-container {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-rows: repeat(9, 11.111%);
+    grid-template-columns: repeat(9, 11.111%);
+    place-items: center center;
+}
