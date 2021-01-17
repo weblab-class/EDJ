@@ -22,6 +22,14 @@ class GameBoard extends Component {
       (x === 8 && y === 8)
     );
   };
+  containsObj = (mirrors, { x, y }) => {
+    for (let i = 0; i < mirrors.length; i++) {
+      if (mirrors[i].x === x && mirrors[i].y === y) {
+        return true;
+      }
+    }
+    return false;
+  };
 
   createMirrors = () => {
     let possibleMirrors = [];
@@ -31,22 +39,32 @@ class GameBoard extends Component {
           possibleMirrors.push({ x: i + 1, y: j + 1 });
         }
       }
-      console.log(possibleMirrors);
     }
-    let mirrors = [];
-    let numMirrors = 0;
+    let mirrorsArr = [];
     while (true) {
-      if (numMirrors === this.props.mirrors) {
+      let mirrorNearby = false;
+      if (mirrorsArr.length === this.props.mirrors) {
         break;
       }
-      let randomLoc = 0;
-      while (!mirrors.includes(randomLoc)) {
-        randomLoc = possibleMirrors[Math.floor(Math.random() * possibleMirrors.length)];
-        mirrors.push(randomLoc);
-        numMirrors += 1;
+      let randomLoc = possibleMirrors[Math.floor(Math.random() * possibleMirrors.length)];
+      for (let i of [-1, 1, 0]) {
+        for (let j of [-1, 1, 0]) {
+          if (this.containsObj(mirrorsArr, { x: randomLoc.x + i, y: randomLoc.y + j })) {
+            mirrorNearby = true;
+            break;
+          }
+        }
+        if (mirrorNearby) {
+          break;
+        }
       }
+      if (mirrorNearby) {
+        continue;
+      }
+      mirrorsArr.push(randomLoc);
     }
-    return mirrors;
+    console.log(mirrorsArr);
+    return mirrorsArr;
   };
 
   createTiles = () => {
