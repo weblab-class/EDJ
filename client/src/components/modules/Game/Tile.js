@@ -41,7 +41,7 @@ class Tile extends Component {
   render() {
     return (
       <div className="Tile-container u-flex u-flex-justifyCenter u-flex-alignCenter">
-        <div className="Tile-body">
+        <div className="Tile-body u-flex u-flex-justifyCenter u-flex-alignCenter">
           <div className={this.checkClass()}></div>
         </div>
       </div>
