@@ -34,64 +34,6 @@ class Game extends Component {
     });
   };
 
-  invalidLoc = (x, y) => {
-    return (
-      (x === 0 && y === 4) ||
-      (x === 4 && y === 0) ||
-      (x === 4 && y === 8) ||
-      (x === 8 && y === 4) ||
-      (x === 4 && y === 4) ||
-      (x === 0 && y === 0) ||
-      (x === 0 && y === 8) ||
-      (x === 8 && y === 0) ||
-      (x === 8 && y === 8)
-    );
-  };
-
-  containsObj = (mirrors, { x, y }) => {
-    for (let i = 0; i < mirrors.length; i++) {
-      if (mirrors[i].x === x && mirrors[i].y === y) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  createMirrors = () => {
-    let possibleMirrors = [];
-    for (let i = 0; i < this.state.board.length; i++) {
-      for (let j = 0; j < this.state.board[i].length; j++) {
-        if (!this.invalidLoc(i, j)) {
-          possibleMirrors.push({ x: i + 1, y: j + 1 });
-        }
-      }
-    }
-    let mirrorsArray = [];
-    while (true) {
-      let mirrorNearby = false;
-      if (mirrorsArray.length === this.state.mirrors) {
-        break;
-      }
-      let randomLoc = possibleMirrors[Math.floor(Math.random() * possibleMirrors.length)];
-      for (let i of [-1, 1, 0]) {
-        for (let j of [-1, 1, 0]) {
-          if (this.containsObj(mirrorsArray, { x: randomLoc.x + i, y: randomLoc.y + j })) {
-            mirrorNearby = true;
-            break;
-          }
-        }
-        if (mirrorNearby) {
-          break;
-        }
-      }
-      if (mirrorNearby) {
-        continue;
-      }
-      mirrorsArray.push(randomLoc);
-    }
-    return mirrorsArray;
-  };
-
   componentDidMount() {
     get("/api/checkGame", { _id: this.props.gameId })
       .then((data) => {
@@ -113,7 +55,7 @@ class Game extends Component {
           <Info roomName={this.state.roomName} roomCode={this.state.roomCode} />
         </div>
         <div className="board">
-          <GameBoard board={this.state.board} mirrors={this.createMirrors()} />
+          <GameBoard board={this.state.board} mirrors={this.state.mirrors} />
         </div>
         <div className="scores">
           <ScoreBoard players={this.state.players} />

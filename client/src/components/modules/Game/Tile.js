@@ -10,10 +10,10 @@ class Tile extends Component {
   containsObj = ({ x, y }) => {
     for (let i = 0; i < this.props.mirrors.length; i++) {
       if (this.props.mirrors[i].x === x && this.props.mirrors[i].y === y) {
-        return true;
+        return { index: i, contains: true };
       }
     }
-    return false;
+    return { index: null, contains: false };
   };
 
   checkClass = () => {
@@ -26,9 +26,11 @@ class Tile extends Component {
     } else if ((i === 1 && j === 5) || (i === 9 && j === 5)) {
       tileClass = "Vert-wall";
     }
-    if (this.containsObj({ x: i, y: j })) {
-      // randomly chooses if mirror is left or right-facing
-      const leftMirror = Math.floor(Math.random() * 2) === 0;
+    let locInMirror = this.containsObj({ x: i, y: j }).contains;
+    let index = this.containsObj({ x: i, y: j }).index;
+    if (locInMirror) {
+      // x coordinate modulo 2 (divisible by 2 --> left-facing mirror)
+      const leftMirror = ((index % 2) + 2) % 2 === 0;
       if (leftMirror) {
         tileClass = "Left-mirror";
       } else {
