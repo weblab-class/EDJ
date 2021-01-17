@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const GameSchema = new mongoose.Schema({
   roomName: String,
   roomCode: String,
-  board: [[Number]],
+  board: [[String]],
   players: [{ name: String, id: String, score: Number }],
-  mirrors: [{ location: { x: Number, y: Number }, leftMirror: Boolean }],
+  // mirrors: [{ location: { x: Number, y: Number }, leftMirror: Boolean }],
   currentTurn: Number,
 });
 

@@ -111,12 +111,6 @@ class HostGame extends Component {
         <div id="host-button" className="u-button u-link" onClick={this.hostgame}>
           Host!
         </div>
-        {/*<Link to="/game/" id="host-button" className="u-button u-link" onClick={this.hostgame}>
-          Host!
-        </Link>*/}
-        {/* TODO: box for user to input desired group name, and dropdown menu for # mirrors,
-        and randomly generated code (sent to database) */}
-        {/* TODO: host submit button */}
       </div>
     );
   }

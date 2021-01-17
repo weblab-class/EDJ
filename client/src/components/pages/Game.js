@@ -18,7 +18,6 @@ class Game extends Component {
       roomCode: "",
       board: [],
       players: [],
-      mirrors: [],
     };
   }
 
@@ -28,7 +27,6 @@ class Game extends Component {
       roomCode: data.roomCode,
       board: data.board,
       players: data.players,
-      mirrors: data.mirrors,
     });
   };
 
@@ -52,7 +50,7 @@ class Game extends Component {
           <Info roomName={this.state.roomName} roomCode={this.state.roomCode} />
         </div>
         <div className="board">
-          <GameBoard board={this.state.board} mirrors={this.state.mirrors} />
+          <GameBoard board={this.state.board} />
         </div>
         <div className="scores">
           <ScoreBoard players={this.state.players} />

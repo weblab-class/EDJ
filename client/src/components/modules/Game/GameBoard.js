@@ -12,13 +12,7 @@ class GameBoard extends Component {
     let tiles = [];
     for (let i = 0; i < this.props.board.length; i++) {
       for (let j = 0; j < this.props.board[i].length; j++) {
-        tiles.push(
-          <Tile
-            pos={{ x: i + 1, y: j + 1 }}
-            data={this.props.board[i][j]}
-            mirrors={this.props.mirrors}
-          />
-        );
+        tiles.push(<Tile pos={{ x: i + 1, y: j + 1 }} data={this.props.board[i][j]} />);
       }
     }
     return tiles;

@@ -15,7 +15,7 @@ const invalidLoc = (x, y) => {
 const containsObj = (mirrors, { x, y }) => {
   for (let i = 0; i < mirrors.length; i++) {
     if (mirrors[i].location.x === x && mirrors[i].location.y === y) {
-      return true;
+      return mirrors[i];
     }
   }
   return false;
@@ -26,7 +26,7 @@ const createMirrors = (mirrorsNum) => {
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       if (!invalidLoc(i, j)) {
-        possibleMirrors.push({ x: i + 1, y: j + 1 });
+        possibleMirrors.push({ x: i, y: j });
       }
     }
   }
@@ -58,8 +58,35 @@ const createMirrors = (mirrorsNum) => {
   return mirrorsArray;
 };
 
+const checkClass = (mirrorsArray) => {
+  const board = [];
+  for (let i = 0; i < 9; i++) {
+    const innerBoard = [];
+    for (let j = 0; j < 9; j++) {
+      let inMirror = containsObj(mirrorsArray, { x: i, y: j });
+      if ((i === 4 && j === 0) || (i === 4 && j === 8)) {
+        innerBoard.push("Hor-wall");
+      } else if ((i === 0 && j === 4) || (i === 8 && j === 4)) {
+        innerBoard.push("Vert-wall");
+      } else if (inMirror) {
+        const leftMirror = inMirror.leftMirror;
+        if (leftMirror) {
+          innerBoard.push("Left-mirror");
+        } else {
+          innerBoard.push("Right-mirror");
+        }
+      } else {
+        innerBoard.push("");
+      }
+    }
+    board.push(innerBoard);
+  }
+  return board;
+};
+
 module.exports = {
   invalidLoc,
   containsObj,
   createMirrors,
+  checkClass,
 };

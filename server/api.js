@@ -9,7 +9,7 @@
 
 const express = require("express");
 
-const makeMirrors = require("./makeMirrors");
+const makeBoard = require("./makeBoard");
 
 // import models so we can interact with the database
 const User = require("./models/user");
@@ -47,11 +47,12 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 
 router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
+  const mirrors = makeBoard.createMirrors(req.body.mirrors);
+  const board = makeBoard.checkClass(mirrors);
   const newGame = new Game({
     roomName: req.body.roomName,
     roomCode: req.body.roomCode,
-    board: new Array(9).fill(new Array(9).fill(0)),
-    mirrors: makeMirrors.createMirrors(req.body.mirrors),
+    board: board,
     players: [{ name: req.user.name, id: req.user._id, score: 0 }],
     currentTurn: 0,
   });
@@ -74,7 +75,14 @@ router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
         if (p.length !== 0) {
           res.send(game);
         } else {
-          game.players = [...game.players, { name: req.user.name, id: req.user._id, score: 0 }];
+          game.players = [
+            ...game.players,
+            {
+              name: req.user.name,
+              id: req.user._id,
+              score: 0,
+            },
+          ];
           game
             .save()
             .then((game) => {
