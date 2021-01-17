@@ -49,34 +49,41 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
     roomName: req.body.roomName,
     roomCode: req.body.roomCode,
     board: new Array(9).fill(new Array(9).fill(0)),
-    players: [{name: req.user.name, id: req.user.googleid, score: 0}],
+    mirrors: req.body.mirrors,
+    players: [{ name: req.user.name, id: req.user.googleid, score: 0 }],
     currentTurn: 0,
   });
 
-  newGame.save().then((game) => res.send(game)).catch(console.log);
-})
+  newGame
+    .save()
+    .then((game) => res.send(game))
+    .catch(console.log);
+});
 
 router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
   Game.findOne(req.query).then((game) => res.send(game));
-})
+});
 
 router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
-  Game.findOne({roomCode: req.body.code}).then((game) => {
-    if (game) {
-      const p = game.players.filter((l) => l.id == req.user.googleid)
-      if (p.length !== 0) {
-        res.send(game)
+  Game.findOne({ roomCode: req.body.code })
+    .then((game) => {
+      if (game) {
+        const p = game.players.filter((l) => l.id == req.user.googleid);
+        if (p.length !== 0) {
+          res.send(game);
+        } else {
+          game.players = [
+            ...game.players,
+            { name: req.user.name, id: req.user.googleid, score: 0 },
+          ];
+          game.save().then((game) => res.send(game));
+        }
+      } else {
+        res.send({});
       }
-      else {
-        game.players = [...game.players, {name: req.user.name, id: req.user.googleid, score: 0}]
-        game.save().then((game) => res.send(game))
-      }
-    }
-    else {
-      res.send({})
-    }
-  }).catch(console.log)
-})
+    })
+    .catch(console.log);
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

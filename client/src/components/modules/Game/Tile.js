@@ -9,10 +9,11 @@ class Tile extends Component {
 
   checkClass = () => {
     let tileClass = "";
-    if (this.props.isHorWall) {
+    const i = this.props.pos.x;
+    const j = this.props.pos.y;
+    if ((i === 5 && j === 1) || (i === 5 && j === 9)) {
       tileClass = "Hor-wall";
-    }
-    if (this.props.isVertWall) {
+    } else if ((i === 1 && j === 5) || (i === 9 && j === 5)) {
       tileClass = "Vert-wall";
     }
     return tileClass;
