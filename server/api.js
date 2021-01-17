@@ -49,7 +49,7 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
     roomName: req.body.roomName,
     roomCode: req.body.roomCode,
     board: new Array(9).fill(new Array(9).fill(0)),
-    players: [{name: req.user.name, id: req.user.googleid, score: 0}],
+    players: [{name: req.user.name, id: req.user._id, score: 0}],
     currentTurn: 0,
   });
 
@@ -63,13 +63,18 @@ router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
 router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
   Game.findOne({roomCode: req.body.code}).then((game) => {
     if (game) {
-      const p = game.players.filter((l) => l.id == req.user.googleid)
+      const p = game.players.filter((l) => l.id == req.user._id)
       if (p.length !== 0) {
         res.send(game)
       }
       else {
-        game.players = [...game.players, {name: req.user.name, id: req.user.googleid, score: 0}]
-        game.save().then((game) => res.send(game))
+        game.players = [...game.players, {name: req.user.name, id: req.user._id, score: 0}]
+        game.save().then((game) => {
+          game.players.map((player) => {
+            if (player.id != req.user._id) {socketManager.getSocketFromUserID(player.id).emit("updateBoard", game)};
+          })
+          res.send(game)
+        }).catch(console.log)
       }
     }
     else {

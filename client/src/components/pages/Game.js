@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { get } from "../../utilities.js";
+import { socket } from "../../client-socket.js";
 
 import Info from "../modules/Game/Info.js";
 import GameBoard from "../modules/Game/GameBoard.js";
@@ -33,7 +34,7 @@ class Game extends Component {
         get("/api/checkGame", {_id: this.props.gameId}).then((data) => {
             if (data) {
                 this.update(data)
-                Socket.on("updateBoard", (game) => {
+                socket.on("updateBoard", (game) => {
                   this.update(game)
                 })
             }
