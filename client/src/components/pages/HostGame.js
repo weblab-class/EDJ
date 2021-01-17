@@ -23,22 +23,20 @@ class HostGame extends Component {
   hostgame = () => {
     if (this.state.roomName === "") {
       alert("You must name the room!");
-    }
-    else {
+    } else {
       const body = {
         roomName: this.state.roomName,
         roomCode: this.state.code,
         mirrors: this.state.mirrors,
       };
       post("/api/newGame", body).then((game) => {
-        console.log(`Starting game room '${game.roomName}'...`)
-        navigate("/game/" + String(game._id))
+        console.log(`Starting game room '${game.roomName}'...`);
+        navigate("/game/" + String(game._id));
       });
     }
   };
 
   revealCode = () => {
-    // while (this.state.code in database)
     let code = "";
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const charactersLength = characters.length;
@@ -96,6 +94,8 @@ class HostGame extends Component {
             <option>4</option>
             <option>5</option>
             <option>6</option>
+            <option>7</option>
+            <option>8</option>
           </select>
         </div>
         <p>Click the code below to copy to clipboard.</p>

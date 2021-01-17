@@ -18,28 +18,32 @@ class Game extends Component {
       roomCode: "",
       board: [],
       players: [],
+      mirrors: 0,
     };
   }
 
-    update = (data) => {
-      this.setState({
-          roomName: data.roomName,
-          roomCode: data.roomCode,
-          board: data.board,
-          players: data.players,
-      })
-    }
+  update = (data) => {
+    this.setState({
+      roomName: data.roomName,
+      roomCode: data.roomCode,
+      board: data.board,
+      players: data.players,
+      mirrors: data.mirrors,
+    });
+  };
 
-    componentDidMount() {
-        get("/api/checkGame", {_id: this.props.gameId}).then((data) => {
-            if (data) {
-                this.update(data)
-                socket.on("updateBoard", (game) => {
-                  this.update(game)
-                })
-            }
-        }).catch((err) => console.log(err));
-    }
+  componentDidMount() {
+    get("/api/checkGame", { _id: this.props.gameId })
+      .then((data) => {
+        if (data) {
+          this.update(data);
+          socket.on("updateBoard", (game) => {
+            this.update(game);
+          });
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 
   render() {
     return (
@@ -48,7 +52,7 @@ class Game extends Component {
           <Info roomName={this.state.roomName} roomCode={this.state.roomCode} />
         </div>
         <div className="board">
-          <GameBoard board={this.state.board} />
+          <GameBoard board={this.state.board} mirrors={this.state.mirrors} />
         </div>
         <div className="scores">
           <ScoreBoard players={this.state.players} />
