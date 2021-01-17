@@ -53,6 +53,7 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
     roomName: req.body.roomName,
     roomCode: req.body.roomCode,
     board: board,
+    isActive: false,
     players: [{ name: req.user.name, id: req.user._id, score: 0 }],
     currentTurn: 0,
   });
@@ -64,11 +65,12 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
-  Game.findOne(req.query).then((game) => res.send(game));
+  console.log(req.query._id);
+  Game.findById(req.query._id).then((game) => res.send(game));
 });
 
 router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
-  Game.findOne({ roomCode: req.body.code })
+  Game.findOne({ isActive: false, roomCode: req.body.code })
     .then((game) => {
       if (game) {
         const p = game.players.filter((l) => l.id == req.user._id);
@@ -100,6 +102,25 @@ router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
       }
     })
     .catch(console.log);
+});
+
+router.post("/startGame", auth.ensureLoggedIn, (req, res) => {
+  Game.findById(req.body.id)
+    .then((game) => {
+      if (game) {
+        game.isActive = true;
+        game.currentTurn = Math.floor(Math.random() * game.players.length);
+        game.save().then((data) => {
+          data.players.map((player) => {
+            socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
+          });
+          res.send(data);
+        });
+      } else {
+        res.send({});
+      }
+    })
+    .catch((err) => res.send(err));
 });
 
 // anything else falls to this "not found" case

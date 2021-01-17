@@ -31,3 +31,9 @@
     background-color: #d7d7d7;
     color: var(--primary--dim);
   }
+
+  .text {
+      text-align: center;
+      font-size: large;
+      color: #3f3f3f;
+  }

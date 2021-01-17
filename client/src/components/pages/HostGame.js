@@ -79,7 +79,6 @@ class HostGame extends Component {
           <input
             id="group-name"
             type="text"
-            maxlength="50"
             className="u-inlineBlock"
             onChange={this.updateName}
           ></input>

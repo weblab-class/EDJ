@@ -4,6 +4,7 @@ const GameSchema = new mongoose.Schema({
   roomName: String,
   roomCode: String,
   board: [[String]],
+  isActive: Boolean,
   players: [{ name: String, id: String, score: Number }],
   // mirrors: [{ location: { x: Number, y: Number }, leftMirror: Boolean }],
   currentTurn: Number,
