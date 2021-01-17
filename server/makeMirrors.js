@@ -14,7 +14,7 @@ const invalidLoc = (x, y) => {
 
 const containsObj = (mirrors, { x, y }) => {
   for (let i = 0; i < mirrors.length; i++) {
-    if (mirrors[i].x === x && mirrors[i].y === y) {
+    if (mirrors[i].location.x === x && mirrors[i].location.y === y) {
       return true;
     }
   }
