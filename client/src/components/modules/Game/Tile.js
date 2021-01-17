@@ -9,11 +9,11 @@ class Tile extends Component {
 
   containsObj = ({ x, y }) => {
     for (let i = 0; i < this.props.mirrors.length; i++) {
-      if (this.props.mirrors[i].x === x && this.props.mirrors[i].y === y) {
-        return { index: i, contains: true };
+      if (this.props.mirrors[i].location.x === x && this.props.mirrors[i].location.y === y) {
+        return this.props.mirrors[i];
       }
     }
-    return { index: null, contains: false };
+    return false;
   };
 
   checkClass = () => {
@@ -26,11 +26,9 @@ class Tile extends Component {
     } else if ((i === 1 && j === 5) || (i === 9 && j === 5)) {
       tileClass = "Vert-wall";
     }
-    let locInMirror = this.containsObj({ x: i, y: j }).contains;
-    let index = this.containsObj({ x: i, y: j }).index;
-    if (locInMirror) {
-      // x coordinate modulo 2 (divisible by 2 --> left-facing mirror)
-      const leftMirror = ((index % 2) + 2) % 2 === 0;
+    let inMirror = this.containsObj({ x: i, y: j });
+    if (inMirror) {
+      const leftMirror = inMirror.leftMirror;
       if (leftMirror) {
         tileClass = "Left-mirror";
       } else {

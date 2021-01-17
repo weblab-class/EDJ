@@ -9,6 +9,8 @@
 
 const express = require("express");
 
+const makeMirrors = require("./makeMirrors");
+
 // import models so we can interact with the database
 const User = require("./models/user");
 const Game = require("./models/game");
@@ -49,7 +51,7 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
     roomName: req.body.roomName,
     roomCode: req.body.roomCode,
     board: new Array(9).fill(new Array(9).fill(0)),
-    mirrors: req.body.mirrors,
+    mirrors: makeMirrors.createMirrors(req.body.mirrors),
     players: [{ name: req.user.name, id: req.user._id, score: 0 }],
     currentTurn: 0,
   });

@@ -18,8 +18,7 @@ class Game extends Component {
       roomCode: "",
       board: [],
       players: [],
-      mirrors: 0,
-      mirrorsArr: [],
+      mirrors: [],
     };
   }
 
@@ -30,7 +29,6 @@ class Game extends Component {
       board: data.board,
       players: data.players,
       mirrors: data.mirrors,
-      mirrorsArr: [],
     });
   };
 
@@ -43,7 +41,6 @@ class Game extends Component {
             this.update(game);
           });
         }
-        this.createMirrors();
       })
       .catch((err) => console.log(err));
   }
