@@ -19,6 +19,63 @@ class HostGame extends Component {
       mirrors: 0,
     };
   }
+  invalidLoc = (x, y) => {
+    return (
+      (x === 0 && y === 4) ||
+      (x === 4 && y === 0) ||
+      (x === 4 && y === 8) ||
+      (x === 8 && y === 4) ||
+      (x === 4 && y === 4) ||
+      (x === 0 && y === 0) ||
+      (x === 0 && y === 8) ||
+      (x === 8 && y === 0) ||
+      (x === 8 && y === 8)
+    );
+  };
+
+  containsObj = (mirrors, { x, y }) => {
+    for (let i = 0; i < mirrors.length; i++) {
+      if (mirrors[i].x === x && mirrors[i].y === y) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  createMirrors = () => {
+    let possibleMirrors = [];
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (!this.invalidLoc(i, j)) {
+          possibleMirrors.push({ x: i + 1, y: j + 1 });
+        }
+      }
+    }
+    let mirrorsArray = [];
+    while (true) {
+      let mirrorNearby = false;
+      if (mirrorsArray.length === this.state.mirrors) {
+        break;
+      }
+      let randomLoc = possibleMirrors[Math.floor(Math.random() * possibleMirrors.length)];
+      for (let i of [-1, 1, 0]) {
+        for (let j of [-1, 1, 0]) {
+          if (this.containsObj(mirrorsArray, { x: randomLoc.x + i, y: randomLoc.y + j })) {
+            mirrorNearby = true;
+            break;
+          }
+        }
+        if (mirrorNearby) {
+          break;
+        }
+      }
+      if (mirrorNearby) {
+        continue;
+      }
+      mirrorsArray.push(randomLoc);
+    }
+    return mirrorsArray;
+  };
 
   hostgame = () => {
     if (this.state.roomName === "") {
@@ -27,7 +84,7 @@ class HostGame extends Component {
       const body = {
         roomName: this.state.roomName,
         roomCode: this.state.code,
-        mirrors: this.state.mirrors,
+        mirrors: this.createMirrors(),
       };
       post("/api/newGame", body).then((game) => {
         console.log(`Starting game room '${game.roomName}'...`);
@@ -96,6 +153,12 @@ class HostGame extends Component {
             <option>6</option>
             <option>7</option>
             <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
           </select>
         </div>
         <p>Click the code below to copy to clipboard.</p>
