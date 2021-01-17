@@ -8,33 +8,39 @@ import ScoreBoard from "../modules/Game/ScoreBoard.js";
 
 import "./Game.css";
 import { Socket } from "socket.io-client";
+import user from "../../../../server/models/user.js";
 
 class Game extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      roomName: "",
-      roomCode: "",
       board: [],
-      players: [],
+      currentTurn: 0,
+      isActive: false,
       mirrors: [],
+      players: [],
+      roomCode: "",
+      roomName: "",
     };
   }
 
   update = (data) => {
     this.setState({
-      roomName: data.roomName,
-      roomCode: data.roomCode,
       board: data.board,
-      players: data.players,
+      currentTurn: data.currentTurn,
+      isActive: data.isActive,
       mirrors: data.mirrors,
+      players: data.players,
+      roomCode: data.roomCode,
+      roomName: data.roomName,
     });
   };
 
   componentDidMount() {
-    get("/api/checkGame", { _id: this.props.gameId })
+    get("/api/checkGame", {_id: this.props.gameId})
       .then((data) => {
+        console.log()
         if (data) {
           this.update(data);
           socket.on("updateBoard", (game) => {
@@ -49,7 +55,7 @@ class Game extends Component {
     return (
       <div className="Game-container u-flex u-flex-justifySpaceEvenly u-flex-alignCenter">
         <div className="info">
-          <Info roomName={this.state.roomName} roomCode={this.state.roomCode} />
+          <Info userId={this.props.userId} roomName={this.state.roomName} roomCode={this.state.roomCode} gameData={this.state} gameId={this.props.gameId} />
         </div>
         <div className="board">
           <GameBoard board={this.state.board} mirrors={this.state.mirrors} />

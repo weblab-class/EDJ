@@ -14,6 +14,7 @@ class GameBoard extends Component {
       for (let j = 0; j < this.props.board[i].length; j++) {
         tiles.push(
           <Tile
+            key={this.props.board[i].length*i+j}
             pos={{ x: i + 1, y: j + 1 }}
             data={this.props.board[i][j]}
             mirrors={this.props.mirrors}
