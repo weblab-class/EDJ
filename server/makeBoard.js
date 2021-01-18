@@ -58,6 +58,11 @@ const createMirrors = (mirrorsNum) => {
   return mirrorsArray;
 };
 
+const updateBoard = (board, value, { x, y }) => {
+  board[x][y] = value;
+  return board;
+};
+
 const checkClass = (mirrorsArray) => {
   const board = [];
   for (let i = 0; i < 9; i++) {
@@ -89,4 +94,5 @@ module.exports = {
   containsObj,
   createMirrors,
   checkClass,
+  updateBoard,
 };

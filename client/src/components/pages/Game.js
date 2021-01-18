@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { get } from "../../utilities.js";
+import { post } from "../../utilities.js";
 import { socket } from "../../client-socket.js";
 
 import Info from "../modules/Game/Info.js";
@@ -18,7 +19,6 @@ class Game extends Component {
       board: [],
       currentTurn: 0,
       isActive: false,
-      mirrors: [],
       players: [],
       roomCode: "",
       roomName: "",
@@ -30,7 +30,6 @@ class Game extends Component {
       board: data.board,
       currentTurn: data.currentTurn,
       isActive: data.isActive,
-      mirrors: data.mirrors,
       players: data.players,
       roomCode: data.roomCode,
       roomName: data.roomName,
@@ -38,9 +37,9 @@ class Game extends Component {
   };
 
   componentDidMount() {
+    document.addEventListener("keydown", this.movePlayer);
     get("/api/checkGame", { _id: this.props.gameId })
       .then((data) => {
-        console.log();
         if (data) {
           this.update(data);
           socket.on("updateBoard", (game) => {
@@ -50,6 +49,27 @@ class Game extends Component {
       })
       .catch((err) => console.log(err));
   }
+
+  movePlayer = (event) => {
+    const body = {
+      roomCode: this.state.roomCode,
+      keyCode: event.code,
+    };
+    post("/api/movePlayer", body)
+      .then((data) => {
+        if (!data) {
+          alert("Not a valid move.");
+        } else {
+          this.update(data);
+          console.log("current player state: " + this.state.board);
+          socket.on("updateBoard", (game) => {
+            console.log("other player state: " + this.state.board);
+            this.update(game);
+          });
+        }
+      })
+      .catch(console.log);
+  };
 
   render() {
     return (

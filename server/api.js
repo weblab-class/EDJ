@@ -24,6 +24,13 @@ const router = express.Router();
 //initialize socket
 const socketManager = require("./server-socket");
 
+const locations = [
+  { x: 0, y: 0 },
+  { x: 8, y: 8 },
+  { x: 0, y: 8 },
+  { x: 8, y: 0 },
+];
+
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
@@ -48,13 +55,14 @@ router.post("/initsocket", (req, res) => {
 
 router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
   const mirrors = makeBoard.createMirrors(req.body.mirrors);
-  const board = makeBoard.checkClass(mirrors);
+  let board = makeBoard.checkClass(mirrors);
+  board = makeBoard.updateBoard(board, "Player", locations[0]);
   const newGame = new Game({
     roomName: req.body.roomName,
     roomCode: req.body.roomCode,
     board: board,
     isActive: false,
-    players: [{ name: req.user.name, id: req.user._id, score: 0 }],
+    players: [{ name: req.user.name, id: req.user._id, score: 0, location: locations[0] }],
     currentTurn: 0,
   });
 
@@ -83,8 +91,10 @@ router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
               name: req.user.name,
               id: req.user._id,
               score: 0,
+              location: locations[game.players.length],
             },
           ];
+          game.board = makeBoard.updateBoard(game.board, "Player", locations[game.players.length]);
           game
             .save()
             .then((game) => {
@@ -121,6 +131,54 @@ router.post("/startGame", auth.ensureLoggedIn, (req, res) => {
       }
     })
     .catch((err) => res.send(err));
+});
+
+router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
+  Game.findOne({ roomCode: req.body.roomCode })
+    .then((game) => {
+      if (game) {
+        console.log("before: " + game.players);
+        console.log(req.body.keyCode);
+        player = game.players.filter((player) => player.id === req.user._id)[0];
+        if (player !== game.players[game.currentTurn]) {
+          console.log("Not your turn!");
+          res.send({});
+        } else {
+          let prev_x = player.location.x;
+          let prev_y = player.location.y;
+          if (req.body.keyCode === "ArrowLeft" && player.location.y > 0) {
+            player.location.y -= 1;
+          }
+          if (req.body.keyCode === "ArrowRight" && player.location.y < 8) {
+            player.location.y += 1;
+          }
+          if (req.body.keyCode === "ArrowUp" && player.location.x > 0) {
+            player.location.x -= 1;
+          }
+          if (req.body.keyCode === "ArrowDown" && player.location.x < 8) {
+            player.location.x += 1;
+          }
+          game.board = makeBoard.updateBoard(game.board, "Player", player.location);
+          game.board = makeBoard.updateBoard(game.board, "", { x: prev_x, y: prev_y });
+          game.players[game.currentTurn].location = { x: player.location.x, y: player.location.y };
+          console.log("after: " + game.players);
+          if (game.currentTurn < 3) {
+            game.currentTurn += 1;
+          } else {
+            game.currentTurn = 0;
+          }
+          game.save().then((data) => {
+            console.log("data: " + data);
+            data.players.map((player) => {
+              socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
+            });
+          });
+        }
+      } else {
+        res.send({});
+      }
+    })
+    .catch(console.log);
 });
 
 // anything else falls to this "not found" case
