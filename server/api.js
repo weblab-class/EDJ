@@ -138,9 +138,11 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
   /*If the user tries to move in the direction they are already facing (and is not off the edge) or presses space,
     call this POST with their input
     (Prob just handle movement first)
+    (Also make sure it's the user's turn)
 
     Call a function that applies the input to a person to move them (and their rotation), and save the new board
-    Emit the board to all the players*/
+    Increment currentTurn
+    Emit updateGame to all the players*/
 })
 
 // router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
