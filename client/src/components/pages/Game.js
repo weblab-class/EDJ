@@ -50,14 +50,16 @@ class Game extends Component {
       .catch((err) => console.log(err));
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.movePlayer);
+  }
+
   updateDirection = (board, { i, j }, { x, y }) => {
     board[i][j].inputDirection = { x, y };
     return board;
   };
 
   movePlayer = (event) => {
-    console.log(typeof this.props.userId);
-    console.log(this.state.players);
     const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
     const x = player.location.x;
     const y = player.location.y;
@@ -77,48 +79,25 @@ class Game extends Component {
     } else if (event.key === "ArrowLeft") {
       direction = left;
     }
-    if (direction_x === direction.x && direction_y === direction.y) {
-      post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction }).then(
-        (game) => {
-          console.log(game);
-          if (typeof game.message === "string") {
-            alert(game.message);
-          } else {
-            this.update(game);
+    console.log(direction);
+    if (!(direction.x === 0 && direction.y === 0)) {
+      console.log("hello");
+      if (direction_x === direction.x && direction_y === direction.y) {
+        post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction }).then(
+          (game) => {
+            console.log(game);
+            if (typeof game.message === "string") {
+              alert(game.message);
+            }
           }
-        }
-      );
-    } else {
-      this.setState({
-        board: this.updateDirection(this.state.board, { i: x, j: y }, direction),
-      });
+        );
+      } else {
+        this.setState({
+          board: this.updateDirection(this.state.board, { i: x, j: y }, direction),
+        });
+      }
     }
   };
-
-  // movePlayer = (event) => {
-  //   const body = {
-  //     roomCode: this.state.roomCode,
-  //     keyCode: event.code,
-  //   };
-  //   if (
-  //     event.code === "ArrowUp" ||
-  //     event.code === "ArrowDown" ||
-  //     event.code === "ArrowLeft" ||
-  //     event.code === "ArrowRight" ||
-  //     event.code === "Space"
-  //   ) {
-  //   post("/api/movePlayer", body)
-  //     .then((data) => {
-  //       this.update(data);
-  //       console.log("current player state: " + this.state.board);
-  //       // socket.on("updateBoard", (game) => {
-  //       //   console.log("other player state: " + this.state.board);
-  //       //   this.update(game);
-  //       // });
-  //     })
-  //     .catch(console.log);
-  //   }
-  // };
 
   render() {
     return (

@@ -26,8 +26,8 @@ const socketManager = require("./server-socket");
 
 const locations = [
   { x: 0, y: 0 },
-  { x: 8, y: 8 },
   { x: 0, y: 8 },
+  { x: 8, y: 8 },
   { x: 8, y: 0 },
 ];
 
@@ -95,7 +95,11 @@ router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
               location: locations[game.players.length],
             },
           ];
-          game.board = makeBoard.updateBoard(game.board, "Player", locations[game.players.length]);
+          game.board = makeBoard.updateBoard(
+            game.board,
+            "Player",
+            locations[game.players.length - 1]
+          );
           game
             .save()
             .then((game) => {
@@ -156,9 +160,18 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
           } else {
             const prev_x = player.location.x;
             const prev_y = player.location.y;
-            const new_x = prev_x + req.body.direction.x;
-            const new_y = prev_y + req.body.direction.y;
-            if (new_x < 0 || new_x > 8 || new_y < 0 || new_y > 8) {
+            const new_x = prev_x - req.body.direction.y;
+            const new_y = prev_y + req.body.direction.x;
+            if (
+              new_x < 0 ||
+              new_x > 8 ||
+              new_y < 0 ||
+              new_y > 8 ||
+              game.board[new_x][new_y].tileType === "Left-mirror" ||
+              game.board[new_x][new_y].tileType === "Right-mirror" ||
+              game.board[new_x][new_y].tileType === "Hor-wall" ||
+              game.board[new_x][new_y].tileType === "Vert-wall"
+            ) {
               res.send({ message: "Not a valid move." });
             } else {
               game.board = makeBoard.updateBoard(game.board, "Player", { x: new_x, y: new_y });
@@ -182,53 +195,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
     })
     .catch(console.log);
 });
-
-// router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
-//   Game.findOne({ roomCode: req.body.roomCode })
-//     .then((game) => {
-//       if (game) {
-//         if (!game.isActive) {
-//           res.send({});
-//         } else {
-//           console.log("before: " + game.players);
-//           console.log(req.body.keyCode);
-//           player = game.players.filter((player) => player.id === req.user._id)[0];
-//           if (player !== game.players[game.currentTurn]) {
-//             console.log("Not your turn!");
-//             res.send({});
-//           } else {
-//             let prev_x = player.location.x;
-//             let prev_y = player.location.y;
-//             if (req.body.keyCode === "ArrowLeft" && prev_y > 0) {
-//               player.location.y -= 1;
-//             } else if (req.body.keyCode === "ArrowRight" && prev_y < 8) {
-//               player.location.y += 1;
-//             } else if (req.body.keyCode === "ArrowUp" && prev_x > 0) {
-//               player.location.x -= 1;
-//             } else if (req.body.keyCode === "ArrowDown" && prev_x < 8) {
-//               player.location.x += 1;
-//             }
-//             game.board = makeBoard.updateBoard(game.board, "Player", player.location);
-//             game.board = makeBoard.updateBoard(game.board, "", { x: prev_x, y: prev_y });
-//             game.players[game.currentTurn].location = {
-//               x: player.location.x,
-//               y: player.location.y,
-//             };
-//             console.log("after: " + game.players);
-//             game.currentTurn = (game.currentTurn + 1) % game.players.length;
-//             game.save().then((data) => {
-//               data.players.map((player) => {
-//                 socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
-//               });
-//             });
-//           }
-//         }
-//       } else {
-//         res.send({});
-//       }
-//     })
-//     .catch(console.log);
-// });
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

@@ -59,10 +59,14 @@ const createMirrors = (mirrorsNum) => {
 };
 
 const updateBoard = (board, value, { x, y }) => {
-  if (value === "Player" && board[x][y].inputDirection === undefined) {
+  if (value === "Player") {
     board[x][y].inputDirection = { x: 0, y: 1 };
   }
+  if (value === "") {
+    board[x][y].inputDirection = undefined;
+  }
   board[x][y].tileType = value;
+  console.log(board);
   return board;
 };
 
@@ -71,6 +75,7 @@ const checkClass = (mirrorsArray) => {
   for (let i = 0; i < 9; i++) {
     const innerBoard = [];
     for (let j = 0; j < 9; j++) {
+      console.log({ i, j });
       let inMirror = containsObj(mirrorsArray, { x: i, y: j });
       if ((i === 4 && j === 0) || (i === 4 && j === 8)) {
         innerBoard.push({ tileType: "Hor-wall" });
