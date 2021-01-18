@@ -37,7 +37,7 @@ class Game extends Component {
   };
 
   componentDidMount() {
-    window.addEventListener("keydown", this.rotatePlayer);
+    window.addEventListener("keydown", this.movePlayer);
     get("/api/checkGame", { _id: this.props.gameId })
       .then((data) => {
         if (data) {
@@ -55,26 +55,42 @@ class Game extends Component {
     return board;
   };
 
-  rotatePlayer = (event) => {
+  movePlayer = (event) => {
+    console.log(typeof this.props.userId);
+    console.log(this.state.players);
     const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
-    let x = player.location.x;
-    let y = player.location.y;
-
+    const x = player.location.x;
+    const y = player.location.y;
+    const direction_x = this.state.board[x][y].inputDirection.x;
+    const direction_y = this.state.board[x][y].inputDirection.y;
+    const up = { x: 0, y: 1 };
+    const down = { x: 0, y: -1 };
+    const right = { x: 1, y: 0 };
+    const left = { x: -1, y: 0 };
+    let direction = { x: 0, y: 0 };
     if (event.key === "ArrowUp") {
-      this.setState({
-        board: this.updateDirection(this.state.board, { i: x, j: y }, { x: 0, y: 1 }),
-      });
+      direction = up;
     } else if (event.key === "ArrowDown") {
-      this.setState({
-        board: this.updateDirection(this.state.board, { i: x, j: y }, { x: 0, y: -1 }),
-      });
+      direction = down;
     } else if (event.key === "ArrowRight") {
-      this.setState({
-        board: this.updateDirection(this.state.board, { i: x, j: y }, { x: 1, y: 0 }),
-      });
+      direction = right;
     } else if (event.key === "ArrowLeft") {
+      direction = left;
+    }
+    if (direction_x === direction.x && direction_y === direction.y) {
+      post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction }).then(
+        (game) => {
+          console.log(game);
+          if (typeof game.message === "string") {
+            alert(game.message);
+          } else {
+            this.update(game);
+          }
+        }
+      );
+    } else {
       this.setState({
-        board: this.updateDirection(this.state.board, { i: x, j: y }, { x: -1, y: 0 }),
+        board: this.updateDirection(this.state.board, { i: x, j: y }, direction),
       });
     }
   };
