@@ -28,7 +28,7 @@ class HowToPlay extends Component {
                     </div>
                 </div>
                 <div className="title2">Controls</div>
-                <div className="info u-flex u-flex-justifySpaceEvenly">
+                <div className="infoP u-flex u-flex-justifySpaceEvenly">
                     <div className="control-box">
                         Test controls by clicking keys
                         <div className = "u-flex">
