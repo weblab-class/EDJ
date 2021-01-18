@@ -143,7 +143,45 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
     Call a function that applies the input to a person to move them (and their rotation), and save the new board
     Increment currentTurn
     Emit updateGame to all the players*/
-})
+  Game.findOne({ roomCode: req.body.roomCode })
+    .then((game) => {
+      if (game) {
+        if (!game.isActive) {
+          res.send({ message: "Not active yet." });
+        } else {
+          player = game.players.filter((player) => player.id === req.user._id)[0];
+          if (player !== game.players[game.currentTurn]) {
+            // console.log("Not your turn!");
+            res.send({ message: "Not your turn!" });
+          } else {
+            const prev_x = player.location.x;
+            const prev_y = player.location.y;
+            const new_x = prev_x + req.body.direction.x;
+            const new_y = prev_y + req.body.direction.y;
+            if (new_x < 0 || new_x > 8 || new_y < 0 || new_y > 8) {
+              res.send({ message: "Not a valid move." });
+            } else {
+              game.board = makeBoard.updateBoard(game.board, "Player", { x: new_x, y: new_y });
+              game.board = makeBoard.updateBoard(game.board, "", { x: prev_x, y: prev_y });
+              game.players[game.currentTurn].location = {
+                x: new_x,
+                y: new_y,
+              };
+              game.currentTurn = (game.currentTurn + 1) % game.players.length;
+              game.save().then((data) => {
+                data.players.map((player) => {
+                  socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
+                });
+              });
+            }
+          }
+        }
+      } else {
+        res.send({ message: "No games found." });
+      }
+    })
+    .catch(console.log);
+});
 
 // router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
 //   Game.findOne({ roomCode: req.body.roomCode })
