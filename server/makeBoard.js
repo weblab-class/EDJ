@@ -76,6 +76,8 @@ const checkClass = (mirrorsArray) => {
         innerBoard.push({ tileType: "Hor-wall" });
       } else if ((i === 0 && j === 4) || (i === 8 && j === 4)) {
         innerBoard.push({ tileType: "Vert-wall" });
+      } else if (i === 4 && j === 4) {
+        innerBoard.push({ tileType: "goal" });
       } else if (inMirror) {
         const leftMirror = inMirror.leftMirror;
         if (leftMirror) {
