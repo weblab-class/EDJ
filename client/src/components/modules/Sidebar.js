@@ -21,7 +21,7 @@ class Sidebar extends Component {
         <div className='title'>Trickshot</div>
         <div className="nav u-link" onClick={this.home}>Play</div>
         <div className="nav u-link" onClick={this.rules}>Rules</div>
-        <div className="login u-flex u-flex-justifyCenter u-flex-alignCenter">
+        <div className="login u-flex u-flex-justifyCenter">
           {this.props.userId ? (
             <GoogleLogout
               clientId={GOOGLE_CLIENT_ID}
