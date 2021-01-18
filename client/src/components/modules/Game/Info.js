@@ -18,7 +18,7 @@ class Info extends Component {
     displayLogic = () => {
         if (!this.props.gameData.isActive) {
             if (this.props.gameData.players.length > 1) {
-                if (this.props.gameData.players[this.props.gameData.currentTurn].id == this.props.userId) {
+                if (this.props.gameData.players[0].id == this.props.userId) {
                     return <div className="start u-link" onClick={this.startGame}>Start</div>
                 }
                 else {return <div className="text">Waiting for host to start the game</div>}
