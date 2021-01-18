@@ -1,6 +1,7 @@
 .App-container {
     height: 100vh;
-    width: 80%;
+    width: 80vw;
     overflow: auto;
+    float:left;
     background-color: rgb(251,239,239);
 }

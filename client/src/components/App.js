@@ -57,7 +57,11 @@ class App extends Component {
   render() {
     return (
       <>
-        <Sidebar />
+        <Sidebar
+          userId={this.state.userId}
+          handleLogin={this.handleLogin}
+          handleLogout={this.handleLogout}
+        />
         <div className='App-container u-flex u-flex-justifyCenter'>
           <Router>
             {/*<Skeleton
@@ -66,12 +70,7 @@ class App extends Component {
               handleLogout={this.handleLogout}
               userId={this.state.userId}
             />*/}
-            <Home 
-              path='/'
-              handleLogin={this.handleLogin}
-              handleLogout={this.handleLogout}
-              userId={this.state.userId}
-            />
+            <Home path='/'userId={this.state.userId} />
             <Game path='/game/:gameId' userId={this.state.userId} />
             <HowToPlay path='/howto/' />
             <HostGame path='/host/' />

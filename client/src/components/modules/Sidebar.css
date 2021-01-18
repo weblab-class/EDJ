@@ -4,30 +4,35 @@
   width: 20vw;
   float: left;
   color: white;
+  font-family: "Press Start 2P", cursive;
 }
 
-.SideBar-link{
-  color:var(--white);
-  font-size:32px;
-  text-decoration: none;
-}
-.SideBar-link:hover {
-  opacity: 0.6;
+.title {
+  width: 100%;
+  font-size: 50px;
+  font-family: "Ubuntu", sans-serif;
+  text-align: center;
+  font-weight: 700;
+  padding: var(--m) 0px 50% 0px;
 }
 
-h1 {
-  padding: 30px;
-  font-size: 30pt;
-  font-family: "Ubuntu", sans-serif;
-}
-h2 {
-  padding: 20px 30px;
-  font-size: 30pt;
-  font-family: "Ubuntu", sans-serif;
+.nav {
+  height: auto;
+  padding: var(--m);
+  margin-bottom: var(--m);
+  width: 100%;
+  color: white;
 }
 
-h3 {
-  padding: 30px;
-  font-size: 12pt;
-  font-family: "Ubuntu", sans-serif;
+.nav:hover {
+  color: var(--medgrey);
+  background-color: var(--primary);
+}
+
+.login {
+  bottom: 0;
+  height: auto;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: var(--l);
 }

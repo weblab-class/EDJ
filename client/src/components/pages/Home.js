@@ -31,22 +31,7 @@ class Home extends Component {
   render() {
     return (
       <div className="u-center-screen">
-        {this.props.userId ? (
-          <GoogleLogout
-            clientId={GOOGLE_CLIENT_ID}
-            buttonText="Logout"
-            onLogoutSuccess={this.props.handleLogout}
-            onFailure={(err) => console.log(err)}
-          />
-        ) : (
-          <GoogleLogin
-            clientId={GOOGLE_CLIENT_ID}
-            buttonText="Login"
-            onSuccess={this.props.handleLogin}
-            onFailure={(err) => console.log(err)}
-          />
-        )}
-        <div className="u-title">GAME NAME</div>
+        <div className="u-title">Trickshot</div>
         <div className="u-button-container">
           <div className="u-button u-link" onClick={this.validateHost}>
             Host game
