@@ -58,15 +58,16 @@ const createMirrors = (mirrorsNum) => {
   return mirrorsArray;
 };
 
-const updateBoard = (board, value, { x, y }) => {
+const updateBoard = (board, value, location, direction) => {
+  const x = location.x;
+  const y = location.y;
   if (value === "Player") {
-    board[x][y].inputDirection = { x: 0, y: 1 };
+    board[x][y].inputDirection = direction;
   }
   if (value === "") {
     board[x][y].inputDirection = undefined;
   }
   board[x][y].tileType = value;
-  console.log(board);
   return board;
 };
 

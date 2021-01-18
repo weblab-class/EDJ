@@ -56,7 +56,7 @@ router.post("/initsocket", (req, res) => {
 router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
   const mirrors = makeBoard.createMirrors(req.body.mirrors);
   let board = makeBoard.checkClass(mirrors);
-  board = makeBoard.updateBoard(board, "Player", locations[0]);
+  board = makeBoard.updateBoard(board, "Player", locations[0], { x: 0, y: -1 });
   console.log(board);
   const newGame = new Game({
     roomName: req.body.roomName,
@@ -86,20 +86,23 @@ router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
         if (p.length !== 0) {
           res.send(game);
         } else {
+          const location = locations[game.players.length];
           game.players = [
             ...game.players,
             {
               name: req.user.name,
               id: req.user._id,
               score: 0,
-              location: locations[game.players.length],
+              location: location,
             },
           ];
-          game.board = makeBoard.updateBoard(
-            game.board,
-            "Player",
-            locations[game.players.length - 1]
-          );
+          let direction;
+          if (location.x < 4) {
+            direction = { x: 0, y: -1 };
+          } else {
+            direction = { x: 0, y: 1 };
+          }
+          game.board = makeBoard.updateBoard(game.board, "Player", location, direction);
           game
             .save()
             .then((game) => {
@@ -160,8 +163,10 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
           } else {
             const prev_x = player.location.x;
             const prev_y = player.location.y;
-            const new_x = prev_x - req.body.direction.y;
-            const new_y = prev_y + req.body.direction.x;
+            const direction_x = req.body.direction.x;
+            const direction_y = req.body.direction.y;
+            const new_x = prev_x - direction_y;
+            const new_y = prev_y + direction_x;
             if (
               new_x < 0 ||
               new_x > 8 ||
@@ -174,8 +179,18 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
             ) {
               res.send({ message: "Not a valid move." });
             } else {
-              game.board = makeBoard.updateBoard(game.board, "Player", { x: new_x, y: new_y });
-              game.board = makeBoard.updateBoard(game.board, "", { x: prev_x, y: prev_y });
+              game.board = makeBoard.updateBoard(
+                game.board,
+                "Player",
+                { x: new_x, y: new_y },
+                { x: direction_x, y: direction_y }
+              );
+              game.board = makeBoard.updateBoard(
+                game.board,
+                "",
+                { x: prev_x, y: prev_y },
+                { x: direction_x, y: direction_y }
+              );
               game.players[game.currentTurn].location = {
                 x: new_x,
                 y: new_y,

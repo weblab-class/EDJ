@@ -63,6 +63,7 @@ class Game extends Component {
     const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
     const x = player.location.x;
     const y = player.location.y;
+    console.log(this.state.board);
     const direction_x = this.state.board[x][y].inputDirection.x;
     const direction_y = this.state.board[x][y].inputDirection.y;
     const up = { x: 0, y: 1 };
@@ -81,11 +82,10 @@ class Game extends Component {
     }
     console.log(direction);
     if (!(direction.x === 0 && direction.y === 0)) {
-      console.log("hello");
       if (direction_x === direction.x && direction_y === direction.y) {
         post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction }).then(
           (game) => {
-            console.log(game);
+            console.log(game.board);
             if (typeof game.message === "string") {
               alert(game.message);
             }
