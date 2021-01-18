@@ -16,7 +16,8 @@ class GameBoard extends Component {
           <Tile
             key={this.props.board[i].length * i + j}
             pos={{ x: i + 1, y: j + 1 }}
-            data={this.props.board[i][j]}
+            data={this.props.board[i][j].tileType}
+            direction={this.props.board[i][j].inputDirection}
           />
         );
       }

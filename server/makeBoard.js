@@ -52,14 +52,17 @@ const createMirrors = (mirrorsNum) => {
       continue;
     }
     // x coordinate modulo 2 (divisible by 2 --> left-facing mirror)
-    const leftMirror = ((mirrorsArray.length % 2) + 2) % 2 === 0;
+    const leftMirror = mirrorsArray.length % 2 === 0;
     mirrorsArray.push({ location: randomLoc, leftMirror: leftMirror });
   }
   return mirrorsArray;
 };
 
 const updateBoard = (board, value, { x, y }) => {
-  board[x][y] = value;
+  if (value === "Player" && !board[x][y].inputDirection) {
+    board[x][y].inputDirection = { x: 0, y: 1 };
+  }
+  board[x][y].tileType = value;
   return board;
 };
 
@@ -70,18 +73,18 @@ const checkClass = (mirrorsArray) => {
     for (let j = 0; j < 9; j++) {
       let inMirror = containsObj(mirrorsArray, { x: i, y: j });
       if ((i === 4 && j === 0) || (i === 4 && j === 8)) {
-        innerBoard.push("Hor-wall");
+        innerBoard.push({ tileType: "Hor-wall" });
       } else if ((i === 0 && j === 4) || (i === 8 && j === 4)) {
-        innerBoard.push("Vert-wall");
+        innerBoard.push({ tileType: "Vert-wall" });
       } else if (inMirror) {
         const leftMirror = inMirror.leftMirror;
         if (leftMirror) {
-          innerBoard.push("Left-mirror");
+          innerBoard.push({ tileType: "Left-mirror" });
         } else {
-          innerBoard.push("Right-mirror");
+          innerBoard.push({ tileType: "Right-mirror" });
         }
       } else {
-        innerBoard.push("");
+        innerBoard.push({ tileType: "" });
       }
     }
     board.push(innerBoard);

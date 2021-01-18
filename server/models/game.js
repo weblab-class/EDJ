@@ -3,7 +3,14 @@ const mongoose = require("mongoose");
 const GameSchema = new mongoose.Schema({
   roomName: String,
   roomCode: String,
-  board: [[String]],
+  board: [
+    [
+      {
+        tileType: String,
+        inputDirection: { x: Number, y: Number },
+      },
+    ],
+  ],
   isActive: Boolean,
   players: [{ name: String, id: String, score: Number, location: { x: Number, y: Number } }],
   currentTurn: Number,

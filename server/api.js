@@ -57,6 +57,7 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
   const mirrors = makeBoard.createMirrors(req.body.mirrors);
   let board = makeBoard.checkClass(mirrors);
   board = makeBoard.updateBoard(board, "Player", locations[0]);
+  console.log(board);
   const newGame = new Game({
     roomName: req.body.roomName,
     roomCode: req.body.roomCode,
@@ -133,53 +134,52 @@ router.post("/startGame", auth.ensureLoggedIn, (req, res) => {
     .catch((err) => res.send(err));
 });
 
-router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
-  Game.findOne({ roomCode: req.body.roomCode })
-    .then((game) => {
-      if (game) {
-        console.log("before: " + game.players);
-        console.log(req.body.keyCode);
-        player = game.players.filter((player) => player.id === req.user._id)[0];
-        if (player !== game.players[game.currentTurn]) {
-          console.log("Not your turn!");
-          res.send({});
-        } else {
-          let prev_x = player.location.x;
-          let prev_y = player.location.y;
-          if (req.body.keyCode === "ArrowLeft" && player.location.y > 0) {
-            player.location.y -= 1;
-          }
-          if (req.body.keyCode === "ArrowRight" && player.location.y < 8) {
-            player.location.y += 1;
-          }
-          if (req.body.keyCode === "ArrowUp" && player.location.x > 0) {
-            player.location.x -= 1;
-          }
-          if (req.body.keyCode === "ArrowDown" && player.location.x < 8) {
-            player.location.x += 1;
-          }
-          game.board = makeBoard.updateBoard(game.board, "Player", player.location);
-          game.board = makeBoard.updateBoard(game.board, "", { x: prev_x, y: prev_y });
-          game.players[game.currentTurn].location = { x: player.location.x, y: player.location.y };
-          console.log("after: " + game.players);
-          if (game.currentTurn < 3) {
-            game.currentTurn += 1;
-          } else {
-            game.currentTurn = 0;
-          }
-          game.save().then((data) => {
-            console.log("data: " + data);
-            data.players.map((player) => {
-              socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
-            });
-          });
-        }
-      } else {
-        res.send({});
-      }
-    })
-    .catch(console.log);
-});
+// router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
+//   Game.findOne({ roomCode: req.body.roomCode })
+//     .then((game) => {
+//       if (game) {
+//         if (!game.isActive) {
+//           res.send({});
+//         } else {
+//           console.log("before: " + game.players);
+//           console.log(req.body.keyCode);
+//           player = game.players.filter((player) => player.id === req.user._id)[0];
+//           if (player !== game.players[game.currentTurn]) {
+//             console.log("Not your turn!");
+//             res.send({});
+//           } else {
+//             let prev_x = player.location.x;
+//             let prev_y = player.location.y;
+//             if (req.body.keyCode === "ArrowLeft" && prev_y > 0) {
+//               player.location.y -= 1;
+//             } else if (req.body.keyCode === "ArrowRight" && prev_y < 8) {
+//               player.location.y += 1;
+//             } else if (req.body.keyCode === "ArrowUp" && prev_x > 0) {
+//               player.location.x -= 1;
+//             } else if (req.body.keyCode === "ArrowDown" && prev_x < 8) {
+//               player.location.x += 1;
+//             }
+//             game.board = makeBoard.updateBoard(game.board, "Player", player.location);
+//             game.board = makeBoard.updateBoard(game.board, "", { x: prev_x, y: prev_y });
+//             game.players[game.currentTurn].location = {
+//               x: player.location.x,
+//               y: player.location.y,
+//             };
+//             console.log("after: " + game.players);
+//             game.currentTurn = (game.currentTurn + 1) % game.players.length;
+//             game.save().then((data) => {
+//               data.players.map((player) => {
+//                 socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
+//               });
+//             });
+//           }
+//         }
+//       } else {
+//         res.send({});
+//       }
+//     })
+//     .catch(console.log);
+// });
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

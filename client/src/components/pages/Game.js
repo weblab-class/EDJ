@@ -37,7 +37,7 @@ class Game extends Component {
   };
 
   componentDidMount() {
-    document.addEventListener("keydown", this.movePlayer);
+    window.addEventListener("keydown", this.rotatePlayer);
     get("/api/checkGame", { _id: this.props.gameId })
       .then((data) => {
         if (data) {
@@ -50,26 +50,59 @@ class Game extends Component {
       .catch((err) => console.log(err));
   }
 
-  movePlayer = (event) => {
-    const body = {
-      roomCode: this.state.roomCode,
-      keyCode: event.code,
-    };
-    post("/api/movePlayer", body)
-      .then((data) => {
-        if (!data) {
-          alert("Not a valid move.");
-        } else {
-          this.update(data);
-          console.log("current player state: " + this.state.board);
-          socket.on("updateBoard", (game) => {
-            console.log("other player state: " + this.state.board);
-            this.update(game);
-          });
-        }
-      })
-      .catch(console.log);
+  updateDirection = (board, { i, j }, { x, y }) => {
+    board[i][j].inputDirection = { x, y };
+    return board;
   };
+
+  rotatePlayer = (event) => {
+    const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
+    let x = player.location.x;
+    let y = player.location.y;
+
+    if (event.key === "ArrowUp") {
+      this.setState({
+        board: this.updateDirection(this.state.board, { i: x, j: y }, { x: 0, y: 1 }),
+      });
+    } else if (event.key === "ArrowDown") {
+      this.setState({
+        board: this.updateDirection(this.state.board, { i: x, j: y }, { x: 0, y: -1 }),
+      });
+    } else if (event.key === "ArrowRight") {
+      this.setState({
+        board: this.updateDirection(this.state.board, { i: x, j: y }, { x: 1, y: 0 }),
+      });
+    } else if (event.key === "ArrowLeft") {
+      this.setState({
+        board: this.updateDirection(this.state.board, { i: x, j: y }, { x: -1, y: 0 }),
+      });
+    }
+  };
+
+  // movePlayer = (event) => {
+  //   const body = {
+  //     roomCode: this.state.roomCode,
+  //     keyCode: event.code,
+  //   };
+  //   if (
+  //     event.code === "ArrowUp" ||
+  //     event.code === "ArrowDown" ||
+  //     event.code === "ArrowLeft" ||
+  //     event.code === "ArrowRight" ||
+  //     event.code === "Space"
+  //   ) {
+  //   post("/api/movePlayer", body)
+  //     .then((data) => {
+  //       this.update(data);
+  //       console.log("current player state: " + this.state.board);
+  //       // socket.on("updateBoard", (game) => {
+  //       //   console.log("other player state: " + this.state.board);
+  //       //   this.update(game);
+  //       // });
+  //     })
+  //     .catch(console.log);
+  //   }
+  // };
 
   render() {
     return (
