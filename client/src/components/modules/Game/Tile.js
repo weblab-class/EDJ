@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import "./Tile.css";
+import art from "./Untitled_Artwork-1.png";
 
 class Tile extends Component {
   constructor(props) {
@@ -8,20 +9,19 @@ class Tile extends Component {
   }
 
   playerDirection = () => {
-    if (!this.props.inputDirection) {
+    if (!this.props.direction) {
       return this.props.data;
     }
-    console.log({ x: this.props.inputDirection.x, y: this.props.inputDirection.y });
-    if (this.props.inputDirection.x === 0 && this.props.inputDirection.y === 1) {
+    if (this.props.direction.x === 0 && this.props.direction.y === 1) {
       return "up";
     }
-    if (this.props.inputDirection.x === 0 && this.props.inputDirection.y === -1) {
+    if (this.props.direction.x === 0 && this.props.direction.y === -1) {
       return "down";
     }
-    if (this.props.inputDirection.x === 1 && this.props.inputDirection.y === 0) {
+    if (this.props.direction.x === 1 && this.props.direction.y === 0) {
       return "right";
     }
-    if (this.props.inputDirection.x === -1 && this.props.inputDirection.y === 0) {
+    if (this.props.direction.x === -1 && this.props.direction.y === 0) {
       return "left";
     }
   };
