@@ -59,7 +59,7 @@ router.post("/initsocket", (req, res) => {
 router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
   const mirrors = makeBoard.createMirrors(req.body.mirrors);
   let board = makeBoard.checkClass(mirrors);
-  board = makeBoard.updateBoard(board, "Player", locations[0], { x: 0, y: -1 });
+  board = makeBoard.updateBoard(board, "Player0", locations[0], { x: 0, y: -1 });
   const newGame = new Game({
     roomName: req.body.roomName,
     roomCode: req.body.roomCode,
@@ -84,11 +84,12 @@ router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
   Game.findOne({ isActive: false, roomCode: req.body.code })
     .then((game) => {
       if (game) {
+        const playerNum = game.players.length;
         const p = game.players.filter((l) => l.id == req.user._id);
         if (p.length !== 0) {
           res.send(game);
         } else {
-          const location = locations[game.players.length];
+          const location = locations[playerNum];
           game.players = [
             ...game.players,
             {
@@ -104,7 +105,12 @@ router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
           } else {
             direction = { x: 0, y: 1 };
           }
-          game.board = makeBoard.updateBoard(game.board, "Player", location, direction);
+          game.board = makeBoard.updateBoard(
+            game.board,
+            "Player" + playerNum.toString(),
+            location,
+            direction
+          );
           game
             .save()
             .then((game) => {
@@ -150,7 +156,8 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
         if (!game.isActive) {
           res.send({ message: "Not active yet." });
         } else {
-          player = game.players.filter((player) => player.id === req.user._id)[0];
+          const player = game.players.filter((player) => player.id === req.user._id)[0];
+          const playerNum = game.players.indexOf(player);
           if (player !== game.players[game.currentTurn]) {
             res.send({ message: "Not your turn!" });
           } else {
@@ -174,7 +181,7 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
             } else {
               game.board = makeBoard.updateBoard(
                 game.board,
-                "Player",
+                "Player" + String(playerNum),
                 { x: new_x, y: new_y },
                 { x: direction_x, y: direction_y }
               );
@@ -209,7 +216,12 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                   } else {
                     direction = { x: 0, y: 1 };
                   }
-                  board = makeBoard.updateBoard(board, "Player", location, direction);
+                  board = makeBoard.updateBoard(
+                    board,
+                    "Player" + String(game.players.indexOf(player)),
+                    location,
+                    direction
+                  );
                 }
                 game.board = board;
                 game.players = newPlayers;

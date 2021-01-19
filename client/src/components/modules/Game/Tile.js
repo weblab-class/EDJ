@@ -9,31 +9,35 @@ class Tile extends Component {
   }
 
   playerDirection = () => {
+    const playerNum = this.props.data.charAt(this.props.data.length - 1);
+    console.log(playerNum);
+    let tileClass;
     if (!this.props.direction) {
       return this.props.data;
     }
     if (this.props.direction.x === 0 && this.props.direction.y === 1) {
-      return "up" + String(this.props.playerN);
+      tileClass = "up" + playerNum;
     }
     if (this.props.direction.x === 0 && this.props.direction.y === -1) {
-      return "down" + String(this.props.playerN);
+      tileClass = "down" + playerNum;
     }
     if (this.props.direction.x === 1 && this.props.direction.y === 0) {
-      return "right" + String(this.props.playerN);
+      tileClass = "right" + playerNum;
     }
     if (this.props.direction.x === -1 && this.props.direction.y === 0) {
-      return "left" + String(this.props.playerN);
+      tileClass = "left" + playerNum;
     }
+    console.log(tileClass);
+    return tileClass;
   };
 
   doLight = () => {
     if (this.props.isLit) {
-      return "lit "
+      return "lit ";
+    } else {
+      return "full ";
     }
-    else {
-      return "full "
-    }
-  }
+  };
 
   render() {
     return (

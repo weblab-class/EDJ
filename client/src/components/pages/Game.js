@@ -36,6 +36,7 @@ class Game extends Component {
       roomCode: data.roomCode,
       roomName: data.roomName,
     });
+    console.log(this.state.board);
   };
 
   componentDidMount() {
@@ -53,32 +54,41 @@ class Game extends Component {
   }
 
   isValid = (space) => {
-    let bounds = (space.x >= 0 && space.x <= 8 && space.y >= 0 && space.y <= 8);
-    if (!bounds) {return false}
-    let wall = (this.state.board[space.x][space.y].tileType !== "Vert-wall" && this.state.board[space.x][space.y].tileType !== "Hor-wall");
+    let bounds = space.x >= 0 && space.x <= 8 && space.y >= 0 && space.y <= 8;
+    if (!bounds) {
+      return false;
+    }
+    let wall =
+      this.state.board[space.x][space.y].tileType !== "Vert-wall" &&
+      this.state.board[space.x][space.y].tileType !== "Hor-wall";
     let player = this.state.board[space.x][space.y].tileType !== "Player";
     return bounds && wall && player;
-  }
+  };
 
   fire = (pos, dir) => {
-    let sum = (p, d) => {return {x: p.x - d.y, y: p.y + d.x}};
-    let leftMirror = (v) => {return {x: v.y, y: v.x}}
-    let rightMirror = (v) => {return {x: -v.y, y: -v.x}}
+    let sum = (p, d) => {
+      return { x: p.x - d.y, y: p.y + d.x };
+    };
+    let leftMirror = (v) => {
+      return { x: v.y, y: v.x };
+    };
+    let rightMirror = (v) => {
+      return { x: -v.y, y: -v.x };
+    };
     let path = [pos];
-    let newSpace = sum(path[0], dir)
+    let newSpace = sum(path[0], dir);
     while (this.isValid(newSpace)) {
       console.log(path);
       if (this.state.board[newSpace.x][newSpace.y].tileType === "Right-mirror") {
         dir = rightMirror(dir);
-      }
-      else if (this.state.board[newSpace.x][newSpace.y].tileType === "Left-mirror") {
-        dir = leftMirror(dir)
+      } else if (this.state.board[newSpace.x][newSpace.y].tileType === "Left-mirror") {
+        dir = leftMirror(dir);
       }
       path.push(newSpace);
       newSpace = sum(newSpace, dir);
     }
     console.log(path);
-  }
+  };
 
   componentWillUnmount() {
     window.removeEventListener("keydown", this.movePlayer);
@@ -92,7 +102,10 @@ class Game extends Component {
   movePlayer = (event) => {
     const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
     if (event.key === " ") {
-      this.fire(player.location, this.state.board[player.location.x][player.location.y].inputDirection);
+      this.fire(
+        player.location,
+        this.state.board[player.location.x][player.location.y].inputDirection
+      );
       //return null;
     }
     const x = player.location.x;
