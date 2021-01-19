@@ -19,6 +19,7 @@ class GameBoard extends Component {
             data={this.props.board[i][j].tileType}
             direction={this.props.board[i][j].inputDirection}
             playerN={this.props.playerN}
+            isLit = {this.props.board[i][j].isLit}
           />
         );
       }
