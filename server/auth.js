@@ -25,6 +25,7 @@ function getOrCreateUser(user) {
 
     const newUser = new User({
       name: user.name,
+      // nickname: "",
       googleid: user.sub,
     });
 

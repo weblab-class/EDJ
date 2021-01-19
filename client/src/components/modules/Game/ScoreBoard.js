@@ -13,7 +13,13 @@ class ScoreBoard extends Component {
     let cards = [];
     for (let i = 0; i < this.props.players.length; i++) {
       if (this.props.currentPlayer.id === this.props.players[i].id) {
-        cards.push(<Card field={this.props.players[i].name} value={this.props.players[i].score} />);
+        cards.push(
+          <Card
+            field={this.props.players[i].name}
+            value={this.props.players[i].score}
+            currentPlayer={true}
+          />
+        );
       } else {
         cards.push(<Card field={this.props.players[i].name} value={this.props.players[i].score} />);
       }
