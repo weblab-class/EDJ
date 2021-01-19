@@ -70,7 +70,7 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
     board: board,
     isActive: false,
     mirrors: req.body.mirrors, // number of mirrors
-    players: [{ name: name, id: req.user._id, score: 0, location: locations[0] }],
+    players: [{ name: req.user.name, id: req.user._id, score: 0, location: locations[0] }],
     currentTurn: 0,
   });
 
@@ -99,7 +99,7 @@ router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
           game.players = [
             ...game.players,
             {
-              name: name,
+              name: req.user.name,
               id: req.user._id,
               score: 0,
               location: location,
