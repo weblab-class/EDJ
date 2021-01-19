@@ -84,7 +84,7 @@ router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
-  Game.findOne({ isActive: false, roomCode: req.body.code })
+  Game.findOne({ roomCode: req.body.code })
     .then((game) => {
       if (game) {
         const playerNum = game.players.length;
@@ -155,38 +155,25 @@ router.post("/startGame", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/laser", auth.ensureLoggedIn, (req, res) => {
-  Game.findOne({ isActive: true, _id: req.body.id })
-    .then((game) => {
-      if (game) {
-        let player = game.players.filter((player) => player.id === req.user._id)[0];
-        if (player !== game.players[game.currentTurn]) {
-          res.send({});
-        }
-        let beam = makeBoard.fire(player.location, req.body.dir, game.board);
-        let emit = () => {
-          game.players.map((player) => {
-            socketManager.getSocketFromUserID(player.id).emit("updateBoard", game);
-          });
-        };
-        game.board = makeBoard.setLight(game.board, beam[0]);
-        game.board[player.location.x][player.location.y].inputDirection = req.body.dir;
-        emit();
-        game.currentTurn = (game.currentTurn + 1) % game.players.length;
-        let playersHit = game.players.filter(
-          (player) => player.location.x === beam[1].x && player.location.y === beam[1].y
-        );
-        if (playersHit.length > 0) {
-          let att = game.board[playersHit[0].location.x][playersHit[0].location.y].inputDirection;
-          let loc = locations[game.players.indexOf(playersHit[0])];
-          game.board = makeBoard.updateBoard(game.board, "Player", loc, att);
-          game.board = makeBoard.updateBoard(game.board, "", beam[1], att);
-          game.players[game.players.indexOf(playersHit[0])].location = loc;
-        }
-        game.board = makeBoard.resetLight(game.board);
-        setTimeout(emit, 500);
-        game.save().then((game) => res.send(game));
-      } else {
-        res.send({});
+  Game.findOne({isActive: true, _id: req.body.id}).then((game) => {
+    if (game) {
+      let player = game.players.filter((player) => player.id === req.user._id)[0]
+      if (player !== game.players[game.currentTurn]) {res.send({})}
+      let beam = makeBoard.fire(player.location, req.body.dir, game.board);
+      let emit = () => {
+        game.players.map((player) => {socketManager.getSocketFromUserID(player.id).emit("updateBoard", game)})
+      }
+      game.board = makeBoard.setLight(game.board, beam[0]);
+      game.board[player.location.x][player.location.y].inputDirection = req.body.dir;
+      emit()
+      game.currentTurn = (game.currentTurn + 1) % game.players.length;
+      let playersHit = game.players.filter((player) => (player.location.x === beam[1].x && player.location.y === beam[1].y));
+      if (playersHit.length > 0) {
+        let att = game.board[playersHit[0].location.x][playersHit[0].location.y].inputDirection;
+        let loc = locations[game.players.indexOf(playersHit[0])]
+        game.board = makeBoard.updateBoard(game.board, "Player" + String(game.players.indexOf(playersHit[0])), loc, att);
+        game.board = makeBoard.updateBoard(game.board, "", beam[1], att);
+        game.players[game.players.indexOf(playersHit[0])].location = loc;
       }
     })
     .catch(console.log);

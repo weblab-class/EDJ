@@ -104,7 +104,7 @@ const isValid = (space, board) => {
   let bounds = (space.x >= 0 && space.x <= 8 && space.y >= 0 && space.y <= 8);
   if (!bounds) {return false}
   let wall = (board[space.x][space.y].tileType !== "Vert-wall" && board[space.x][space.y].tileType !== "Hor-wall");
-  let player = board[space.x][space.y].tileType !== "Player";
+  let player = !board[space.x][space.y].tileType.includes("Player");
   return bounds && wall && player;
 }
 
