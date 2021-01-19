@@ -88,7 +88,7 @@ router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
-  Game.findOne({ isActive: false, roomCode: req.body.code })
+  Game.findOne({ roomCode: req.body.code })
     .then((game) => {
       if (game) {
         const playerNum = game.players.length;
@@ -179,7 +179,7 @@ router.post("/laser", auth.ensureLoggedIn, (req, res) => {
       if (playersHit.length > 0) {
         let att = game.board[playersHit[0].location.x][playersHit[0].location.y].inputDirection;
         let loc = locations[game.players.indexOf(playersHit[0])]
-        game.board = makeBoard.updateBoard(game.board, "Player", loc, att);
+        game.board = makeBoard.updateBoard(game.board, "Player" + String(game.players.indexOf(playersHit[0])), loc, att);
         game.board = makeBoard.updateBoard(game.board, "", beam[1], att);
         game.players[game.players.indexOf(playersHit[0])].location = loc;
       }
