@@ -156,8 +156,9 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
         if (!game.isActive) {
           res.send({ message: "Not active yet." });
         } else {
-          const player = game.players.filter((player) => player.id === req.user._id)[0];
+          player = game.players.filter((player) => player.id === req.user._id)[0];
           const playerNum = game.players.indexOf(player);
+          console.log(playerNum);
           if (player !== game.players[game.currentTurn]) {
             res.send({ message: "Not your turn!" });
           } else {
