@@ -16,7 +16,7 @@ class Sidebar extends Component {
     }
   }
 
- /* handleLogin = (res) =>{
+ /*handleLogin = (res) =>{
     this.setState({loggedIn: true});
 
     const token = res.tokenObj.id_token;
@@ -30,12 +30,18 @@ class Sidebar extends Component {
     post('/api/logout').then(()=>{
       this.setState({loggedIn: false})
     })
-  };
+  };*/
 
-*/
+
   home = () => {navigate("/")}
   rules = () => {navigate("/howto")}
   profile = () => {navigate("/profile/" + this.props.userId)}
+
+  isLogged = () => {
+    if (this.props.userId) {
+      return <div className = "nav u-link" onClick={this.profile}>Profile</div>
+    }
+  }
 
   render() {
     return (
@@ -43,7 +49,7 @@ class Sidebar extends Component {
         <div className='title'>Trickshot</div>
         <div className="nav u-link" onClick={this.home}>Play</div>
         <div className="nav u-link" onClick={this.rules}>Rules</div>
-        <div className = "nav u-link" onClick={this.profile}>Profile</div>
+        {this.isLogged()}
         <div className="login u-flex u-flex-justifyCenter">
           {this.props.userId ? (
             <GoogleLogout
