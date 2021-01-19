@@ -50,6 +50,34 @@ class Game extends Component {
       .catch((err) => console.log(err));
   }
 
+  isValid = (space) => {
+    let bounds = (space.x >= 0 && space.x <= 8 && space.y >= 0 && space.y <= 8);
+    if (!bounds) {return false}
+    let wall = (this.state.board[space.x][space.y].tileType !== "Vert-wall" && this.state.board[space.x][space.y].tileType !== "Hor-wall");
+    let player = this.state.board[space.x][space.y].tileType !== "Player";
+    return bounds && wall && player;
+  }
+
+  fire = (pos, dir) => {
+    let sum = (p, d) => {return {x: p.x - d.y, y: p.y + d.x}};
+    let leftMirror = (v) => {return {x: v.y, y: v.x}}
+    let rightMirror = (v) => {return {x: -v.y, y: -v.x}}
+    let path = [pos];
+    let newSpace = sum(path[0], dir)
+    while (this.isValid(newSpace)) {
+      console.log(path);
+      if (this.state.board[newSpace.x][newSpace.y].tileType === "Right-mirror") {
+        dir = rightMirror(dir);
+      }
+      else if (this.state.board[newSpace.x][newSpace.y].tileType === "Left-mirror") {
+        dir = leftMirror(dir)
+      }
+      path.push(newSpace);
+      newSpace = sum(newSpace, dir);
+    }
+    console.log(path);
+  }
+
   componentWillUnmount() {
     window.removeEventListener("keydown", this.movePlayer);
   }
@@ -61,6 +89,10 @@ class Game extends Component {
 
   movePlayer = (event) => {
     const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
+    if (event.key === " ") {
+      this.fire(player.location, this.state.board[player.location.x][player.location.y].inputDirection);
+      //return null;
+    }
     const x = player.location.x;
     const y = player.location.y;
     console.log(this.state);
@@ -80,9 +112,6 @@ class Game extends Component {
     } else if (event.key === "ArrowLeft") {
       direction = left;
     }
-    console.log(direction);
-    console.log([direction_x, direction_y])
-    console.log(direction_x === direction.x && direction_y === direction.y);
     if (!(direction.x === 0 && direction.y === 0)) {
       if (direction_x === direction.x && direction_y === direction.y && this.state.isActive) {
         post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction })

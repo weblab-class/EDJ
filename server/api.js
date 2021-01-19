@@ -140,13 +140,10 @@ router.post("/startGame", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
-  console.log("fail")
   Game.findOne({ roomCode: req.body.roomCode })
     .then((game) => {
-      console.log("yay0")
       if (game) {
         if (!game.isActive) {
-          console.log("yay1")
           res.send({ message: "Not active yet." });
         } else {
           player = game.players.filter((player) => player.id === req.user._id)[0];
@@ -159,7 +156,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
             const direction_y = req.body.direction.y;
             const new_x = prev_x - direction_y;
             const new_y = prev_y + direction_x;
-            console.log("yay4")
             if (
               new_x < 0 ||
               new_x > 8 ||
@@ -170,7 +166,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
               game.board[new_x][new_y].tileType === "Hor-wall" ||
               game.board[new_x][new_y].tileType === "Vert-wall"
             ) {
-              console.log("yay3")
               res.send({ message: "Not a valid move." });
             } else {
               game.board = makeBoard.updateBoard(
@@ -185,7 +180,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                 { x: prev_x, y: prev_y },
                 { x: direction_x, y: direction_y }
               );
-              console.log(prev_x, prev_y, new_x, new_y, direction_x, direction_y)
               game.players[game.currentTurn].location = {
                 x: new_x,
                 y: new_y,
@@ -201,7 +195,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
           }
         }
       } else {
-        console.log("yay5")
         res.send({ message: "No games found." });
       }
     })
