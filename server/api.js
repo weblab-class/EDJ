@@ -158,7 +158,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
         } else {
           player = game.players.filter((player) => player.id === req.user._id)[0];
           if (player !== game.players[game.currentTurn]) {
-            // console.log("Not your turn!");
             res.send({ message: "Not your turn!" });
           } else {
             const prev_x = player.location.x;

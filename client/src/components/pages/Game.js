@@ -83,14 +83,14 @@ class Game extends Component {
     console.log(direction);
     if (!(direction.x === 0 && direction.y === 0)) {
       if (direction_x === direction.x && direction_y === direction.y && this.state.isActive) {
-        post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction }).then(
-          (game) => {
+        post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction })
+          .then((game) => {
             console.log(game.board);
             if (typeof game.message === "string") {
               alert(game.message);
             }
-          }
-        );
+          })
+          .catch(console.log);
       } else {
         this.setState({
           board: this.updateDirection(this.state.board, { i: x, j: y }, direction),
