@@ -7,6 +7,7 @@ import HowToPlay from "./pages/HowToPlay.js";
 import HostGame from "./pages/HostGame.js";
 import JoinGame from "./pages/JoinGame.js";
 import Login from "./pages/Login.js";
+import Profile from "./pages/Profile.js";
 import Skeleton from "./pages/Skeleton.js";
 import NotFound from "./pages/NotFound.js";
 
@@ -76,6 +77,7 @@ class App extends Component {
             <HostGame path='/host/' />
             <JoinGame path='/join/' />
             <Login path='/login/' />
+            <Profile path = '/profile/:userId' userId={this.state.userId}/>
             <NotFound default />
           </Router>
         </div>
