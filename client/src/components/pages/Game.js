@@ -20,6 +20,7 @@ class Game extends Component {
       currentTurn: 0,
       isActive: false,
       players: [],
+      mirrors: 0,
       roomCode: "",
       roomName: "",
     };
@@ -30,6 +31,7 @@ class Game extends Component {
       board: data.board,
       currentTurn: data.currentTurn,
       isActive: data.isActive,
+      mirrors: data.mirrors,
       players: data.players,
       roomCode: data.roomCode,
       roomName: data.roomName,
@@ -95,7 +97,6 @@ class Game extends Component {
     }
     const x = player.location.x;
     const y = player.location.y;
-    console.log(this.state);
     const direction_x = this.state.board[x][y].inputDirection.x;
     const direction_y = this.state.board[x][y].inputDirection.y;
     const up = { x: 0, y: 1 };
@@ -116,9 +117,14 @@ class Game extends Component {
       if (direction_x === direction.x && direction_y === direction.y && this.state.isActive) {
         post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction })
           .then((game) => {
-            console.log(game.board);
             if (typeof game.message === "string") {
-              alert(game.message);
+              if (game.message === "Game over.") {
+                if (this.props.userId === player.id) {
+                  alert("You won!");
+                }
+              } else {
+                alert(game.message);
+              }
             }
           })
           .catch(console.log);
@@ -131,12 +137,12 @@ class Game extends Component {
   };
 
   getPlayerN = () => {
-    for (let i = 0; i < this.state.players.length;i++) {
+    for (let i = 0; i < this.state.players.length; i++) {
       if (this.state.players[i].id === this.props.userId) {
-        return i
+        return i;
       }
     }
-  }
+  };
 
   render() {
     return (
@@ -151,7 +157,7 @@ class Game extends Component {
           />
         </div>
         <div className="board">
-          <GameBoard board={this.state.board} playerN={this.getPlayerN()}/>
+          <GameBoard board={this.state.board} playerN={this.getPlayerN()} />
         </div>
         <div className="scores">
           <ScoreBoard players={this.state.players} />

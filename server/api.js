@@ -20,7 +20,7 @@ const auth = require("./auth");
 
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
-router.get('/user', (req, res)=>{
+router.get("/user", (req, res) => {
   const id = req.query.userId;
   User.findById(id).then((user) => res.send(user));
 });
@@ -40,9 +40,8 @@ router.get("/whoami", (req, res) => {
   if (!req.user) {
     // not logged in
     return res.send({});
-  }
-  else{
-  res.send(req.user);
+  } else {
+    res.send(req.user);
   }
 });
 
@@ -66,6 +65,7 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
     roomCode: req.body.roomCode,
     board: board,
     isActive: false,
+    mirrors: req.body.mirrors, // number of mirrors
     players: [{ name: req.user.name, id: req.user._id, score: 0, location: locations[0] }],
     currentTurn: 0,
   });
@@ -189,11 +189,38 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                 y: new_y,
               };
               game.currentTurn = (game.currentTurn + 1) % game.players.length;
+              if (new_x === 4 && new_y === 4) {
+                // game won
+                let newPlayers = [];
+                const mirrorsArr = makeBoard.createMirrors(game.mirrors);
+                let board = makeBoard.checkClass(mirrorsArr);
+                game.players[game.currentTurn].score += 1;
+                for (player of game.players) {
+                  const location = locations[game.players.indexOf(player)];
+                  newPlayers.push({
+                    name: player.name,
+                    id: player.id,
+                    score: player.score,
+                    location: location,
+                  });
+                  let direction;
+                  if (location.x < 4) {
+                    direction = { x: 0, y: -1 };
+                  } else {
+                    direction = { x: 0, y: 1 };
+                  }
+                  board = makeBoard.updateBoard(board, "Player", location, direction);
+                }
+                game.board = board;
+                game.players = newPlayers;
+                res.send({ message: "Game won." });
+              } else {
+                res.send({});
+              }
               game.save().then((data) => {
                 data.players.map((player) => {
                   socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
                 });
-                res.send({});
               });
             }
           }
