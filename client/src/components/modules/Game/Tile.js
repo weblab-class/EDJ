@@ -10,7 +10,6 @@ class Tile extends Component {
 
   playerDirection = () => {
     const playerNum = this.props.data.charAt(this.props.data.length - 1);
-    console.log(playerNum);
     let tileClass;
     if (!this.props.direction) {
       return this.props.data;
@@ -27,7 +26,6 @@ class Tile extends Component {
     if (this.props.direction.x === -1 && this.props.direction.y === 0) {
       tileClass = "left" + playerNum;
     }
-    console.log(tileClass);
     return tileClass;
   };
 

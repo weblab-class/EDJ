@@ -36,7 +36,7 @@ class Game extends Component {
       roomCode: data.roomCode,
       roomName: data.roomName,
     });
-    console.log(this.state.board);
+    console.log(this.state.players);
   };
 
   componentDidMount() {
@@ -173,7 +173,10 @@ class Game extends Component {
           <GameBoard board={this.state.board} playerN={this.getPlayerN()} />
         </div>
         <div className="scores">
-          <ScoreBoard players={this.state.players} />
+          <ScoreBoard
+            players={this.state.players}
+            currentPlayer={this.state.players[this.state.currentTurn]}
+          />
         </div>
       </div>
     );

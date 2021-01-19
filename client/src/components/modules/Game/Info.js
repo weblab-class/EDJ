@@ -32,7 +32,7 @@ class Info extends Component {
       }
     } else {
       if (this.props.userId === this.props.gameData.players[this.props.gameData.currentTurn].id) {
-        return <div className="text">It's your turn</div>;
+        return <div className="text">Your turn</div>;
       } else {
         return (
           <div className="text">

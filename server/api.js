@@ -60,13 +60,19 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
   const mirrors = makeBoard.createMirrors(req.body.mirrors);
   let board = makeBoard.checkClass(mirrors);
   board = makeBoard.updateBoard(board, "Player0", locations[0], { x: 0, y: -1 });
+  let name;
+  if (req.user.nickname) {
+    name = req.user.nickname;
+  } else {
+    name = req.user.name;
+  }
   const newGame = new Game({
     roomName: req.body.roomName,
     roomCode: req.body.roomCode,
     board: board,
     isActive: false,
     mirrors: req.body.mirrors, // number of mirrors
-    players: [{ name: req.user.name, id: req.user._id, score: 0, location: locations[0] }],
+    players: [{ name: name, id: req.user._id, score: 0, location: locations[0] }],
     currentTurn: 0,
   });
 
@@ -90,10 +96,16 @@ router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
           res.send(game);
         } else {
           const location = locations[playerNum];
+          let name;
+          if (req.user.nickname) {
+            name = req.user.nickname;
+          } else {
+            name = req.user.name;
+          }
           game.players = [
             ...game.players,
             {
-              name: req.user.name,
+              name: name,
               id: req.user._id,
               score: 0,
               location: location,
@@ -243,6 +255,16 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
       }
     })
     .catch((err) => console.log(err));
+});
+
+router.post("/changeName", auth.ensureLoggedIn, (req, res) => {
+  console.log("boo");
+  User.findById(req.user._id)
+    .then((user) => {
+      user.name = req.body.nickname;
+      res.send(user);
+    })
+    .catch(console.log);
 });
 
 // anything else falls to this "not found" case
