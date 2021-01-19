@@ -199,6 +199,7 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                 data.players.map((player) => {
                   socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
                 });
+                res.send({});
               });
             }
           }
