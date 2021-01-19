@@ -36,6 +36,7 @@ class Game extends Component {
       roomCode: data.roomCode,
       roomName: data.roomName,
     });
+    console.log(this.state.board);
   };
 
   componentDidMount() {

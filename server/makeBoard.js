@@ -61,7 +61,7 @@ const createMirrors = (mirrorsNum) => {
 const updateBoard = (board, value, location, direction) => {
   const x = location.x;
   const y = location.y;
-  if (value === "Player") {
+  if (value.includes("Player")) {
     board[x][y].inputDirection = direction;
   }
   if (value === "") {
