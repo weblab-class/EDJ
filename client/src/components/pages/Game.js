@@ -61,7 +61,7 @@ class Game extends Component {
     let wall =
       this.state.board[space.x][space.y].tileType !== "Vert-wall" &&
       this.state.board[space.x][space.y].tileType !== "Hor-wall";
-    let player = this.state.board[space.x][space.y].tileType !== "Player";
+    let player = !this.state.board[space.x][space.y].tileType.contains("Player");
     return bounds && wall && player;
   };
 
