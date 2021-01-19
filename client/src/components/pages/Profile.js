@@ -43,7 +43,7 @@ class Profile extends Component {
 
   render() {
     if (this.state.loading) {
-      return <div>Loading</div>;
+      return <div>Loading...</div>;
     }
     // if (this.state.nickname === "") {
     return (
@@ -55,7 +55,7 @@ class Profile extends Component {
             <div className="flexRow">
               <label className="u-inlineBlock">Change Name:</label>
               <input onChange={this.changeName}></input>
-              <button onClick={this.submitName}></button>
+              <button onClick={this.submitName}>Submit</button>
             </div>
             <div className="title2">Game History</div>
             <label>wins:</label>

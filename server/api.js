@@ -198,8 +198,9 @@ router.post("/laser", auth.ensureLoggedIn, (req, res) => {
       setTimeout(emit, 500);
       //Placeholder
       game.save().then((game) => res.send(game));
-  }).catch(console.log)
-})
+    })
+    .catch(console.log);
+});
 
 router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
   Game.findOne({ roomCode: req.body.roomCode })
@@ -299,6 +300,7 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
 router.post("/changeName", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
+      console.log(user);
       user.name = req.body.newName;
       user.save().then((data) => res.send(data));
     })

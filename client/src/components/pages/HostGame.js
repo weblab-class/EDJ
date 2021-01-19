@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
+import user from "../../../../server/models/user.js";
 import { post } from "../../utilities.js";
 import { navigate } from "@reach/router";
 

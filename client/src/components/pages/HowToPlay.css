@@ -1,13 +1,13 @@
 .img {
-    max-height:70%;
-    max-width:70%;
-    background-color: rgb(90, 90, 90);
-    border-radius:10px;
-    box-shadow: 2px 3px 5px #000000;
+  max-height: 70%;
+  max-width: 70%;
+  background-color: rgb(90, 90, 90);
+  border-radius: 10px;
+  box-shadow: 2px 3px 5px #000000;
 }
 
 p {
-    margin: 30px 20px;
+  margin: 30px 20px;
 }
 
 .instruction-box-container {
@@ -20,7 +20,7 @@ p {
   height: auto;
   border-radius: 10px;
   font-size: 18pt;
-  background-color: rgb(232,199,199,1);
+  background-color: rgb(232, 199, 199, 1);
   font-weight: 600;
   color: --primary;
   padding: var(--m);
@@ -32,11 +32,11 @@ p {
   align-items: center;
 }
 
-.control-box{
+.control-box {
   padding: 20px 40px;
   border-radius: 10px;
   font-size: 18pt;
-  background-color: #d4d4d4;;
+  background-color: #d4d4d4;
   font-weight: 600;
   color: --primary;
   box-shadow: 2px 3px 5px #3f3f3f;
@@ -44,7 +44,7 @@ p {
 
 .title1 {
   text-align: left;
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Yusei Magic", sans-serif;
   font-size: 50pt;
   padding: var(--s);
   padding-left: var(--m);
@@ -52,20 +52,20 @@ p {
 
 .title2 {
   text-align: left;
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Yusei Magic", sans-serif;
   font-size: 40pt;
   padding: var(--s);
   padding-left: var(--m);
 }
 
-.key{
+.key {
   margin: 20px 20px 10px 10px;
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 18pt;
   font-weight: 600;
-  color:#fff;
-  background-color:#858585;
+  color: #fff;
+  background-color: #858585;
   transition-duration: 0.2s;
   box-shadow: 2px 3px 5px #3f3f3f;
 }
@@ -75,7 +75,7 @@ p {
   border-radius: 5px;
   font-size: 18pt;
   font-weight: 600;
-  color:#fff;   
+  color: #fff;
   transition-duration: 0.2s;
   box-shadow: 2px 3px 5px #3f3f3f;
   background-color: #d7d7d7;
@@ -85,9 +85,9 @@ p {
   flex-direction: column;
 }
 
-.flexRow{
-  display:flex;
-  flex-direction:row;
+.flexRow {
+  display: flex;
+  flex-direction: row;
 }
 
 .player-container {
@@ -99,25 +99,29 @@ p {
 .down {
   height: 100%;
   width: 100%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_149_1.png") center center no-repeat;
+  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_149_1.png")
+    center center no-repeat;
   background-size: cover;
 }
 .up {
   height: 100%;
   width: 100%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-b_hgss/o-b_hs_149_1.png") center center no-repeat;
+  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-b_hgss/o-b_hs_149_1.png")
+    center center no-repeat;
   background-size: cover;
 }
 .left {
   height: 100%;
   width: 100%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-l_hgss/o-l_hs_149_1.png") center center no-repeat;
+  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-l_hgss/o-l_hs_149_1.png")
+    center center no-repeat;
   background-size: cover;
 }
 .right {
   height: 100%;
   width: 100%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-r_hgss/o-r_hs_149_1.png") center center no-repeat;
+  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-r_hgss/o-r_hs_149_1.png")
+    center center no-repeat;
   background-size: cover;
 }
 /* Add How To Play styling here */
