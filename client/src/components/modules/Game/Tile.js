@@ -13,16 +13,16 @@ class Tile extends Component {
       return this.props.data;
     }
     if (this.props.direction.x === 0 && this.props.direction.y === 1) {
-      return "up";
+      return "up" + String(this.props.playerN);
     }
     if (this.props.direction.x === 0 && this.props.direction.y === -1) {
-      return "down";
+      return "down" + String(this.props.playerN);
     }
     if (this.props.direction.x === 1 && this.props.direction.y === 0) {
-      return "right";
+      return "right" + String(this.props.playerN);
     }
     if (this.props.direction.x === -1 && this.props.direction.y === 0) {
-      return "left";
+      return "left" + String(this.props.playerN);
     }
   };
 
