@@ -162,7 +162,7 @@ router.post("/laser", auth.ensureLoggedIn, (req, res) => {
         let player = game.players.filter((player) => player.id === req.user._id)[0];
         if (player !== game.players[game.currentTurn]) {
           res.send({});
-        } else {
+        // } else {
           let beam = makeBoard.fire(player.location, req.body.dir, game.board);
           let emit = () => {
             game.players.map((player) => {
@@ -198,7 +198,7 @@ router.post("/laser", auth.ensureLoggedIn, (req, res) => {
           setTimeout(emit, 500);
           //Placeholder
           game.save().then((game) => res.send(game));
-        }
+        // }
       }
     })
     .catch(console.log);
