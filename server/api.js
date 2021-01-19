@@ -185,6 +185,7 @@ router.post("/laser", auth.ensureLoggedIn, (req, res) => {
       }
       game.board = makeBoard.resetLight(game.board);
       setTimeout(emit, 500);
+      //Placeholder
       game.save().then((game) => res.send(game));
     }
     else {res.send({})}
