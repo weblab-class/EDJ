@@ -275,13 +275,13 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                     direction
                   );
                 }
-                game.currentTurn = (game.currentTurn + 1) % game.players.length;
                 game.board = board;
                 game.players = newPlayers;
                 res.send({ message: "Game won." });
               } else {
                 res.send({});
               }
+              game.currentTurn = (game.currentTurn + 1) % game.players.length;
               game.save().then((data) => {
                 data.players.map((player) => {
                   socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
