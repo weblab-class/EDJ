@@ -9,16 +9,16 @@ class Card extends Component {
 
   isCurrentPlayer = () => {
     if (this.props.currentPlayer) {
-      return "field-bold";
+      return "Card-container-currPlayer";
     } else {
-      return "field";
+      return "Card-container";
     }
   };
 
   render() {
     return (
-      <div className="Card-container">
-        <div className={this.isCurrentPlayer()}>{this.props.field}</div>
+      <div className={this.isCurrentPlayer()}>
+        <div className="field">{this.props.field}</div>
         <hr />
         <div className="value">{this.props.value}</div>
       </div>

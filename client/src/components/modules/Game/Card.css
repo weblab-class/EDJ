@@ -10,11 +10,12 @@
   font-size: large;
 }
 
-.field-bold {
-  text-align: center;
-  font-weight: 900;
-  font-size: large;
-  background-color: rgb(183, 183, 183);
+.Card-container-currPlayer {
+  height: auto;
+  width: 100%;
+  margin: var(--s) 0px var(--s) 0px;
+  background-color: rgb(226, 226, 226);
+  border-radius: 4px;
 }
 
 .value {

@@ -188,6 +188,11 @@ router.post("/laser", auth.ensureLoggedIn, (req, res) => {
           game.board = makeBoard.updateBoard(game.board, "", beam[1], att);
           game.players[game.players.indexOf(playersHit[0])].location = loc;
         }
+        game.save().then((data) => {
+          data.players.map((player) => {
+            socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
+          });
+        });
       }
     })
     .catch(console.log);
