@@ -11,6 +11,8 @@ class Profile extends Component {
         this.state = {
             user : undefined,
             loading: true,
+            nickname: "",
+            changeName: false,
         };
     }
 
@@ -20,19 +22,69 @@ class Profile extends Component {
         })
     }
 
+    changeName = (event) => {
+        event.persist();
+        this.setState((prevState) => {
+          return {
+            nickname: event.target.value,
+          };
+        });
+      };
+      
+
     render(){
      if(this.state.loading){
             return (<div>Loading</div>)
         }
+    if(this.state.nickname === ""){
     return(
-        <div>
-            <div className="title1"> Profile </div>
-            <div className="title2">{this.state.user.name}</div>
-           
-           
-           
+        <div className="u-center">
+             <div className="title1">{this.state.user.name} </div>
+    <div className = "flexRow">
+        <div className = "flexColumn">
+            <div className="title2">Username</div>
+         <div className= "flexRow">
+            <label className="u-inlineBlock">Change Name:</label>
+            <input
+            onChange={this.changeName}
+          ></input>
+         </div>
+        <div className="title2">Game History</div>
+            <label>wins:</label>
+            <label>losses:</label>
+            <label>ratio:</label>
+            </div>
+            <div className = "flexColumn">
+                <div className ="title2" >Custom Boards</div>
+            <select>
+                 <option>board1</option>
+                 <option>board2</option>
+                 <option>board3</option>
+                 </select>
+                 </div>
+            </div>
         </div>
+        
     )
+    }
+    else{
+        return(
+            <div className="u-center-screen">
+                <div className="title1"> {this.state.nickname} </div>
+                <div className="title2">Username</div>
+                <label className="u-inlineBlock">Change Name:</label>
+                <input
+                onChange={this.changeName}
+              ></input>
+                 <div>Game History</div>
+            <label>wins:</label>
+            <label>losses:</label>
+            <label>ratio:</label>
+            
+            </div>
+        )
+    }
+    
     }
 }
 export default Profile;
