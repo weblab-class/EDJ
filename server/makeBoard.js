@@ -76,7 +76,6 @@ const checkClass = (mirrorsArray) => {
   for (let i = 0; i < 9; i++) {
     const innerBoard = [];
     for (let j = 0; j < 9; j++) {
-      console.log({ i, j });
       let inMirror = containsObj(mirrorsArray, { x: i, y: j });
       if ((i === 4 && j === 0) || (i === 4 && j === 8)) {
         innerBoard.push({ tileType: "Hor-wall" });
@@ -101,48 +100,57 @@ const checkClass = (mirrorsArray) => {
 };
 
 const isValid = (space, board) => {
-  let bounds = (space.x >= 0 && space.x <= 8 && space.y >= 0 && space.y <= 8);
-  if (!bounds) {return false}
-  let wall = (board[space.x][space.y].tileType !== "Vert-wall" && board[space.x][space.y].tileType !== "Hor-wall");
+  let bounds = space.x >= 0 && space.x <= 8 && space.y >= 0 && space.y <= 8;
+  if (!bounds) {
+    return false;
+  }
+  let wall =
+    board[space.x][space.y].tileType !== "Vert-wall" &&
+    board[space.x][space.y].tileType !== "Hor-wall";
   let player = !board[space.x][space.y].tileType.includes("Player");
   return bounds && wall && player;
-}
+};
 
 const fire = (pos, dir, board) => {
-  let sum = (p, d) => {return {x: p.x - d.y, y: p.y + d.x}};
-  let leftMirror = (v) => {return {x: v.y, y: v.x}}
-  let rightMirror = (v) => {return {x: -v.y, y: -v.x}}
+  let sum = (p, d) => {
+    return { x: p.x - d.y, y: p.y + d.x };
+  };
+  let leftMirror = (v) => {
+    return { x: v.y, y: v.x };
+  };
+  let rightMirror = (v) => {
+    return { x: -v.y, y: -v.x };
+  };
   let path = [pos];
-  let newSpace = sum(path[0], dir)
+  let newSpace = sum(path[0], dir);
   //console.log(pos, dir, newSpace);
   while (isValid(newSpace, board)) {
     if (board[newSpace.x][newSpace.y].tileType === "Right-mirror") {
       dir = rightMirror(dir);
-    }
-    else if (board[newSpace.x][newSpace.y].tileType === "Left-mirror") {
-      dir = leftMirror(dir)
+    } else if (board[newSpace.x][newSpace.y].tileType === "Left-mirror") {
+      dir = leftMirror(dir);
     }
     path.push(newSpace);
     newSpace = sum(newSpace, dir);
   }
   return [path, newSpace];
-}
+};
 
 const setLight = (board, beam) => {
   for (let i = 0; i < beam.length; i++) {
     board[beam[i].x][beam[i].y].isLit = true;
   }
   return board;
-}
+};
 
 const resetLight = (board) => {
-  for (let i=0;i<board.length;i++) {
-    for (let j=0;j<board[i].length;j++) {
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
       board[i][j].isLit = false;
     }
   }
   return board;
-}
+};
 
 module.exports = {
   fire,

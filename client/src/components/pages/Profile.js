@@ -34,7 +34,8 @@ class Profile extends Component {
   submitName = () => {
     if (this.state.nickname !== "") {
       post("/api/changeName", { newName: this.state.nickname }).then((newUser) => {
-        console.log("profile user: " + newUser);
+        console.log("profile user: ");
+        console.log(newUser);
         this.setState({ user: newUser });
       });
     }
