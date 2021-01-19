@@ -63,7 +63,7 @@ class Game extends Component {
     const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
     const x = player.location.x;
     const y = player.location.y;
-    console.log(this.state.board);
+    console.log(this.state);
     const direction_x = this.state.board[x][y].inputDirection.x;
     const direction_y = this.state.board[x][y].inputDirection.y;
     const up = { x: 0, y: 1 };
@@ -81,16 +81,18 @@ class Game extends Component {
       direction = left;
     }
     console.log(direction);
+    console.log([direction_x, direction_y])
+    console.log(direction_x === direction.x && direction_y === direction.y);
     if (!(direction.x === 0 && direction.y === 0)) {
       if (direction_x === direction.x && direction_y === direction.y && this.state.isActive) {
-        post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction }).then(
-          (game) => {
+        post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction })
+          .then((game) => {
             console.log(game.board);
             if (typeof game.message === "string") {
               alert(game.message);
             }
-          }
-        );
+          })
+          .catch(console.log);
       } else {
         this.setState({
           board: this.updateDirection(this.state.board, { i: x, j: y }, direction),
@@ -98,6 +100,14 @@ class Game extends Component {
       }
     }
   };
+
+  getPlayerN = () => {
+    for (let i = 0; i < this.state.players.length;i++) {
+      if (this.state.players[i].id === this.props.userId) {
+        return i
+      }
+    }
+  }
 
   render() {
     return (
@@ -112,7 +122,7 @@ class Game extends Component {
           />
         </div>
         <div className="board">
-          <GameBoard board={this.state.board} />
+          <GameBoard board={this.state.board} playerN={this.getPlayerN()}/>
         </div>
         <div className="scores">
           <ScoreBoard players={this.state.players} />
