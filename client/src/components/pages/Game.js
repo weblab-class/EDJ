@@ -65,9 +65,13 @@ class Game extends Component {
 
   movePlayer = (event) => {
     const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
-    if (event.key === " ") {
-      post("/api/laser", {id: this.props.gameId, dir: this.state.board[player.location.x][player.location.y].inputDirection})
-      .then((res) => console.log("Pew")).catch(console.log);
+    if (event.key === " " && player.id === this.state.players[this.state.currentTurn].id) {
+      post("/api/laser", {
+        id: this.props.gameId,
+        dir: this.state.board[player.location.x][player.location.y].inputDirection,
+      })
+        .then((res) => console.log("Pew"))
+        .catch(console.log);
       return null;
     }
     const x = player.location.x;
