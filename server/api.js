@@ -248,7 +248,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                 x: new_x,
                 y: new_y,
               };
-              game.currentTurn = (game.currentTurn + 1) % game.players.length;
               if (new_x === 4 && new_y === 4) {
                 // game won
                 let newPlayers = [];
@@ -276,6 +275,7 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                     direction
                   );
                 }
+                game.currentTurn = (game.currentTurn + 1) % game.players.length;
                 game.board = board;
                 game.players = newPlayers;
                 res.send({ message: "Game won." });
