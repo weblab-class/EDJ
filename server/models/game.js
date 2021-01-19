@@ -8,6 +8,7 @@ const GameSchema = new mongoose.Schema({
       {
         tileType: String,
         inputDirection: { x: Number, y: Number },
+        isLit: Boolean,
       },
     ],
   ],
