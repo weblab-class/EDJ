@@ -33,7 +33,10 @@ class Profile extends Component {
 
   submitName = () => {
     if (this.state.nickname !== "") {
-      post("/api/changeName", { userId: this.props.userId, newName: this.state.nickname });
+      post("/api/changeName", { newName: this.state.nickname }).then((newUser) => {
+        console.log("profile user: " + newUser);
+        this.setState({ user: newUser });
+      });
     }
   };
 
@@ -41,62 +44,64 @@ class Profile extends Component {
     if (this.state.loading) {
       return <div>Loading</div>;
     }
-    if (this.state.nickname === "") {
-      return (
-        <div className="u-center">
-          <div className="title1">{this.state.user.name} </div>
-          <div className="flexRow">
-            <div className="flexColumn">
-              <div className="title2">Username</div>
-              <div className="flexRow">
-                <label className="u-inlineBlock">Change Name:</label>
-                <input onChange={this.changeName}></input>
-              </div>
-              <div className="title2">Game History</div>
-              <label>wins:</label>
-              <label>losses:</label>
-              <label>ratio:</label>
+    // if (this.state.nickname === "") {
+    return (
+      <div className="u-center">
+        <div className="title1">{this.state.user.name} </div>
+        <div className="flexRow">
+          <div className="flexColumn">
+            <div className="title2">Username</div>
+            <div className="flexRow">
+              <label className="u-inlineBlock">Change Name:</label>
+              <input onChange={this.changeName}></input>
+              <button onClick={this.submitName}></button>
             </div>
-            <div className="flexColumn">
-              <div className="title2">Custom Boards</div>
-              <select>
-                <option>board1</option>
-                <option>board2</option>
-                <option>board3</option>
-              </select>
-            </div>
+            <div className="title2">Game History</div>
+            <label>wins:</label>
+            <label>losses:</label>
+            <label>ratio:</label>
+          </div>
+          <div className="flexColumn">
+            <div className="title2">Custom Boards</div>
+            <select>
+              <option>board1</option>
+              <option>board2</option>
+              <option>board3</option>
+            </select>
           </div>
         </div>
-      );
-    } else {
-      return (
-        <div className="u-center">
-          <div className="title1"> {this.state.nickname} </div>
-          <div className="flexRow">
-            <div className="flexColumn">
-              <div className="title2">Username</div>
-              <div className="flexRow">
-                <label className="u-inlineBlock">Change Name:</label>
-                <input onChange={this.changeName}></input>
-                <button onClick={this.submitName}></button>
-              </div>
-              <div className="title2">Game History</div>
-              <label>wins:</label>
-              <label>losses:</label>
-              <label>ratio:</label>
-            </div>
-            <div className="flexColumn">
-              <div className="title2">Custom Boards</div>
-              <select>
-                <option>board1</option>
-                <option>board2</option>
-                <option>board3</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      );
-    }
+      </div>
+    );
+    // );
+    //   } else {
+    //     return (
+    //       <div className="u-center">
+    //         <div className="title1"> {this.state.nickname} </div>
+    //         <div className="flexRow">
+    //           <div className="flexColumn">
+    //             <div className="title2">Username</div>
+    //             <div className="flexRow">
+    //               <label className="u-inlineBlock">Change Name:</label>
+    //               <input onChange={this.changeName}></input>
+    //               <button onClick={this.submitName}></button>
+    //             </div>
+    //             <div className="title2">Game History</div>
+    //             <label>wins:</label>
+    //             <label>losses:</label>
+    //             <label>ratio:</label>
+    //           </div>
+    //           <div className="flexColumn">
+    //             <div className="title2">Custom Boards</div>
+    //             <select>
+    //               <option>board1</option>
+    //               <option>board2</option>
+    //               <option>board3</option>
+    //             </select>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     );
+    // }
   }
 }
 export default Profile;
