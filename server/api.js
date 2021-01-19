@@ -62,6 +62,7 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
     roomCode: req.body.roomCode,
     board: board,
     isActive: false,
+    mirrors: req.body.mirrors, // number of mirrors
     players: [{ name: req.user.name, id: req.user._id, score: 0, location: locations[0] }],
     currentTurn: 0,
   });
@@ -140,13 +141,10 @@ router.post("/startGame", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
-  console.log("fail")
   Game.findOne({ roomCode: req.body.roomCode })
     .then((game) => {
-      console.log("yay0")
       if (game) {
         if (!game.isActive) {
-          console.log("yay1")
           res.send({ message: "Not active yet." });
         } else {
           player = game.players.filter((player) => player.id === req.user._id)[0];
@@ -159,7 +157,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
             const direction_y = req.body.direction.y;
             const new_x = prev_x - direction_y;
             const new_y = prev_y + direction_x;
-            console.log("yay4")
             if (
               new_x < 0 ||
               new_x > 8 ||
@@ -170,7 +167,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
               game.board[new_x][new_y].tileType === "Hor-wall" ||
               game.board[new_x][new_y].tileType === "Vert-wall"
             ) {
-              console.log("yay3")
               res.send({ message: "Not a valid move." });
             } else {
               game.board = makeBoard.updateBoard(
@@ -185,23 +181,49 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                 { x: prev_x, y: prev_y },
                 { x: direction_x, y: direction_y }
               );
-              console.log(prev_x, prev_y, new_x, new_y, direction_x, direction_y)
+              // console.log(prev_x, prev_y, new_x, new_y, direction_x, direction_y);
               game.players[game.currentTurn].location = {
                 x: new_x,
                 y: new_y,
               };
               game.currentTurn = (game.currentTurn + 1) % game.players.length;
+              if (new_x === 4 && new_y === 4) {
+                // game won
+                let newPlayers = [];
+                const mirrorsArr = makeBoard.createMirrors(game.mirrors);
+                let board = makeBoard.checkClass(mirrorsArr);
+                game.players[game.currentTurn].score += 1;
+                for (player of game.players) {
+                  const location = locations[game.players.indexOf(player)];
+                  newPlayers.push({
+                    name: player.name,
+                    id: player.id,
+                    score: player.score,
+                    location: location,
+                  });
+                  let direction;
+                  if (location.x < 4) {
+                    direction = { x: 0, y: -1 };
+                  } else {
+                    direction = { x: 0, y: 1 };
+                  }
+                  board = makeBoard.updateBoard(board, "Player", location, direction);
+                }
+                game.board = board;
+                game.players = newPlayers;
+                res.send({ message: "Game won." });
+              } else {
+                res.send({});
+              }
               game.save().then((data) => {
                 data.players.map((player) => {
                   socketManager.getSocketFromUserID(player.id).emit("updateBoard", data);
                 });
-                res.send({});
               });
             }
           }
         }
       } else {
-        console.log("yay5")
         res.send({ message: "No games found." });
       }
     })

@@ -9,11 +9,8 @@ class JoinGame extends Component {
   constructor(props) {
     super(props);
 
-    // this.handleChange = this.handleChange.bind(this);
     this.state = {
       code: "",
-      // isValidCode: false,
-      // TODO: need logic for checking the code in the DB
     };
   }
 
@@ -23,7 +20,6 @@ class JoinGame extends Component {
     this.setState((prev) => {
       return {
         code: event.target.value,
-        // isValidCode: prev.isValidCode,
       };
     });
   };
