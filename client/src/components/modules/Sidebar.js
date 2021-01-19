@@ -6,14 +6,36 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 const GOOGLE_CLIENT_ID = "473769754928-7ahknn038led2u1qif6aj95lka4k528i.apps.googleusercontent.com";
 
 import "./Sidebar.css";
+import { get, post } from "../../utilities";
 
 class Sidebar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loggedIn: false,
+    }
   }
 
+ /* handleLogin = (res) =>{
+    this.setState({loggedIn: true});
+
+    const token = res.tokenObj.id_token;
+    post('/api/login',{token}).then(()=>{
+      this.setState({loggedIn: true})
+    }
+    )
+  };
+  handleLogout = (res) =>{
+    this.setState({loggedIn: false});
+    post('/api/logout').then(()=>{
+      this.setState({loggedIn: false})
+    })
+  };
+
+*/
   home = () => {navigate("/")}
   rules = () => {navigate("/howto")}
+  profile = () => {navigate("/profile/" + this.props.userId)}
 
   render() {
     return (
@@ -21,6 +43,7 @@ class Sidebar extends Component {
         <div className='title'>Trickshot</div>
         <div className="nav u-link" onClick={this.home}>Play</div>
         <div className="nav u-link" onClick={this.rules}>Rules</div>
+        <div className = "nav u-link" onClick={this.profile}>Profile</div>
         <div className="login u-flex u-flex-justifyCenter">
           {this.props.userId ? (
             <GoogleLogout

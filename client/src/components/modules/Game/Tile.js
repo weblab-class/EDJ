@@ -26,11 +26,22 @@ class Tile extends Component {
     }
   };
 
+  doLight = () => {
+    if (this.props.isLit) {
+      return "lit "
+    }
+    else {
+      return "full "
+    }
+  }
+
   render() {
     return (
       <div className="Tile-container u-flex u-flex-justifyCenter u-flex-alignCenter">
         <div className="Tile-body u-flex u-flex-justifyCenter u-flex-alignCenter">
-          <div className={this.playerDirection()}></div>
+          <div className={this.doLight() + "u-flex u-flex-justifyCenter u-flex-alignCenter"}>
+            <div className={this.playerDirection()}></div>
+          </div>
         </div>
       </div>
     );

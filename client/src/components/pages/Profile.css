@@ -1,0 +1,15 @@
+.title1 {
+    text-align: left;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 50pt;
+    padding: var(--s);
+    padding-left: var(--m);
+  }
+
+  .title2{
+    text-align: left;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 30pt;
+    padding: var(--s);
+    padding-left: var(--m);
+  }

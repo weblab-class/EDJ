@@ -20,7 +20,10 @@ const auth = require("./auth");
 
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
-
+router.get("/user", (req, res) => {
+  const id = req.query.userId;
+  User.findById(id).then((user) => res.send(user));
+});
 //initialize socket
 const socketManager = require("./server-socket");
 
@@ -37,9 +40,9 @@ router.get("/whoami", (req, res) => {
   if (!req.user) {
     // not logged in
     return res.send({});
+  } else {
+    res.send(req.user);
   }
-
-  res.send(req.user);
 });
 
 router.post("/initsocket", (req, res) => {
@@ -181,7 +184,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                 { x: prev_x, y: prev_y },
                 { x: direction_x, y: direction_y }
               );
-              // console.log(prev_x, prev_y, new_x, new_y, direction_x, direction_y);
               game.players[game.currentTurn].location = {
                 x: new_x,
                 y: new_y,
