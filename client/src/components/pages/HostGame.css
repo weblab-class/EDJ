@@ -77,7 +77,7 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 2px 3px 2px rgb(151, 151, 158);
+  box-shadow: 4px 4px 4px 2px rgb(151, 151, 158);
 }
 
 .popsicle-containerClicked:hover {

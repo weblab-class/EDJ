@@ -31,28 +31,107 @@
   flex: 50%;
 }
 
-.down0small {
+.mini-imgContainer {
   flex: 50%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_149_1.png")
-    center center no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.down1small {
-  flex: 50%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_376_1.png")
-    center center no-repeat;
+.pokemondown0small {
+  width: 100%;
+  height: 100%;
+  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_149_1.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: walkDown0 0.5s linear 0s infinite;
+  -webkit-animation-timing-function: steps(1, end);
+  -moz-animation-timing-function: steps(1, end);
+  -ms-animation-timing-function: steps(1, end);
+  -o-animation-timing-function: steps(1, end);
+  animation-timing-function: steps(1, end);
 }
 
-.down2small {
-  flex: 50%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_395_1.png")
-    center center no-repeat;
+.pokemondown1small {
+  width: 100%;
+  height: 100%;
+  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_376_1.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: walkDown1 0.5s linear 0s infinite;
+  -webkit-animation-timing-function: steps(1, end);
+  -moz-animation-timing-function: steps(1, end);
+  -ms-animation-timing-function: steps(1, end);
+  -o-animation-timing-function: steps(1, end);
+  animation-timing-function: steps(1, end);
 }
 
-.down3small {
-  flex: 50%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_380_1.png")
-    center center no-repeat;
+.pokemondown2small {
+  width: 100%;
+  height: 100%;
+  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_395_1.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: walkDown2 0.5s linear 0s infinite;
+  -webkit-animation-timing-function: steps(1, end);
+  -moz-animation-timing-function: steps(1, end);
+  -ms-animation-timing-function: steps(1, end);
+  -o-animation-timing-function: steps(1, end);
+  animation-timing-function: steps(1, end);
+}
+
+.pokemondown3small {
+  width: 100%;
+  height: 100%;
+  background-image: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_380_1.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: walkDown3 0.5s linear 0s infinite;
+  -webkit-animation-timing-function: steps(1, end);
+  -moz-animation-timing-function: steps(1, end);
+  -ms-animation-timing-function: steps(1, end);
+  -o-animation-timing-function: steps(1, end);
+  animation-timing-function: steps(1, end);
+}
+
+.popsicledown0small {
+  width: 100%;
+  height: 100%;
+  background-image: url("./Gifs/green_d.gif");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.popsicledown1small {
+  width: 100%;
+  height: 100%;
+  background-image: url("./Gifs/pink_d.gif");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.popsicledown2small {
+  width: 100%;
+  height: 100%;
+  background-image: url("./Gifs/purple_d.gif");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.popsicledown3small {
+  width: 100%;
+  height: 100%;
+  background-image: url("./Gifs/yellow_d.gif");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .Card-container-currPlayer {

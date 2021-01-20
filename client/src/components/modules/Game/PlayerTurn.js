@@ -17,7 +17,7 @@ class PlayerTurn extends Component {
 
   playerImg = () => {
     const playerNum = this.props.players.indexOf(this.props.currentPlayer);
-    return "down_" + String(playerNum);
+    return this.props.playerStyle + "_down_" + String(playerNum);
   };
 
   render() {

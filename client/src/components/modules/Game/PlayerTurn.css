@@ -15,7 +15,7 @@
 }
 
 .img-container {
-  height: 50%;
+  height: 60%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -29,19 +29,20 @@
 }
 
 .text-container {
-  height: 50%;
+  height: 40%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.down_0 {
-  width: 50%;
-  height: 50%;
+.pokemon_down_0 {
+  width: 100%;
+  height: 100%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_149_1.png")
     center center no-repeat;
   background-size: contain;
+  display: flex;
   animation: walkDown0 0.5s linear 0s infinite;
   -webkit-animation-timing-function: steps(1, end);
   -moz-animation-timing-function: steps(1, end);
@@ -50,11 +51,12 @@
   animation-timing-function: steps(1, end);
 }
 
-.down_1 {
-  width: 50%;
-  height: 50%;
+.pokemon_down_1 {
+  width: 100%;
+  height: 100%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_376_1.png")
     center center no-repeat;
+  display: flex;
   background-size: contain;
   animation: walkDown1 0.5s linear 0s infinite;
   -webkit-animation-timing-function: steps(1, end);
@@ -64,11 +66,12 @@
   animation-timing-function: steps(1, end);
 }
 
-.down_2 {
-  width: 50%;
-  height: 50%;
+.pokemon_down_2 {
+  width: 100%;
+  height: 100%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_395_1.png")
     center center no-repeat;
+  display: flex;
   background-size: contain;
   animation: walkDown2 0.5s linear 0s infinite;
   -webkit-animation-timing-function: steps(1, end);
@@ -78,11 +81,12 @@
   animation-timing-function: steps(1, end);
 }
 
-.down_3 {
-  width: 50%;
-  height: 50%;
+.pokemon_down_3 {
+  width: 100%;
+  height: 100%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_380_1.png")
     center center no-repeat;
+  display: flex;
   background-size: contain;
   animation: walkDown3 0.5s linear 0s infinite;
   -webkit-animation-timing-function: steps(1, end);
@@ -90,4 +94,36 @@
   -ms-animation-timing-function: steps(1, end);
   -o-animation-timing-function: steps(1, end);
   animation-timing-function: steps(1, end);
+}
+
+.popsicle_down_0 {
+  width: 100%;
+  height: 100%;
+  background: url("./Gifs/green_d.gif") center center no-repeat;
+  display: flex;
+  background-size: contain;
+}
+
+.popsicle_down_1 {
+  width: 100%;
+  height: 100%;
+  background: url("./Gifs/pink_d.gif") center center no-repeat;
+  display: flex;
+  background-size: contain;
+}
+
+.popsicle_down_2 {
+  width: 100%;
+  height: 100%;
+  background: url("./Gifs/purple_d.gif") center center no-repeat;
+  display: flex;
+  background-size: contain;
+}
+
+.popsicle_down_3 {
+  width: 100%;
+  height: 100%;
+  background: url("./Gifs/yellow_d.gif") center center no-repeat;
+  display: flex;
+  background-size: contain;
 }

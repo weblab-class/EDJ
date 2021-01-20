@@ -139,6 +139,7 @@ class Game extends Component {
             roomCode={this.state.roomCode}
             gameData={this.state}
             gameId={this.props.gameId}
+            playerStyle={this.state.playerStyle}
           />
         </div>
         <div className="board">
@@ -152,6 +153,7 @@ class Game extends Component {
           <ScoreBoard
             players={this.state.players}
             currentPlayer={this.state.players[this.state.currentTurn]}
+            playerStyle={this.state.playerStyle}
           />
         </div>
       </div>

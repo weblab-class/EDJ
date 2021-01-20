@@ -17,15 +17,10 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("keydown", this.handleEnter);
     get("/api/user", { userId: this.props.userId }).then((user) => {
       this.setState({ user: user, loading: false });
     });
     // alert("Page not fully functional yet");
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleEnter);
   }
 
   handleEnter = (event) => {
@@ -68,7 +63,12 @@ class Profile extends Component {
             <div className="title2">Username</div>
             <div className="flexRow">
               <label className="u-inlineBlock">Change Name:</label>
-              <input className="u-inlineBlock" id="change-user" onChange={this.changeName}></input>
+              <input
+                className="u-inlineBlock"
+                id="change-user"
+                onChange={this.changeName}
+                onKeyDown={this.handleEnter}
+              ></input>
               <div className="button u-link" onClick={this.submitName}>
                 Submit
               </div>

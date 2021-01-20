@@ -19,6 +19,7 @@ class ScoreBoard extends Component {
             value={this.props.players[i].score}
             currentPlayer={true}
             playerNum={this.props.players.indexOf(this.props.players[i])}
+            playerStyle={this.props.playerStyle}
           />
         );
       } else {
@@ -27,6 +28,7 @@ class ScoreBoard extends Component {
             field={this.props.players[i].name}
             value={this.props.players[i].score}
             playerNum={this.props.players.indexOf(this.props.players[i])}
+            playerStyle={this.props.playerStyle}
           />
         );
       }

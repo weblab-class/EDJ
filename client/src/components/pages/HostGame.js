@@ -21,7 +21,14 @@ class HostGame extends Component {
       playerStyle: "",
     };
   }
-  componentDidMount = () => {};
+
+  componentDidMount = () => {
+    window.addEventListener("keydown", this.handleEnter);
+  };
+
+  componentWillUnmount = () => {
+    window.removeEventListener("keydown", this.handleEnter);
+  };
 
   handleEnter = (event) => {
     if (event.keyCode === 13) {
@@ -111,7 +118,6 @@ class HostGame extends Component {
             type="text"
             className="u-inlineBlock"
             onChange={this.updateName}
-            onKeyDown={this.handleEnter}
           ></input>
         </div>
         <div>

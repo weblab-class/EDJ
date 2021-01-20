@@ -34,21 +34,14 @@ class Info extends Component {
         return <div className="text">Waiting for more players to join</div>;
       }
     } else {
-      // if (this.props.userId === this.props.gameData.players[this.props.gameData.currentTurn].id) {
       return (
         <PlayerTurn
           players={this.props.gameData.players}
           currentPlayer={this.props.gameData.players[this.props.gameData.currentTurn]}
           viewPlayerId={this.props.userId}
+          playerStyle={this.props.playerStyle}
         ></PlayerTurn>
       );
-      // } else {
-      //   return (
-      //     <div className="turn">
-      //       {this.props.gameData.players[this.props.gameData.currentTurn].name}'s turn
-      //     </div>
-      //   );
-      // }
     }
   };
 
