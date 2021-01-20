@@ -121,7 +121,8 @@
 .goal {
   width: 100%;
   height: 100%;
-  background: url("./flag.png") center center no-repeat;
+  background: url("https://pixeljoint.com/files/icons/full/drapeauanimationdetail.gif") center
+    center no-repeat;
   background-size: cover;
 }
 
