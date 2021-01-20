@@ -17,7 +17,7 @@ class HostGame extends Component {
       code: code,
       toDisplay: code,
       roomName: "",
-      mirrors: 0,
+      mirrors: 6,
     };
   }
 
@@ -87,12 +87,12 @@ class HostGame extends Component {
         <div>
           <label className="u-inlineBlock">Number of mirrors:</label>
           <select id="mirrors" value={this.state.mirrors} onChange={this.updateMirrors}>
-            <option>0</option>
+            {/* <option>0</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
-            <option>5</option>
+            <option>5</option> */}
             <option>6</option>
             <option>7</option>
             <option>8</option>
