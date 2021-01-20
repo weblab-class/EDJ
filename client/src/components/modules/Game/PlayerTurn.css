@@ -67,7 +67,7 @@
 .down_2 {
   width: 50%;
   height: 50%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_387_1.png")
+  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_395_1.png")
     center center no-repeat;
   background-size: cover;
   animation: walkDown2 0.5s linear 0s infinite;
@@ -81,7 +81,7 @@
 .down_3 {
   width: 50%;
   height: 50%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_393_1.png")
+  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_380_1.png")
     center center no-repeat;
   background-size: cover;
   animation: walkDown3 0.5s linear 0s infinite;

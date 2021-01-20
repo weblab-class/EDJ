@@ -16,16 +16,20 @@ class Card extends Component {
   };
 
   render() {
-    if (this.props.playerNum) {
-      const playerClass = "down" + String(this.props.playerNum) + "down";
+    if (typeof this.props.playerNum === "number") {
+      const playerClass = "down" + String(this.props.playerNum) + "small";
       return (
         <div className={this.isCurrentPlayer()}>
           <div className="Card-top-container">
-            <div className="field-container">{this.props.field}</div>
-            <div className="player-container"></div>
+            <div className="field-container u-flexColumn">
+              <div className="player-name">{this.props.field}</div>
+            </div>
+            <div
+              className={playerClass + " u-flexColumn u-flex-justifyCenter u-flex-alignCenter"}
+            ></div>
           </div>
           <hr />
-          <div className="Card-bottom-container">
+          <div className="Card-bottom-container u-flex-justifyCenter">
             <div className="value">{this.props.value}</div>
           </div>
         </div>

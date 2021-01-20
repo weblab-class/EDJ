@@ -22,7 +22,13 @@ class ScoreBoard extends Component {
           />
         );
       } else {
-        cards.push(<Card field={this.props.players[i].name} value={this.props.players[i].score} />);
+        cards.push(
+          <Card
+            field={this.props.players[i].name}
+            value={this.props.players[i].score}
+            playerNum={this.props.players.indexOf(this.props.players[i])}
+          />
+        );
       }
     }
     return cards;
