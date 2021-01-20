@@ -1,49 +1,44 @@
-.Card-container {
-  height: auto;
+.turn-container {
+  height: 100%;
   width: 100%;
-  margin: var(--s) 0px var(--s) 0px;
-}
-
-.Card-top-container {
-  height: 50%;
-  width: 100%;
-  display: flex;
-}
-
-.Card-bottom-container {
-  height: 50%;
-  width: 100%;
-}
-
-.field {
-  text-align: center;
-  font-weight: bold;
-  font-size: large;
-  padding-top: var(--xs);
-}
-
-.field-container {
-  /* height: 25%; */
-  flex: 50%;
-  /* float: left; */
   display: flex;
   justify-content: center;
-  overflow: hidden;
 }
 
-.player-container {
-  height: 25%;
-  flex: 50%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_149_1.png")
-    center center no-repeat;
-  /* float: right; */
-  /* display: flex;
-  justify-content: center; */
+.turn-outer {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 8px;
+  background-color: rgba(198, 198, 205, 0.5);
+  box-shadow: 0px 0px 2px rgb(151, 151, 158);
 }
 
-.down0small {
-  width: 10%;
-  height: 10%;
+.img-container {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-style {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.text-container {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.down_0 {
+  width: 50%;
+  height: 50%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_149_1.png")
     center center no-repeat;
   background-size: cover;
@@ -55,9 +50,9 @@
   animation-timing-function: steps(1, end);
 }
 
-.down1small {
-  width: 10%;
-  height: 10%;
+.down_1 {
+  width: 50%;
+  height: 50%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_376_1.png")
     center center no-repeat;
   background-size: cover;
@@ -69,9 +64,9 @@
   animation-timing-function: steps(1, end);
 }
 
-.down2small {
-  width: 25%;
-  height: 25%;
+.down_2 {
+  width: 50%;
+  height: 50%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_387_1.png")
     center center no-repeat;
   background-size: cover;
@@ -83,9 +78,9 @@
   animation-timing-function: steps(1, end);
 }
 
-.down3small {
-  width: 25%;
-  height: 25%;
+.down_3 {
+  width: 50%;
+  height: 50%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_393_1.png")
     center center no-repeat;
   background-size: cover;
@@ -95,22 +90,4 @@
   -ms-animation-timing-function: steps(1, end);
   -o-animation-timing-function: steps(1, end);
   animation-timing-function: steps(1, end);
-}
-
-.Card-container-currPlayer {
-  height: auto;
-  width: 100%;
-  margin: var(--s) 0px var(--s) 0px;
-  background-color: rgb(226, 226, 226);
-  border-radius: 4px;
-}
-
-.value {
-  text-align: center;
-  font-size: large;
-  padding-bottom: var(--xs);
-}
-
-hr {
-  width: 75%;
 }

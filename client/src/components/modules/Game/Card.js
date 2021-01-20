@@ -16,13 +16,29 @@ class Card extends Component {
   };
 
   render() {
-    return (
-      <div className={this.isCurrentPlayer()}>
-        <div className="field">{this.props.field}</div>
-        <hr />
-        <div className="value">{this.props.value}</div>
-      </div>
-    );
+    if (this.props.playerNum) {
+      const playerClass = "down" + String(this.props.playerNum) + "down";
+      return (
+        <div className={this.isCurrentPlayer()}>
+          <div className="Card-top-container">
+            <div className="field-container">{this.props.field}</div>
+            <div className="player-container"></div>
+          </div>
+          <hr />
+          <div className="Card-bottom-container">
+            <div className="value">{this.props.value}</div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className={this.isCurrentPlayer()}>
+          <div className="field">{this.props.field}</div>
+          <hr />
+          <div className="value">{this.props.value}</div>
+        </div>
+      );
+    }
   }
 }
 
