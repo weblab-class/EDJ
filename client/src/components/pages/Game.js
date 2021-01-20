@@ -23,6 +23,7 @@ class Game extends Component {
       mirrors: 0,
       roomCode: "",
       roomName: "",
+      playerStyle: "",
     };
   }
 
@@ -35,6 +36,7 @@ class Game extends Component {
       players: data.players,
       roomCode: data.roomCode,
       roomName: data.roomName,
+      playerStyle: data.playerStyle,
     });
     console.log(this.state.players);
   };
@@ -140,7 +142,11 @@ class Game extends Component {
           />
         </div>
         <div className="board">
-          <GameBoard board={this.state.board} playerN={this.getPlayerN()} />
+          <GameBoard
+            board={this.state.board}
+            playerN={this.getPlayerN()}
+            playerStyle={this.state.playerStyle}
+          />
         </div>
         <div className="scores">
           <ScoreBoard

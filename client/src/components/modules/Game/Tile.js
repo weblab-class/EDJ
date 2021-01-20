@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import "./Tile.css";
-import art from "./Untitled_Artwork-1.png";
 
 class Tile extends Component {
   constructor(props) {
@@ -11,20 +10,27 @@ class Tile extends Component {
   playerDirection = () => {
     const playerNum = this.props.data.charAt(this.props.data.length - 1);
     let tileClass;
+    // not a player tile
     if (!this.props.direction) {
-      return this.props.data;
+      if (this.props.data === "goal" && this.props.playerStyle === "pokemon") {
+        return "pokeball";
+      } else if (this.props.data === "goal" && this.props.playerStyle === "popsicle") {
+        return "flag";
+      } else {
+        return this.props.data;
+      }
     }
     if (this.props.direction.x === 0 && this.props.direction.y === 1) {
-      tileClass = "up" + playerNum;
+      tileClass = this.props.playerStyle + "_up" + playerNum;
     }
     if (this.props.direction.x === 0 && this.props.direction.y === -1) {
-      tileClass = "down" + playerNum;
+      tileClass = this.props.playerStyle + "_down" + playerNum;
     }
     if (this.props.direction.x === 1 && this.props.direction.y === 0) {
-      tileClass = "right" + playerNum;
+      tileClass = this.props.playerStyle + "_right" + playerNum;
     }
     if (this.props.direction.x === -1 && this.props.direction.y === 0) {
-      tileClass = "left" + playerNum;
+      tileClass = this.props.playerStyle + "_left" + playerNum;
     }
     return tileClass;
   };

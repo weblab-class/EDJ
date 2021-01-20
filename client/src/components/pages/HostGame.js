@@ -18,6 +18,7 @@ class HostGame extends Component {
       toDisplay: code,
       roomName: "",
       mirrors: 6,
+      playerStyle: "",
     };
   }
   componentDidMount = () => {};
@@ -31,11 +32,14 @@ class HostGame extends Component {
   hostgame = () => {
     if (this.state.roomName === "") {
       alert("You must name the room!");
+    } else if (this.state.playerStyle === "") {
+      alert("You must choose a player style!");
     } else {
       const body = {
         roomName: this.state.roomName,
         roomCode: this.state.code,
         mirrors: this.state.mirrors,
+        playerStyle: this.state.playerStyle,
       };
       post("/api/newGame", body).then((game) => {
         console.log(`Starting game room '${game.roomName}'...`);
@@ -78,6 +82,24 @@ class HostGame extends Component {
     this.setState({ mirrors: Number(event.target.value) });
   };
 
+  isPopsicle = (event) => {
+    event.persist();
+    this.setState({ playerStyle: "popsicle" });
+  };
+
+  isPokemon = (event) => {
+    event.persist();
+    this.setState({ playerStyle: "pokemon" });
+  };
+
+  isClicked = (playerStyle) => {
+    if (this.state.playerStyle === playerStyle) {
+      return "popsicle-containerClicked";
+    } else {
+      return "popsicle-container";
+    }
+  };
+
   render() {
     return (
       <div className="u-center-screen">
@@ -112,6 +134,23 @@ class HostGame extends Component {
             <option>14</option>
           </select>
         </div>
+        {/* <div> */}
+        <label className="u-inlineBlock">Player style:</label>
+        <div className="player-style-container">
+          <div className={this.isClicked("popsicle") + " u-link"} onClick={this.isPopsicle}>
+            <div className="popsicle_1"></div>
+            <div className="popsicle_2"></div>
+            <div className="popsicle_3"></div>
+            <div className="popsicle_4"></div>
+          </div>
+          <div className={this.isClicked("pokemon") + " u-link"} onClick={this.isPokemon}>
+            <div className="pokemon_1"></div>
+            <div className="pokemon_2"></div>
+            <div className="pokemon_3"></div>
+            <div className="pokemon_4"></div>
+          </div>
+        </div>
+        {/* </div> */}
         <p>Click the code below to copy to clipboard.</p>
         <div className="hostgame-link code-box" id="code" onClick={this.clickCode}>
           {this.state.toDisplay}

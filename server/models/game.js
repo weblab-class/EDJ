@@ -16,6 +16,7 @@ const GameSchema = new mongoose.Schema({
   isActive: Boolean,
   players: [{ name: String, id: String, score: Number, location: { x: Number, y: Number } }],
   currentTurn: Number,
+  playerStyle: String,
 });
 
 // compile model from schema

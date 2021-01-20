@@ -101,27 +101,27 @@ p {
   width: 100%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_149_1.png")
     center center no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
 .up {
   height: 100%;
   width: 100%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-b_hgss/o-b_hs_149_1.png")
     center center no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
 .left {
   height: 100%;
   width: 100%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-l_hgss/o-l_hs_149_1.png")
     center center no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
 .right {
   height: 100%;
   width: 100%;
   background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-r_hgss/o-r_hs_149_1.png")
     center center no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
 /* Add How To Play styling here */

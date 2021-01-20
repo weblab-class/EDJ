@@ -72,6 +72,7 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
     mirrors: req.body.mirrors, // number of mirrors
     players: [{ name: req.user.name, id: req.user._id, score: 0, location: locations[0] }],
     currentTurn: 0,
+    playerStyle: req.body.playerStyle,
   });
 
   newGame
