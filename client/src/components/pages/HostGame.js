@@ -20,6 +20,7 @@ class HostGame extends Component {
       mirrors: 6,
     };
   }
+  componentDidMount = () => {};
 
   handleEnter = (event) => {
     if (event.keyCode === 13) {

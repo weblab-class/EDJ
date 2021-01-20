@@ -58,7 +58,11 @@ class Game extends Component {
     window.removeEventListener("keydown", this.movePlayer);
   }
 
-  updateDirection = (board, { i, j }, { x, y }) => {
+  updateDirection = (board, location, direction) => {
+    const i = location.i;
+    const j = location.j;
+    const x = direction.x;
+    const y = direction.y;
     board[i][j].inputDirection = { x, y };
     return board;
   };

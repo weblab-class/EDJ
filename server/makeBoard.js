@@ -12,9 +12,9 @@ const invalidLoc = (x, y) => {
   );
 };
 
-const containsObj = (mirrors, { x, y }) => {
+const containsObj = (mirrors, location) => {
   for (let i = 0; i < mirrors.length; i++) {
-    if (mirrors[i].location.x === x && mirrors[i].location.y === y) {
+    if (mirrors[i].location.x === location.x && mirrors[i].location.y === location.y) {
       return mirrors[i];
     }
   }
@@ -37,6 +37,8 @@ const createMirrors = (mirrorsNum) => {
       break;
     }
     let randomLoc = possibleMirrors[Math.floor(Math.random() * possibleMirrors.length)];
+
+    // check for neighbors
     const directlyAdj = [
       { i: -1, j: 0 },
       { i: 1, j: 0 },
@@ -52,6 +54,12 @@ const createMirrors = (mirrorsNum) => {
     if (mirrorNearby) {
       continue;
     }
+
+    // check for self
+    // if (containsObj(mirrorsArray, randomLoc)) {
+    //   continue;
+    // }
+
     // x coordinate modulo 2 (divisible by 2 --> left-facing mirror)
     const leftMirror = mirrorsArray.length % 2 === 0;
     mirrorsArray.push({ location: randomLoc, leftMirror: leftMirror });

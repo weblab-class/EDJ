@@ -29,7 +29,6 @@ class Profile extends Component {
   }
 
   handleEnter = (event) => {
-    console.log(event.keyCode);
     if (event.keyCode === 13) {
       this.submitName();
     }

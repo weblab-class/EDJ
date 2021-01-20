@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "@reach/router";
 
 import Card from "./Card.js";
+import PlayerTurn from "./PlayerTurn.js";
 
 import "./Info.css";
 import { post } from "../../../utilities.js";
@@ -14,6 +15,8 @@ class Info extends Component {
   startGame = () => {
     post("/api/startGame", { id: this.props.gameId });
   };
+
+  componentDidMount = () => {};
 
   displayLogic = () => {
     if (!this.props.gameData.isActive) {
@@ -31,15 +34,21 @@ class Info extends Component {
         return <div className="text">Waiting for more players to join</div>;
       }
     } else {
-      if (this.props.userId === this.props.gameData.players[this.props.gameData.currentTurn].id) {
-        return <div className="text">Your turn</div>;
-      } else {
-        return (
-          <div className="text">
-            {this.props.gameData.players[this.props.gameData.currentTurn].name}'s turn
-          </div>
-        );
-      }
+      // if (this.props.userId === this.props.gameData.players[this.props.gameData.currentTurn].id) {
+      return (
+        <PlayerTurn
+          players={this.props.gameData.players}
+          currentPlayer={this.props.gameData.players[this.props.gameData.currentTurn]}
+          viewPlayerId={this.props.userId}
+        ></PlayerTurn>
+      );
+      // } else {
+      //   return (
+      //     <div className="turn">
+      //       {this.props.gameData.players[this.props.gameData.currentTurn].name}'s turn
+      //     </div>
+      //   );
+      // }
     }
   };
 
