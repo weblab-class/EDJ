@@ -17,11 +17,23 @@ class Profile extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener("keydown", this.handleEnter);
     get("/api/user", { userId: this.props.userId }).then((user) => {
       this.setState({ user: user, loading: false });
     });
-    alert("Page not fully functional yet");
+    // alert("Page not fully functional yet");
   }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleEnter);
+  }
+
+  handleEnter = (event) => {
+    console.log(event.keyCode);
+    if (event.keyCode === 13) {
+      this.submitName();
+    }
+  };
 
   changeName = (event) => {
     event.persist();
@@ -49,14 +61,18 @@ class Profile extends Component {
     // if (this.state.nickname === "") {
     return (
       <div className="u-center">
-        <div className="title1">{this.state.user.nickname ? this.state.user.nickname : this.state.user.name} </div>
+        <div className="title1">
+          {this.state.user.nickname ? this.state.user.nickname : this.state.user.name}{" "}
+        </div>
         <div className="flexRow">
           <div className="flexColumn">
             <div className="title2">Username</div>
             <div className="flexRow">
               <label className="u-inlineBlock">Change Name:</label>
-              <input onChange={this.changeName}></input>
-              <button onClick={this.submitName}>Submit</button>
+              <input className="u-inlineBlock" id="change-user" onChange={this.changeName}></input>
+              <div className="button u-link" onClick={this.submitName}>
+                Submit
+              </div>
             </div>
             <div className="title2">Game History</div>
             <label>wins:</label>

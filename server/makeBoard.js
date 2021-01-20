@@ -37,14 +37,15 @@ const createMirrors = (mirrorsNum) => {
       break;
     }
     let randomLoc = possibleMirrors[Math.floor(Math.random() * possibleMirrors.length)];
-    for (let i of [-1, 1, 0]) {
-      for (let j of [-1, 1, 0]) {
-        if (containsObj(mirrorsArray, { x: randomLoc.x + i, y: randomLoc.y + j })) {
-          mirrorNearby = true;
-          break;
-        }
-      }
-      if (mirrorNearby) {
+    const directlyAdj = [
+      { i: -1, j: 0 },
+      { i: 1, j: 0 },
+      { i: 0, j: 1 },
+      { i: 0, j: -1 },
+    ];
+    for (neighbor of directlyAdj) {
+      if (containsObj(mirrorsArray, { x: randomLoc.x + neighbor.i, y: randomLoc.y + neighbor.j })) {
+        mirrorNearby = true;
         break;
       }
     }

@@ -21,6 +21,12 @@ class HostGame extends Component {
     };
   }
 
+  handleEnter = (event) => {
+    if (event.keyCode === 13) {
+      this.hostgame();
+    }
+  };
+
   hostgame = () => {
     if (this.state.roomName === "") {
       alert("You must name the room!");
@@ -82,6 +88,7 @@ class HostGame extends Component {
             type="text"
             className="u-inlineBlock"
             onChange={this.updateName}
+            onKeyDown={this.handleEnter}
           ></input>
         </div>
         <div>

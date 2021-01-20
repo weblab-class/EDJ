@@ -15,6 +15,19 @@ class JoinGame extends Component {
     };
   }
 
+  componentDidMount() {
+    window.addEventListener("keydown", this.handleEnter);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleEnter);
+  }
+
+  handleEnter = (event) => {
+    if (event.keyCode === 13) {
+      this.handleClick();
+    }
+  };
+
   handleChange = (event) => {
     event.persist();
     console.log("Received Input");
@@ -25,7 +38,7 @@ class JoinGame extends Component {
     });
   };
 
-  handleClick = (event) => {
+  handleClick = () => {
     post("/api/joinGame", { code: this.state.code }).then((data) => {
       console.log(data);
       if (!(Object.keys(data).length === 0 && data.constructor === Object)) {
