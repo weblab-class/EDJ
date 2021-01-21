@@ -15,6 +15,7 @@ import ScoreBoard from "../modules/Game/ScoreBoard.js";
 import "./Game.css";
 import { Socket } from "socket.io-client";
 import user from "../../../../server/models/user.js";
+import { navigate } from "@reach/router";
 
 class Game extends Component {
   constructor(props) {
@@ -47,6 +48,10 @@ class Game extends Component {
   };
 
   componentDidMount() {
+    // if (!this.props.userId) {
+    //   alert("You are not logged in.");
+    //   navigate("/");
+    // }
     window.addEventListener("keydown", this.movePlayer);
     get("/api/checkGame", { _id: this.props.gameId })
       .then((data) => {
@@ -58,7 +63,10 @@ class Game extends Component {
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        alert("You are not logged in.");
+        navigate("/");
+      });
   }
 
   componentWillUnmount() {

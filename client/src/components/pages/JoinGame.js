@@ -39,14 +39,18 @@ class JoinGame extends Component {
   };
 
   handleClick = () => {
-    post("/api/joinGame", { code: this.state.code }).then((data) => {
-      console.log(data);
-      if (!(Object.keys(data).length === 0 && data.constructor === Object)) {
-        navigate("/game/" + String(data._id));
-      } else {
-        alert("No valid games found.");
-      }
-    });
+    post("/api/joinGame", { code: this.state.code })
+      .then((data) => {
+        console.log(data);
+        if (!(Object.keys(data).length === 0 && data.constructor === Object)) {
+          navigate("/game/" + String(data._id));
+        } else {
+          alert("No valid games found.");
+        }
+      })
+      .catch((err) => {
+        alert("You are not logged in. Click on the menu icon in the upper left corner to log in.");
+      });
   };
 
   render() {

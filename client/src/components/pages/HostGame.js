@@ -48,10 +48,16 @@ class HostGame extends Component {
         mirrors: this.state.mirrors,
         playerStyle: this.state.playerStyle,
       };
-      post("/api/newGame", body).then((game) => {
-        console.log(`Starting game room '${game.roomName}'...`);
-        navigate("/game/" + String(game._id));
-      });
+      post("/api/newGame", body)
+        .then((game) => {
+          console.log(`Starting game room '${game.roomName}'...`);
+          navigate("/game/" + String(game._id));
+        })
+        .catch((err) => {
+          alert(
+            "You are not logged in. Click on the menu icon in the upper left corner to log in."
+          );
+        });
     }
   };
 
