@@ -23,9 +23,9 @@ class HowToPlay extends Component {
 
   isClicked = (playerStyle) => {
     if (this.state.playerStyle === playerStyle) {
-      return "popsicle-containerClicked";
+      return "popsicle-containerClicked-play";
     } else {
-      return "popsicle-container";
+      return "popsicle-container-play";
     }
   };
 
@@ -138,12 +138,18 @@ class HowToPlay extends Component {
           <div className="player-container u-flexColumn">
             <div className={this.state.playerStyle + "_" + this.state.orientation + "0"}></div>
           </div>
-          <div className="choose-container u-flexColumn">
-            <label>Choose Player:</label>
-            <div className={this.isClicked("popsicle") + " u-link"} onClick={this.isPopsicle}>
+          <div className="choose-container u-flex-justifySpaceEvenly">
+            <label id="choose-player">Choose Player:</label>
+            <div
+              className={this.isClicked("popsicle") + " u-link u-flexColumn"}
+              onClick={this.isPopsicle}
+            >
               <div className="popsicle_1"></div>
             </div>
-            <div className={this.isClicked("pokemon") + " u-link"} onClick={this.isPokemon}>
+            <div
+              className={this.isClicked("pokemon") + " u-link u-flexColumn"}
+              onClick={this.isPokemon}
+            >
               <div className="pokemon_1"></div>
             </div>
           </div>

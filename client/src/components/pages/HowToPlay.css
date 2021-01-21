@@ -112,59 +112,48 @@ p {
   padding: 20px 40px;
   background-color: rgba(212, 212, 212, 0.4);
   box-shadow: 2px 3px 5px #3f3f3f;
+  display: flex;
   text-align: center;
   align-items: center;
 }
 
-.down {
-  height: 100%;
-  width: 100%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_149_1.png")
-    center center no-repeat;
-  background-size: contain;
-  animation: walkDown0 0.5s linear 0s infinite;
-  -webkit-animation-timing-function: steps(1, end);
-  -moz-animation-timing-function: steps(1, end);
-  -ms-animation-timing-function: steps(1, end);
-  -o-animation-timing-function: steps(1, end);
-  animation-timing-function: steps(1, end);
+.popsicle-container-play {
+  width: 50%;
+  height: 50%;
+  background-color: rgba(201, 201, 202, 0.3);
+  box-shadow: 2px 3px 2px rgb(151, 151, 158);
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.up {
-  height: 100%;
-  width: 100%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-b_hgss/o-b_hs_149_1.png")
-    center center no-repeat;
-  background-size: contain;
-  animation: walkUp0 0.5s linear 0s infinite;
-  -webkit-animation-timing-function: steps(1, end);
-  -moz-animation-timing-function: steps(1, end);
-  -ms-animation-timing-function: steps(1, end);
-  -o-animation-timing-function: steps(1, end);
-  animation-timing-function: steps(1, end);
+
+.popsicle-container-play:hover {
+  width: 70%;
+  height: 70%;
+  background-color: rgba(108, 108, 108, 0.4);
+  box-shadow: 2px 3px 2px rgb(151, 151, 158);
 }
-.left {
-  height: 100%;
-  width: 100%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-l_hgss/o-l_hs_149_1.png")
-    center center no-repeat;
-  background-size: contain;
-  animation: walkLeft0 0.5s linear 0s infinite;
-  -webkit-animation-timing-function: steps(1, end);
-  -moz-animation-timing-function: steps(1, end);
-  -ms-animation-timing-function: steps(1, end);
-  -o-animation-timing-function: steps(1, end);
-  animation-timing-function: steps(1, end);
+
+.popsicle-containerClicked-play {
+  width: 70%;
+  height: 70%;
+  background-color: rgba(216, 216, 216, 0.8);
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 4px 4px 4px 2px rgb(151, 151, 158);
 }
-.right {
-  height: 100%;
-  width: 100%;
-  background: url("https://www.pokencyclopedia.info/sprites/overworlds/o-r_hgss/o-r_hs_149_1.png")
-    center center no-repeat;
-  background-size: contain;
-  animation: walkRight0 0.5s linear 0s infinite;
-  -webkit-animation-timing-function: steps(1, end);
-  -moz-animation-timing-function: steps(1, end);
-  -ms-animation-timing-function: steps(1, end);
-  -o-animation-timing-function: steps(1, end);
-  animation-timing-function: steps(1, end);
+
+.popsicle-containerClicked-play:hover {
+  background-color: rgba(108, 108, 108, 0.4);
+}
+
+#choose-player {
+  margin-left: 0px;
 }
