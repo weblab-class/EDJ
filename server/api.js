@@ -64,8 +64,6 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
       let board = makeBoard.checkClass(mirrors);
       board = makeBoard.updateBoard(board, "Player0", locations[0], { x: 0, y: -1 });
       const name = user.name;
-      console.log("api user: ");
-      console.log(req.user);
       const newGame = new Game({
         roomName: req.body.roomName,
         roomCode: req.body.roomCode,
@@ -88,55 +86,59 @@ router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
-  Game.findOne({ roomCode: req.body.code })
-    .then((game) => {
-      if (game) {
-        const playerNum = game.players.length;
-        const p = game.players.filter((l) => l.id == req.user._id);
-        if (p.length !== 0) {
-          res.send(game);
-        } else {
-          const location = locations[playerNum];
-          const name = req.user.name;
-
-          game.players = [
-            ...game.players,
-            {
-              name: req.user.name,
-              id: req.user._id,
-              score: 0,
-              location: location,
-            },
-          ];
-          let direction;
-          if (location.x < 4) {
-            direction = { x: 0, y: -1 };
+  User.findById(req.user._id).then((user) => {
+    const newUser = user;
+    console.log(newUser);
+    Game.findOne({ roomCode: req.body.code })
+      .then((game) => {
+        if (game) {
+          const playerNum = game.players.length;
+          const p = game.players.filter((l) => l.id == req.user._id);
+          if (p.length !== 0) {
+            res.send(game);
           } else {
-            direction = { x: 0, y: 1 };
+            const location = locations[playerNum];
+            const name = newUser.name;
+
+            game.players = [
+              ...game.players,
+              {
+                name: name,
+                id: req.user._id,
+                score: 0,
+                location: location,
+              },
+            ];
+            let direction;
+            if (location.x < 4) {
+              direction = { x: 0, y: -1 };
+            } else {
+              direction = { x: 0, y: 1 };
+            }
+            game.board = makeBoard.updateBoard(
+              game.board,
+              "Player" + playerNum.toString(),
+              location,
+              direction
+            );
+            game
+              .save()
+              .then((game) => {
+                game.players.map((player) => {
+                  if (player.id != req.user._id) {
+                    socketManager.getSocketFromUserID(player.id).emit("updateBoard", game);
+                  }
+                });
+                res.send(game);
+              })
+              .catch(console.log);
           }
-          game.board = makeBoard.updateBoard(
-            game.board,
-            "Player" + playerNum.toString(),
-            location,
-            direction
-          );
-          game
-            .save()
-            .then((game) => {
-              game.players.map((player) => {
-                if (player.id != req.user._id) {
-                  socketManager.getSocketFromUserID(player.id).emit("updateBoard", game);
-                }
-              });
-              res.send(game);
-            })
-            .catch(console.log);
+        } else {
+          res.send({});
         }
-      } else {
-        res.send({});
-      }
-    })
-    .catch(console.log);
+      })
+      .catch(console.log);
+  });
 });
 
 router.post("/startGame", auth.ensureLoggedIn, (req, res) => {
