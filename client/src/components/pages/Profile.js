@@ -55,9 +55,7 @@ class Profile extends Component {
     // if (this.state.nickname === "") {
     return (
       <div className="u-center">
-        <div className="title1">
-          {this.state.user.nickname ? this.state.user.nickname : this.state.user.name}{" "}
-        </div>
+        <div className="title1">{this.state.user.name}</div>
         <div className="flexRow">
           <div className="flexColumn">
             <div className="title2">Username</div>

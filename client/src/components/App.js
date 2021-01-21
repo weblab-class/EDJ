@@ -14,7 +14,7 @@ import NotFound from "./pages/NotFound.js";
 import Sidebar from "./modules/Sidebar.js";
 
 import "../utilities.css";
-import './App.css';
+import "./App.css";
 
 import { socket } from "../client-socket.js";
 
@@ -63,7 +63,7 @@ class App extends Component {
           handleLogin={this.handleLogin}
           handleLogout={this.handleLogout}
         />
-        <div className='App-container u-flex u-flex-justifyCenter'>
+        <div className="App-container u-flex u-flex-justifyCenter">
           <Router>
             {/*<Skeleton
               path="/skeleton/"
@@ -71,13 +71,13 @@ class App extends Component {
               handleLogout={this.handleLogout}
               userId={this.state.userId}
             />*/}
-            <Home path='/'userId={this.state.userId} />
-            <Game path='/game/:gameId' userId={this.state.userId} />
-            <HowToPlay path='/howto/' />
-            <HostGame path='/host/' />
-            <JoinGame path='/join/' />
-            <Login path='/login/' />
-            <Profile path = '/profile/:userId' userId={this.state.userId}/>
+            <Home path="/" userId={this.state.userId} />
+            <Game path="/game/:gameId" userId={this.state.userId} />
+            <HowToPlay path="/howto/" />
+            <HostGame path="/host/" />
+            <JoinGame path="/join/" />
+            <Login path="/login/" />
+            <Profile path="/profile/:userId" userId={this.state.userId} />
             <NotFound default />
           </Router>
         </div>

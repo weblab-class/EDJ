@@ -110,7 +110,8 @@ class HostGame extends Component {
   render() {
     return (
       <div className="u-center-screen">
-        <div className="u-title">HOST GAME</div>
+        {/* <div className="u-title">HOST GAME</div> */}
+        <div className="u-title">{this.props.username}</div>
         <div>
           <label className="u-inlineBlock">Group name:</label>
           <input

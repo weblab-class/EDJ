@@ -9,8 +9,40 @@ class HowToPlay extends Component {
 
     this.state = {
       orientation: "down",
+      playerStyle: "pokemon",
     };
   }
+
+  componentDidMount = () => {
+    window.addEventListener("keydown", this.handleButton);
+  };
+
+  componentWillUnmount = () => {
+    window.removeEventListener("keydown", this.handleButton);
+  };
+
+  isClicked = (playerStyle) => {
+    if (this.state.playerStyle === playerStyle) {
+      return "popsicle-containerClicked";
+    } else {
+      return "popsicle-container";
+    }
+  };
+
+  handleButton = (event) => {
+    if (event.key === "ArrowUp") {
+      this.buttonClickUp(event);
+    }
+    if (event.key === "ArrowDown") {
+      this.buttonClickDown(event);
+    }
+    if (event.key === "ArrowLeft") {
+      this.buttonClickLeft(event);
+    }
+    if (event.key === "ArrowRight") {
+      this.buttonClickRight(event);
+    }
+  };
 
   buttonClickUp = (event) => {
     this.setState({ orientation: "up" });
@@ -23,6 +55,16 @@ class HowToPlay extends Component {
   };
   buttonClickLeft = (event) => {
     this.setState({ orientation: "left" });
+  };
+
+  isPopsicle = (event) => {
+    event.persist();
+    this.setState({ playerStyle: "popsicle" });
+  };
+
+  isPokemon = (event) => {
+    event.persist();
+    this.setState({ playerStyle: "pokemon" });
   };
 
   render() {
@@ -53,8 +95,8 @@ class HowToPlay extends Component {
           </div>
         </div>
         <div className="title2">Controls</div>
-        <div className="infoP u-flex u-flex-justifySpaceEvenly">
-          <div className="control-box">
+        <div className="infoP u-flex u-flex-alignSpaceAround">
+          <div className="control-box u-flexColumn">
             Test controls by clicking keys
             <div className="u-flex">
               <div className="u-flexColumn">
@@ -93,10 +135,18 @@ class HowToPlay extends Component {
               <p>shoot</p>
             </div>
           </div>
-          <div className="player-container">
-            <div className={this.state.orientation}></div>
+          <div className="player-container u-flexColumn">
+            <div className={this.state.playerStyle + "_" + this.state.orientation + "0"}></div>
           </div>
-          {/* <img className="player" src="https://www.pokencyclopedia.info/sprites/overworlds/o_hgss/o_hs_149_1.png" /> */}
+          <div className="choose-container u-flexColumn">
+            <label>Choose Player:</label>
+            <div className={this.isClicked("popsicle") + " u-link"} onClick={this.isPopsicle}>
+              <div className="popsicle_1"></div>
+            </div>
+            <div className={this.isClicked("pokemon") + " u-link"} onClick={this.isPokemon}>
+              <div className="pokemon_1"></div>
+            </div>
+          </div>
         </div>
       </div>
     );
