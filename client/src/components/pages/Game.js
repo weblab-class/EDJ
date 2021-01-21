@@ -5,6 +5,8 @@ import { socket } from "../../client-socket.js";
 
 import laser from "../modules/Game/laser.mp3";
 import bounce from "../modules/Game/jump.mp3";
+import won from "../modules/Game/game_won.mp3";
+import alertTone from "../modules/Game/alert.mp3";
 
 import Info from "../modules/Game/Info.js";
 import GameBoard from "../modules/Game/GameBoard.js";
@@ -75,8 +77,12 @@ class Game extends Component {
   movePlayer = (event) => {
     const moveSound = new Audio(bounce);
     const laserSound = new Audio(laser);
-    moveSound.volume = 0.2;
+    const wonGame = new Audio(won);
+    const alertSound = new Audio(alertTone);
+    moveSound.volume = 0.15;
     laserSound.volume = 0.5;
+    wonGame.volume = 0.2;
+    alertSound.volume = 0.3;
     const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
     if (event.key === " " && player.id === this.state.players[this.state.currentTurn].id) {
       post("/api/laser", {
@@ -89,6 +95,9 @@ class Game extends Component {
         })
         .catch(console.log);
       return null;
+    } else if (event.key === " " && player.id !== this.state.players[this.state.currentTurn].id) {
+      alertSound.play();
+      alert("Not your turn!");
     }
     const x = player.location.x;
     const y = player.location.y;
@@ -113,12 +122,11 @@ class Game extends Component {
         post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction })
           .then((game) => {
             if (typeof game.message === "string") {
-              if (game.message === "Game over.") {
-                moveSound.play();
-                if (this.props.userId === player.id) {
-                  alert("You won!");
-                }
+              if (game.message === "Game won.") {
+                wonGame.play();
+                alert("You won!");
               } else {
+                alertSound.play();
                 alert(game.message);
               }
             } else {
