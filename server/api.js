@@ -58,29 +58,31 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 
 router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
-  const mirrors = makeBoard.createMirrors(req.body.mirrors);
-  let board = makeBoard.checkClass(mirrors);
-  board = makeBoard.updateBoard(board, "Player0", locations[0], { x: 0, y: -1 });
-  const name = req.user.name;
-  console.log("api user: ");
-  console.log(req.user);
-  const newGame = new Game({
-    roomName: req.body.roomName,
-    roomCode: req.body.roomCode,
-    board: board,
-    isActive: false,
-    mirrors: req.body.mirrors, // number of mirrors
-    players: [{ name: req.user.name, id: req.user._id, score: 0, location: locations[0] }],
-    currentTurn: 0,
-    playerStyle: req.body.playerStyle,
-  });
-
-  newGame
-    .save()
-    .then((game) => res.send(game))
+  User.findById(req.user._id)
+    .then((user) => {
+      const mirrors = makeBoard.createMirrors(req.body.mirrors);
+      let board = makeBoard.checkClass(mirrors);
+      board = makeBoard.updateBoard(board, "Player0", locations[0], { x: 0, y: -1 });
+      const name = user.name;
+      console.log("api user: ");
+      console.log(req.user);
+      const newGame = new Game({
+        roomName: req.body.roomName,
+        roomCode: req.body.roomCode,
+        board: board,
+        isActive: false,
+        mirrors: req.body.mirrors, // number of mirrors
+        players: [{ name: name, id: req.user._id, score: 0, location: locations[0] }],
+        currentTurn: 0,
+        playerStyle: req.body.playerStyle,
+      });
+      newGame
+        .save()
+        .then((game) => res.send(game))
+        .catch(console.log);
+    })
     .catch(console.log);
 });
-
 router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
   Game.findById(req.query._id).then((game) => res.send(game));
 });

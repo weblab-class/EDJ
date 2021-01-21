@@ -28,11 +28,11 @@
 }
 
 .field-container {
-  flex: 50%;
+  flex: 60%;
 }
 
 .mini-imgContainer {
-  flex: 50%;
+  flex: 40%;
   display: flex;
   justify-content: center;
   align-items: center;

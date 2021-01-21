@@ -3,6 +3,7 @@ import { get } from "../../utilities";
 import { post } from "../../utilities";
 import user from "../../../../server/models/user.js";
 import Info from "../modules/Game/Info.js";
+import { PieChart } from "react-minimal-pie-chart";
 import "./Profile.css";
 
 class Profile extends Component {
@@ -75,6 +76,14 @@ class Profile extends Component {
             <label>wins:</label>
             <label>losses:</label>
             <label>ratio:</label>
+            {/* <PieChart
+              data={[
+                { title: "One", value: 10, color: "#E38627" },
+                { title: "Two", value: 15, color: "#C13C37" },
+                { title: "Three", value: 20, color: "#6A2135" },
+              ]}
+            /> */}
+            ;
           </div>
           <div className="flexColumn">
             <div className="title2">Custom Boards</div>

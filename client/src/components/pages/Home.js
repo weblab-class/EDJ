@@ -16,7 +16,9 @@ class Home extends Component {
     if (this.props.userId) {
       navigate("/host");
     } else {
-      alert("You must be logged in to host or join a game.");
+      alert(
+        "You must be logged in to host or join a game. Click on the menu icon in the upper left corner to log in."
+      );
     }
   };
 
@@ -24,7 +26,9 @@ class Home extends Component {
     if (this.props.userId) {
       navigate("/join");
     } else {
-      alert("You must be logged in to host or join a game.");
+      alert(
+        "You must be logged in to host or join a game. Click on the menu icon in the upper left corner to log in."
+      );
     }
   };
 
