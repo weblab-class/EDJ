@@ -56,6 +56,11 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.mp3$/,
+        // include: SRC,
+        loader: "file-loader",
+      },
     ],
   },
   resolve: {

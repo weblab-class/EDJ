@@ -3,6 +3,9 @@ import { get } from "../../utilities.js";
 import { post } from "../../utilities.js";
 import { socket } from "../../client-socket.js";
 
+import laser from "../modules/Game/laser.mp3";
+import bounce from "../modules/Game/jump.mp3";
+
 import Info from "../modules/Game/Info.js";
 import GameBoard from "../modules/Game/GameBoard.js";
 import ScoreBoard from "../modules/Game/ScoreBoard.js";
@@ -70,13 +73,20 @@ class Game extends Component {
   };
 
   movePlayer = (event) => {
+    const moveSound = new Audio(bounce);
+    const laserSound = new Audio(laser);
+    moveSound.volume = 0.2;
+    laserSound.volume = 0.5;
     const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
     if (event.key === " " && player.id === this.state.players[this.state.currentTurn].id) {
       post("/api/laser", {
         id: this.props.gameId,
         dir: this.state.board[player.location.x][player.location.y].inputDirection,
       })
-        .then((res) => console.log("Pew"))
+        .then((res) => {
+          console.log("Pew");
+          laserSound.play();
+        })
         .catch(console.log);
       return null;
     }
@@ -104,12 +114,15 @@ class Game extends Component {
           .then((game) => {
             if (typeof game.message === "string") {
               if (game.message === "Game over.") {
+                moveSound.play();
                 if (this.props.userId === player.id) {
                   alert("You won!");
                 }
               } else {
                 alert(game.message);
               }
+            } else {
+              moveSound.play();
             }
           })
           .catch(console.log);
