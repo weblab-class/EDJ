@@ -19,6 +19,7 @@ class HostGame extends Component {
       roomName: "",
       mirrors: 6,
       playerStyle: "",
+      message: "",
     };
   }
 
@@ -38,9 +39,15 @@ class HostGame extends Component {
 
   hostgame = () => {
     if (this.state.roomName === "") {
-      alert("You must name the room!");
+      this.setState({ message: "You must name the room!" });
+      setTimeout(() => {
+        this.setState({ message: "" });
+      }, 2000);
     } else if (this.state.playerStyle === "") {
-      alert("You must choose a player style!");
+      this.setState({ message: "You must choose a player state!" });
+      setTimeout(() => {
+        this.setState({ message: "" });
+      }, 2000);
     } else {
       const body = {
         roomName: this.state.roomName,
@@ -54,9 +61,13 @@ class HostGame extends Component {
           navigate("/game/" + String(game._id));
         })
         .catch((err) => {
-          alert(
-            "You are not logged in. Click on the menu icon in the upper left corner to log in."
-          );
+          this.setState({
+            message:
+              "You are not logged in. Click on the menu icon in the upper left corner to log in.",
+          });
+          setTimeout(() => {
+            this.setState({ message: "" });
+          }, 3000);
         });
     }
   };
@@ -113,6 +124,13 @@ class HostGame extends Component {
     }
   };
 
+  viewError = () => {
+    if (this.state.message !== "") {
+      return "error-message";
+    }
+    return "";
+  };
+
   render() {
     return (
       <div className="u-center-screen">
@@ -167,6 +185,7 @@ class HostGame extends Component {
         <div className="hostgame-link code-box" id="code" onClick={this.clickCode}>
           {this.state.toDisplay}
         </div>
+        <div className={this.viewError()}>{this.state.message}</div>
         <div id="host-button" className="u-button u-link" onClick={this.hostgame}>
           Host!
         </div>

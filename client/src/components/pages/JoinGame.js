@@ -12,6 +12,7 @@ class JoinGame extends Component {
 
     this.state = {
       code: "",
+      message: "",
     };
   }
 
@@ -38,6 +39,13 @@ class JoinGame extends Component {
     });
   };
 
+  viewError = () => {
+    if (this.state.message !== "") {
+      return "error-message";
+    }
+    return "";
+  };
+
   handleClick = () => {
     post("/api/joinGame", { code: this.state.code })
       .then((data) => {
@@ -45,11 +53,20 @@ class JoinGame extends Component {
         if (!(Object.keys(data).length === 0 && data.constructor === Object)) {
           navigate("/game/" + String(data._id));
         } else {
-          alert("No valid games found.");
+          this.setState({ message: "No valid games found." });
+          setTimeout(() => {
+            this.setState({ message: "" });
+          }, 2000);
         }
       })
       .catch((err) => {
-        alert("You are not logged in. Click on the menu icon in the upper left corner to log in.");
+        this.setState({
+          message:
+            "You are not logged in. Click on the menu icon in the upper left corner to log in.",
+        });
+        setTimeout(() => {
+          this.setState({ message: "" });
+        }, 3000);
       });
   };
 
@@ -63,6 +80,7 @@ class JoinGame extends Component {
           placeholder="Enter code here..."
           onChange={this.handleChange}
         ></input>
+        <div className={this.viewError()}>{this.state.message}</div>
         <div className="u-button u-link" onClick={this.handleClick}>
           Join!
         </div>
