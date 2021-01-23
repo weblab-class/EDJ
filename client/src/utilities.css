@@ -45,11 +45,13 @@ form {
 
 .u-flex {
   display: flex;
+ 
 }
 
 .u-flexColumn {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .u-flex-justifyCenter {

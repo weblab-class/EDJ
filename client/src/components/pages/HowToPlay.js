@@ -94,6 +94,7 @@ class HowToPlay extends Component {
             </ol>
           </div>
         </div>
+    <div className = "bottom-half-box">
         <div className="title2">Controls</div>
         <div className="infoP u-flex u-flex-alignSpaceAround">
           <div className="control-box u-flexColumn">
@@ -135,25 +136,30 @@ class HowToPlay extends Component {
               <p>shoot</p>
             </div>
           </div>
-          <div className="player-container u-flexColumn">
+               
+        <div className = "u-flexColumn">
+          <div className="player-container ">
             <div className={this.state.playerStyle + "_" + this.state.orientation + "0"}></div>
           </div>
           <div className="choose-container u-flex-justifySpaceEvenly">
             <label id="choose-player">Choose Player:</label>
             <div
-              className={this.isClicked("popsicle") + " u-link u-flexColumn"}
+              className={this.isClicked("popsicle") + " u-link "}
               onClick={this.isPopsicle}
             >
               <div className="popsicle_1"></div>
             </div>
             <div
-              className={this.isClicked("pokemon") + " u-link u-flexColumn"}
+              className={this.isClicked("pokemon") + " u-link "}
               onClick={this.isPokemon}
             >
               <div className="pokemon_1"></div>
             </div>
           </div>
-        </div>
+          </div>
+          </div>
+          </div>
+        
       </div>
     );
   }
