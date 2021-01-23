@@ -19,3 +19,8 @@
 .button:hover {
   background-color: #d7d7d7;
 }
+
+.ajs-message.ajs-custom {
+  color: #000000;
+  background-color: #c4c4c4;
+}

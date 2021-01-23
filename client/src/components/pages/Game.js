@@ -7,10 +7,14 @@ import laser from "../modules/Game/laser.mp3";
 import bounce from "../modules/Game/jump.mp3";
 import won from "../modules/Game/game_won.mp3";
 import alertTone from "../modules/Game/alert.mp3";
+import errorTone from "../modules/Game/message.mp3";
 
 import Info from "../modules/Game/Info.js";
 import GameBoard from "../modules/Game/GameBoard.js";
 import ScoreBoard from "../modules/Game/ScoreBoard.js";
+
+import alertify from "alertifyjs";
+import "alertifyjs/build/css/alertify.css";
 
 import "./Game.css";
 import { Socket } from "socket.io-client";
@@ -48,10 +52,6 @@ class Game extends Component {
   };
 
   componentDidMount() {
-    // if (!this.props.userId) {
-    //   alert("You are not logged in.");
-    //   navigate("/");
-    // }
     window.addEventListener("keydown", this.movePlayer);
     get("/api/checkGame", { _id: this.props.gameId })
       .then((data) => {
@@ -64,8 +64,9 @@ class Game extends Component {
         }
       })
       .catch((err) => {
-        alert("You are not logged in.");
-        navigate("/");
+        alertify.alert("Error.", "You are not logged in!", () => {
+          navigate("/");
+        });
       });
   }
 
@@ -87,6 +88,7 @@ class Game extends Component {
     const laserSound = new Audio(laser);
     const wonGame = new Audio(won);
     const alertSound = new Audio(alertTone);
+    const errorSound = new Audio(errorTone);
     moveSound.volume = 0.15;
     laserSound.volume = 0.5;
     wonGame.volume = 0.2;
@@ -105,7 +107,9 @@ class Game extends Component {
       return null;
     } else if (event.key === " " && player.id !== this.state.players[this.state.currentTurn].id) {
       alertSound.play();
-      alert("Not your turn!");
+      alertify.notify("Not your turn!", "custom", 3, function () {
+        console.log("dismissed");
+      });
     }
     const x = player.location.x;
     const y = player.location.y;
@@ -132,10 +136,14 @@ class Game extends Component {
             if (typeof game.message === "string") {
               if (game.message === "Game won.") {
                 wonGame.play();
-                alert("You won!");
+                alertify.notify("You won!", "custom", 3, function () {
+                  console.log("dismissed");
+                });
               } else {
                 alertSound.play();
-                alert(game.message);
+                alertify.notify(game.message, "custom", 3, function () {
+                  console.log("dismissed");
+                });
               }
             } else {
               moveSound.play();

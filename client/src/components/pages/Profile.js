@@ -21,7 +21,6 @@ class Profile extends Component {
     get("/api/user", { userId: this.props.userId }).then((user) => {
       this.setState({ user: user, loading: false });
     });
-    // alert("Page not fully functional yet");
   }
 
   handleEnter = (event) => {
