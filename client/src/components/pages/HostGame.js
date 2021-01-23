@@ -4,6 +4,8 @@ import user from "../../../../server/models/user.js";
 import { post } from "../../utilities.js";
 import { navigate } from "@reach/router";
 
+import errorTone from "../modules/Game/message.mp3";
+
 import "./HostGame.css";
 //import { post } from "../../../../server/api";
 
@@ -11,8 +13,6 @@ class HostGame extends Component {
   constructor(props) {
     super(props);
     const code = this.revealCode();
-    // while code in db of current games, keep generating code
-    // append code to array of codes after while loop
     this.state = {
       code: code,
       toDisplay: code,
@@ -38,12 +38,15 @@ class HostGame extends Component {
   };
 
   hostgame = () => {
+    const errorSound = new Audio(errorTone);
     if (this.state.roomName === "") {
+      errorSound.play();
       this.setState({ message: "You must name the room!" });
       setTimeout(() => {
         this.setState({ message: "" });
       }, 2000);
     } else if (this.state.playerStyle === "") {
+      errorSound.play();
       this.setState({ message: "You must choose a player state!" });
       setTimeout(() => {
         this.setState({ message: "" });
@@ -61,6 +64,7 @@ class HostGame extends Component {
           navigate("/game/" + String(game._id));
         })
         .catch((err) => {
+          errorSound.play();
           this.setState({
             message:
               "You are not logged in. Click on the menu icon in the upper left corner to log in.",
