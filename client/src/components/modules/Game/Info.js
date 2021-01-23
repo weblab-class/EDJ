@@ -48,13 +48,11 @@ class Info extends Component {
   render() {
     return (
       <div className="Info-container">
-        <div className="Room-info u-flexColumn u-flex-justifySpaceEvenly">
+        <div className="Room-info u-flex-justifySpaceEvenly">
           <Card field="Room Name" value={this.props.roomName} />
           <Card field="Room Code" value={this.props.roomCode} />
         </div>
-        <div className="status-container u-flexColumn u-flex-justifySpaceEvenly">
-          {this.displayLogic()}
-        </div>
+        <div className="status-container u-flex-justifySpaceEvenly">{this.displayLogic()}</div>
       </div>
     );
   }

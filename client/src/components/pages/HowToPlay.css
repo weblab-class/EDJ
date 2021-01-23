@@ -16,15 +16,15 @@ p {
 }
 
 .instruction-box {
-  width: 90%;/* calc(100% - 64px);*/
+  /* width: 90%; calc(100% - 64px); */
   height: auto;
+  margin: 0px 90px 0px 90px;
   border-radius: 10px;
   font-size: 16pt;
   background-color: rgb(232, 199, 199, 1);
   font-weight: 600;
   color: --primary;
-  padding: var(--m) ;
- 
+  padding: var(--m);
 }
 
 .infoP {
@@ -36,24 +36,23 @@ p {
   align-items: center;
 }
 
-.bottom-half-box{
-  background-color:rgb(240, 216, 216);
-  padding: 10px 0px 70px 0px;
-  margin: 20px 90px 100px 90px ;
+.bottom-half-box {
+  background-color: rgb(240, 216, 216);
+  padding: 10px 0px 50px 0px;
+  margin: 20px 90px 100px 90px;
   border-radius: 15px;
-  height: 100%;
-  
+  /* height: 100%; */
 }
 
 .control-box {
-  padding: 20px 40px;
+  padding: 5px 40px;
   margin-right: 20px;
-  margin-top: 20px;
+  /* margin-top: 10px; */
+  /* margin-bottom: 10px; */
   border-radius: 10px;
   font-size: 18pt;
   background-color: rgb(211, 180, 180);
   font-weight: 600;
-  color: --primary;
   box-shadow: 2px 3px 5px #3f3f3f;
 }
 
@@ -69,7 +68,7 @@ p {
   text-align: left;
   font-family: "Yusei Magic", sans-serif;
   font-size: 40pt;
-  background-color:  #fff4f4;
+  background-color: #fff4f4;
   padding: 40px;
   margin: 20px;
   border-radius: 10px;
@@ -86,6 +85,7 @@ p {
   transition-duration: 0.2s;
   box-shadow: 2px 3px 5px #3f3f3f;
 }
+
 .key:hover {
   margin: 20px 20px 10px 10px;
   padding: 10px 20px;
@@ -110,11 +110,11 @@ p {
 
 .player-container {
   width: 300px;
-  height: 100%;
+  height: 70%;
   margin-right: 20px;
   border-radius: 10px;
   padding: 5px 40px;
-  background-color:  #574e4e;
+  background-color: #574e4e;
   box-shadow: 2px 3px 5px #3f3f3f;
 }
 
@@ -134,8 +134,8 @@ p {
 .popsicle-container-play {
   width: 80%;
   height: 80%;
-  background-color:rgba(92, 82, 82, 0.438);
-  box-shadow: 2px 3px 2px  rgb(110, 102, 102);
+  background-color: rgba(92, 82, 82, 0.438);
+  box-shadow: 2px 3px 2px rgb(110, 102, 102);
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 10px;
@@ -148,7 +148,7 @@ p {
   width: 100%;
   height: 100%;
   background-color: rgba(75, 67, 67, 0.4);
-  box-shadow: 2px 3px 2px  rgb(110, 102, 102);
+  box-shadow: 2px 3px 2px rgb(110, 102, 102);
 }
 
 .popsicle-containerClicked-play {

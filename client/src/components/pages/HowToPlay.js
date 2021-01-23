@@ -94,72 +94,65 @@ class HowToPlay extends Component {
             </ol>
           </div>
         </div>
-    <div className = "bottom-half-box">
-        <div className="title2">Controls</div>
-        <div className="infoP u-flex u-flex-alignSpaceAround">
-          <div className="control-box u-flexColumn">
-            Test controls by clicking keys
-            <div className="u-flex">
-              <div className="u-flexColumn">
-                <button className="key" onClick={this.buttonClickUp}>
-                  {" "}
-                  ᐃ{" "}
-                </button>
-                <button className="key" onClick={this.buttonClickDown}>
-                  {" "}
-                  ᐁ{" "}
-                </button>
+        <div className="bottom-half-box">
+          <div className="title2">Controls</div>
+          <div className="infoP u-flex u-flex-alignSpaceAround">
+            <div className="control-box u-flexColumn">
+              Test controls by clicking keys
+              <div className="u-flex">
+                <div className="u-flexColumn">
+                  <button className="key" onClick={this.buttonClickUp}>
+                    {" "}
+                    ᐃ{" "}
+                  </button>
+                  <button className="key" onClick={this.buttonClickDown}>
+                    {" "}
+                    ᐁ{" "}
+                  </button>
+                </div>
+                <div className="u-flexColumn">
+                  <p>up</p>
+                  <p>down</p>
+                </div>
+                <div className="u-flexColumn">
+                  <button className="key" onClick={this.buttonClickLeft}>
+                    {" "}
+                    ᐊ{" "}
+                  </button>
+                  <button className="key" onClick={this.buttonClickRight}>
+                    {" "}
+                    ᐅ{" "}
+                  </button>
+                </div>
+                <div className="u-flexColumn">
+                  <p>left</p>
+                  <p>right</p>
+                </div>
               </div>
-              <div className="u-flexColumn">
-                <p>up</p>
-                <p>down</p>
-              </div>
-              <div className="u-flexColumn">
-                <button className="key" onClick={this.buttonClickLeft}>
-                  {" "}
-                  ᐊ{" "}
+              <div className="u-flex">
+                <button className="key" onKeyPress={this.buttonClick}>
+                  [ SPACE ]
                 </button>
-                <button className="key" onClick={this.buttonClickRight}>
-                  {" "}
-                  ᐅ{" "}
-                </button>
-              </div>
-              <div className="u-flexColumn">
-                <p>left</p>
-                <p>right</p>
+                <p>shoot</p>
               </div>
             </div>
-            <div className="u-flex">
-              <button className="key" onKeyPress={this.buttonClick}>
-                [ SPACE ]
-              </button>
-              <p>shoot</p>
+
+            <div className="u-flexColumn">
+              <div className="player-container">
+                <div className={this.state.playerStyle + "_" + this.state.orientation + "0"}></div>
+              </div>
+              <div className="choose-container u-flex-justifySpaceEvenly">
+                <label id="choose-player">Choose Player:</label>
+                <div className={this.isClicked("popsicle") + " u-link "} onClick={this.isPopsicle}>
+                  <div className="popsicle_1"></div>
+                </div>
+                <div className={this.isClicked("pokemon") + " u-link "} onClick={this.isPokemon}>
+                  <div className="pokemon_1"></div>
+                </div>
+              </div>
             </div>
           </div>
-               
-        <div className = "u-flexColumn">
-          <div className="player-container ">
-            <div className={this.state.playerStyle + "_" + this.state.orientation + "0"}></div>
-          </div>
-          <div className="choose-container u-flex-justifySpaceEvenly">
-            <label id="choose-player">Choose Player:</label>
-            <div
-              className={this.isClicked("popsicle") + " u-link "}
-              onClick={this.isPopsicle}
-            >
-              <div className="popsicle_1"></div>
-            </div>
-            <div
-              className={this.isClicked("pokemon") + " u-link "}
-              onClick={this.isPokemon}
-            >
-              <div className="pokemon_1"></div>
-            </div>
-          </div>
-          </div>
-          </div>
-          </div>
-        
+        </div>
       </div>
     );
   }
