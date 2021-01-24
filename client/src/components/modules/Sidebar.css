@@ -56,6 +56,10 @@
   top: 36px;
 }
 
+.bm-burger-button button:focus, .bm-cross-button button:focus {
+  outline: none;
+}
+
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
   background: rgb(73, 72, 80);
