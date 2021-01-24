@@ -31,15 +31,19 @@ class HowToPlay extends Component {
 
   handleButton = (event) => {
     if (event.key === "ArrowUp") {
+      event.preventDefault();
       this.buttonClickUp(event);
     }
     if (event.key === "ArrowDown") {
+      event.preventDefault();
       this.buttonClickDown(event);
     }
     if (event.key === "ArrowLeft") {
+      event.preventDefault();
       this.buttonClickLeft(event);
     }
     if (event.key === "ArrowRight") {
+      event.preventDefault();
       this.buttonClickRight(event);
     }
   };
