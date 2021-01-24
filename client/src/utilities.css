@@ -43,6 +43,10 @@ form {
   flex-grow: 1;
 }
 
+.u-height {
+  height: 100%;
+}
+
 .u-flex {
   display: flex;
  
@@ -51,7 +55,6 @@ form {
 .u-flexColumn {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .u-flex-justifyCenter {

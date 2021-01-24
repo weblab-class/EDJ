@@ -90,7 +90,7 @@ router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id).then((user) => {
     const newUser = user;
     console.log(newUser);
-    Game.findOne({ roomCode: req.body.code })
+    Game.findOne({ isActive: false, roomCode: req.body.code })
       .then((game) => {
         if (game) {
           const playerNum = game.players.length;

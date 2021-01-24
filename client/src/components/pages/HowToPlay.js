@@ -141,7 +141,7 @@ class HowToPlay extends Component {
               </div>
             </div>
 
-            <div className="u-flexColumn">
+            <div className="u-flexColumn u-height">
               <div className="player-container">
                 <div className={this.state.playerStyle + "_" + this.state.orientation + "0"}></div>
               </div>
