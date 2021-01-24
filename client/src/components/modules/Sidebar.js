@@ -13,17 +13,29 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      menuOpen: false,
       loggedIn: false,
     };
   }
 
+  closeMenu() {
+    this.setState({ menuOpen: false });
+  }
+
+  handleStateChange(state) {
+    this.setState({ menuOpen: state.isOpen });
+  }
+
   home = () => {
+    this.closeMenu();
     navigate("/");
   };
   rules = () => {
+    this.closeMenu();
     navigate("/howto");
   };
   profile = () => {
+    this.closeMenu();
     navigate("/profile/" + this.props.userId);
   };
 
@@ -41,7 +53,11 @@ class Sidebar extends Component {
   }
   render() {
     return (
-      <Menu>
+      <Menu
+        isOpen={this.state.menuOpen}
+        onStateChange={(state) => this.handleStateChange(state)}
+        disableAutoFocus
+      >
         <div className="title">Trickshot</div>
         <div className="nav u-link" onClick={this.home}>
           Play

@@ -85,6 +85,7 @@ router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
   Game.findById(req.query._id).then((game) => res.send(game));
 });
 
+
 router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id).then((user) => {
     const newUser = user;
