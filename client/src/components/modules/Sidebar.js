@@ -53,7 +53,11 @@ class Sidebar extends Component {
   }
   render() {
     return (
-      <Menu isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
+      <Menu
+        isOpen={this.state.menuOpen}
+        onStateChange={(state) => this.handleStateChange(state)}
+        disableAutoFocus
+      >
         <div className="title">Trickshot</div>
         <div className="nav u-link" onClick={this.home}>
           Play
