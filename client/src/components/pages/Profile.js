@@ -96,6 +96,7 @@ class Profile extends Component {
             <label>Losses: {this.state.losses}</label>
             <label>Ratio:      {Math.round(this.state.wins/this.state.user.losses)}</label>
             </div>
+        <div className = "flexColumn">
             <PieChart
               radius={40}
               label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
@@ -110,6 +111,13 @@ class Profile extends Component {
                 { title: "Losses", value: this.state.losses, color: "#756565" },
               ]}
             /> 
+            <div className="flexRow keyBox">
+              <label>wins</label> 
+              <div className = "winKey"> word  </div>
+              <label>losses</label>
+              <div className = "loseKey"> word  </div>
+            </div>
+            </div>
           </div>
           </div>
           <div className="flexColumn">
@@ -119,36 +127,7 @@ class Profile extends Component {
         </div>
       </div>
     );
-    // );
-    //   } else {
-    //     return (
-    //       <div className="u-center">
-    //         <div className="title1"> {this.state.nickname} </div>
-    //         <div className="flexRow">
-    //           <div className="flexColumn">
-    //             <div className="title2">Username</div>
-    //             <div className="flexRow">
-    //               <label className="u-inlineBlock">Change Name:</label>
-    //               <input onChange={this.changeName}></input>
-    //               <button onClick={this.submitName}></button>
-    //             </div>
-    //             <div className="title2">Game History</div>
-    //             <label>wins:</label>
-    //             <label>losses:</label>
-    //             <label>ratio:</label>
-    //           </div>
-    //           <div className="flexColumn">
-    //             <div className="title2">Custom Boards</div>
-    //             <select>
-    //               <option>board1</option>
-    //               <option>board2</option>
-    //               <option>board3</option>
-    //             </select>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     );
-    // }
+   
   }
 }
 export default Profile;

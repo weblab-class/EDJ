@@ -51,9 +51,27 @@
 .statsBox{
   background-color:rgb(221, 183, 182);
   border-radius: 10px;
-  margin: 20px;
+  margin-top: 40px;
   padding: 10px;
 }
+
+.keyBox{
+  background-color:#ffffff;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.winKey {
+  background-color: #45d8b8;
+  color: #45d8b8;
+  border-radius: 10px;
+}
+.loseKey {
+  background-color: #756565;
+  color: #756565;
+  border-radius: 10px;
+}
+
 #change-user {
   padding: 20px;
   border: 0;
