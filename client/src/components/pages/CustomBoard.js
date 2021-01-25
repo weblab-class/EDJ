@@ -35,7 +35,7 @@ class CustomBoard extends Component {
     render() {
         return (
           <div className="blank-container u-flex u-flex-justifyCenter u-flex-alignCenter">
-            <div className="holder u-flex uflex-justifyCenter u-flex-alignCenter">
+            <div className="holder u-flex u-flex-justifyCenter u-flex-alignCenter">
                 <div className="blank">
                     <Blank board={this.state.board} cycle={this.cycle} />
                 </div>

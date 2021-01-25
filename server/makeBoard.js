@@ -80,6 +80,10 @@ const updateBoard = (board, value, location, direction) => {
   return board;
 };
 
+const validate = (board) => {
+  return true;
+}
+
 const checkClass = (mirrorsArray) => {
   const board = [];
   for (let i = 0; i < 9; i++) {
@@ -162,6 +166,7 @@ const resetLight = (board) => {
 };
 
 module.exports = {
+  validate,
   fire,
   setLight,
   resetLight,

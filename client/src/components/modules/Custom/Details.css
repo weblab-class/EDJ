@@ -10,3 +10,19 @@
     border-radius: 5px;
     box-shadow: 2px 3px 5px #3f3f3f;
 }
+
+.row-container {
+    height: auto;
+    width: 100%;
+    padding: var(--s) 0px;
+}
+
+.icon {
+    width: 40%;
+    padding-bottom: 40%;
+    height: 100%;
+}
+
+.Board-name-bar {
+    width: 90%;
+}
