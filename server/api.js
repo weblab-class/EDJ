@@ -311,6 +311,19 @@ router.post("/changeName", auth.ensureLoggedIn, (req, res) => {
     .catch(console.log);
 });
 
+router.post("/newBoard", auth.ensureLoggedIn, (req, res) => {
+  if (makeBoard.validate(req.body.board)) {
+    User.findById(req.user._id).then((user) => {
+      const newBoard = {name: req.body.name, board: req.body.board};
+      user.boards.push(newBoard);
+      res.send(newBoard);
+    })
+  }
+  else {
+    res.send({message: "Not a valid board"})
+  }
+})
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
