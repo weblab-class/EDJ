@@ -60,8 +60,15 @@ router.post("/initsocket", (req, res) => {
 router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
-      const mirrors = makeBoard.createMirrors(req.body.mirrors);
-      let board = makeBoard.checkClass(mirrors);
+      let board = []
+      if (req.body.boardType == "Random") {
+        const mirrors = makeBoard.createMirrors(14)
+        board = makeBoard.checkClass(mirrors);
+      }
+      else {
+        template = user.boards.filter((board) => board.name === req.body.boardType)[0].board;
+        board = makeBoard.makeFromTemplate(template);
+      }
       board = makeBoard.updateBoard(board, "Player0", locations[0], { x: 0, y: -1 });
       const name = user.name;
       const newGame = new Game({
