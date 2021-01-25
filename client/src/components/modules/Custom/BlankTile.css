@@ -1,0 +1,57 @@
+.blankTile-container {
+    height: 100%;
+    width: 100%;
+}
+
+.blankTile-body {
+    background-color:rgb(255, 255, 255);
+    height: 90%;
+    width: 90%;
+    border-radius: 4px;
+    /*box-shadow: 2px 3px 5px #3f3f3f;*/
+}
+
+.NA {
+    /* background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/White_x_in_red_rounded_square.svg/1200px-White_x_in_red_rounded_square.svg.png") center center no-repeat; */
+    /* background-size: cover; */
+    background-color: rgb(156, 128, 128);
+}
+
+.allowed:hover {
+    border: solid 2px yellow;
+    cursor: pointer;
+}
+
+.Right-mirror {
+    width: 100%;
+    height: 6px;
+    background-color: rgb(154, 210, 255);
+    transform: rotate(45deg);
+    border-radius: 4px;
+    box-shadow: 2px 3px 5px #3f3f3f;
+}
+
+.Left-mirror {
+    width: 100%;
+    height: 6px;
+    background-color: rgb(154, 210, 255);
+    transform: rotate(-45deg);
+    border-radius: 4px;
+    box-shadow: 2px 3px 5px #3f3f3f;
+}
+
+.Vert-wall {
+    width: 6px;
+    height: 100%;
+    background-color: rgb(85, 72, 72);
+    border-radius: 4px;
+    box-shadow: 2px 3px 5px #3f3f3f;
+}
+
+.Hor-wall {
+    width: 100%;
+    height: 6px;
+    background-color: rgb(85, 72, 72);
+    border-radius: 4px;
+    box-shadow: 2px 3px 5px #3f3f3f;
+}

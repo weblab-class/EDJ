@@ -61,6 +61,10 @@ form {
   justify-content: center;
 }
 
+.u-flex-justifySpaceAround {
+  justify-content: space-around;
+}
+
 .u-flex-justifySpaceEvenly {
   justify-content: space-evenly;
 }
