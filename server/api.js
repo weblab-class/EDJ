@@ -60,12 +60,11 @@ router.post("/initsocket", (req, res) => {
 router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
-      let board = []
+      let board = [];
       if (req.body.boardType == "Random") {
-        const mirrors = makeBoard.createMirrors(14)
+        const mirrors = makeBoard.createMirrors(14);
         board = makeBoard.checkClass(mirrors);
-      }
-      else {
+      } else {
         template = user.boards.filter((board) => board.name === req.body.boardType)[0].board;
         board = makeBoard.makeFromTemplate(template);
       }
@@ -269,9 +268,6 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                 game.currRound += 1;
                 if (game.currRound === game.rounds + 1) {
                   game.isActive = false;
-                  // game.players.map((player) => {
-                  //   socketManager.getSocketFromUserID(player.id).emit("updateBoard", game);
-                  // });
                 } else {
                   for (player of game.players) {
                     const location = locations[game.players.indexOf(player)];

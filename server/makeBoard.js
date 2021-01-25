@@ -39,16 +39,12 @@ const createMirrors = (mirrorsNum) => {
     let randomLoc = possibleMirrors[Math.floor(Math.random() * possibleMirrors.length)];
 
     // check for neighbors
-    const directlyAdj = [
-      { i: -1, j: 0 },
-      { i: 1, j: 0 },
-      { i: 0, j: 1 },
-      { i: 0, j: -1 },
-    ];
-    for (neighbor of directlyAdj) {
-      if (containsObj(mirrorsArray, { x: randomLoc.x + neighbor.i, y: randomLoc.y + neighbor.j })) {
-        mirrorNearby = true;
-        break;
+    for (i of [-1, 0, 1]) {
+      for (j of [-1, 0, 1]) {
+        if (containsObj(mirrorsArray, { x: randomLoc.x + i, y: randomLoc.y + j })) {
+          mirrorNearby = true;
+          break;
+        }
       }
     }
     if (mirrorNearby) {
@@ -82,7 +78,7 @@ const updateBoard = (board, value, location, direction) => {
 
 const validate = (board) => {
   return true;
-}
+};
 
 const checkClass = (mirrorsArray) => {
   const board = [];
@@ -113,28 +109,27 @@ const checkClass = (mirrorsArray) => {
 };
 
 const makeFromTemplate = (board) => {
-  for (let i=0;i<9;i++) {
-    for (let j=0; j<9;j++) {
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
       switch (board[i][j]) {
         case "-2":
-          board[i][j] = {tileType: "Vert-wall"};
+          board[i][j] = { tileType: "Vert-wall" };
           break;
         case "-1":
-          board[i][j] = {tileType: "Hor-wall"};
+          board[i][j] = { tileType: "Hor-wall" };
           break;
         case "0":
           if (i === 4 && j === 4) {
-            board[i][j] = {tileType: "goal"}
-          }
-          else {
-            board[i][j] = {tileType: ""};
+            board[i][j] = { tileType: "goal" };
+          } else {
+            board[i][j] = { tileType: "" };
           }
           break;
         case "1":
-          board[i][j] = {tileType: "Left-mirror"};
+          board[i][j] = { tileType: "Left-mirror" };
           break;
         case "2":
-          board[i][j] = {tileType: "Right-mirror"};
+          board[i][j] = { tileType: "Right-mirror" };
           break;
         default:
           break;
@@ -142,7 +137,7 @@ const makeFromTemplate = (board) => {
     }
   }
   return board;
-}
+};
 
 const isValid = (space, board) => {
   let bounds = space.x >= 0 && space.x <= 8 && space.y >= 0 && space.y <= 8;

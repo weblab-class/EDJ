@@ -1,5 +1,3 @@
-
-
 .title1 {
   text-align: center;
   font-family: "Yusei Magic", sans-serif;
@@ -24,14 +22,13 @@
 .flexRow {
   display: flex;
   flex-direction: row;
-  
 }
 .flexColumn {
   display: flex;
   flex-direction: column;
   margin: 20px 50px;
   height: 100%;
-  width:100%;
+  width: 100%;
 }
 
 .button {
@@ -48,15 +45,15 @@
   background-color: #d7d7d7;
 }
 
-.statsBox{
-  background-color:rgb(221, 183, 182);
+.statsBox {
+  background-color: rgb(221, 183, 182);
   border-radius: 10px;
   margin-top: 40px;
   padding: 10px;
 }
 
-.keyBox{
-  background-color:#ffffff;
+.keyBox {
+  background-color: #ffffff;
   border-radius: 10px;
   padding: 10px;
 }
@@ -79,4 +76,11 @@
   box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
   border-radius: 10px;
   font-size: 18pt;
+}
+
+.gamesInfo {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }

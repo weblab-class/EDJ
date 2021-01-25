@@ -69,10 +69,8 @@ class Profile extends Component {
     if (this.state.loading) {
       return <div>Loading...</div>;
     }
-    // if (this.state.nickname === "") {
     return (
       <div className="u-center">
-        
         <div className="title1">{this.state.user.name}</div>
         <div className="flexRow">
           <div className="flexColumn">
@@ -89,36 +87,44 @@ class Profile extends Component {
                 Submit
               </div>
             </div>
-            <div className="flexRow">
-              <div className="flexColumn statsBox">
-            <div className="title2">Game History</div>
-            <label>Wins:  {this.state.user.wins}</label>
-            <label>Losses: {this.state.losses}</label>
-            <label>Ratio:      {Math.round(this.state.wins/this.state.user.losses)}</label>
+            {/* <div className="flexRow"> */}
+            <div className="statsBox flexRow">
+              <div className="u-flexColumn">
+                <div className="title2">Game History</div>
+                <div className="gamesInfo">
+                  <label>Wins: {this.state.wins}</label>
+                  <label>Losses: {this.state.losses}</label>
+                  <label>Total games: {this.state.wins + this.state.losses}</label>
+                </div>
+                {/* <label>Ratio: {Math.round(this.state.wins / this.state.user.losses)}</label> */}
+              </div>
+              <div className="u-flexColumn">
+                <PieChart
+                  radius={40}
+                  label={({ dataEntry }) => `${Math.round(dataEntry.percentage)}%`}
+                  labelStyle={{
+                    fontSize: "8px",
+                    fontFamily: "Nunito",
+                    fill: "#ffffff",
+                    fontWeight: "300",
+                  }}
+                  labelPosition={65}
+                  data={[
+                    { title: "Wins", value: this.state.wins, color: "#45d8b8" },
+                    { title: "Losses", value: this.state.losses, color: "#756565" },
+                  ]}
+                  lengthAngle={360}
+                  animate
+                />
+                <div className="flexRow keyBox">
+                  <label>wins</label>
+                  <div className="winKey"> word </div>
+                  <label>losses</label>
+                  <div className="loseKey"> word </div>
+                </div>
+              </div>
+              {/* </div> */}
             </div>
-        <div className = "flexColumn">
-            <PieChart
-              radius={40}
-              label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
-              labelStyle={{
-                fontSize: '10px',
-                fontFamily: "Nunito",
-                fill: "#ffffff",
-                fontWeight: "300",
-              }}
-              data={[
-                { title: "Wins", value: this.state.wins, color: "#45d8b8" },
-                { title: "Losses", value: this.state.losses, color: "#756565" },
-              ]}
-            /> 
-            <div className="flexRow keyBox">
-              <label>wins</label> 
-              <div className = "winKey"> word  </div>
-              <label>losses</label>
-              <div className = "loseKey"> word  </div>
-            </div>
-            </div>
-          </div>
           </div>
           <div className="flexColumn">
             <div className="title2">Custom Boards</div>
@@ -127,7 +133,6 @@ class Profile extends Component {
         </div>
       </div>
     );
-   
   }
 }
 export default Profile;
