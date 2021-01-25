@@ -24,18 +24,20 @@
 
 .player-name {
   font-size: 18px;
-  text-align: right;
+  text-align: center;
 }
 
 .field-container {
-  flex: 60%;
+  flex: 70%;
+  padding-left: 15px;
 }
 
 .mini-imgContainer {
-  flex: 40%;
+  flex: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-right: 15px;
 }
 
 .pokemondown0small {

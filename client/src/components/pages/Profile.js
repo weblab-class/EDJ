@@ -82,7 +82,7 @@ class Profile extends Component {
                 { title: "Three", value: 20, color: "#6A2135" },
               ]}
             /> */}
-            ;
+            {/* ; */}
           </div>
           <div className="flexColumn">
             <div className="title2">Custom Boards</div>
