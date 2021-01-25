@@ -3,7 +3,6 @@ import { Link } from "@reach/router";
 import { navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { stack as Menu } from "react-burger-menu";
-
 const GOOGLE_CLIENT_ID = "787919045075-1l8kq4dvm5i4s525fjvrdnctpcrl70hm.apps.googleusercontent.com";
 
 import "./Sidebar.css";

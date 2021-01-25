@@ -13,13 +13,14 @@ class Profile extends Component {
       loading: true,
       nickname: "",
       changeName: false,
+      wins: undefined,
+      losses: undefined,
     };
   }
 
   componentDidMount() {
     get("/api/user", { userId: this.props.userId }).then((user) => {
-      this.setState({ user: user, loading: false });
-      console.log(user);
+      this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
     });
   }
 
@@ -72,8 +73,8 @@ class Profile extends Component {
               </div>
             </div>
             <div className="title2">Game History</div>
-            <label>wins: {this.state.user.wins}</label>
-            <label>losses: {this.state.user.wins}</label>
+            <label>wins: {this.state.wins}</label>
+            <label>losses: {this.state.losses}</label>
             <label>ratio:</label>
             {/* <PieChart
               data={[

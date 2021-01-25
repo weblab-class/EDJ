@@ -39,6 +39,18 @@ class Game extends Component {
   }
 
   update = (data) => {
+    this.setState({
+      board: data.board,
+      currentTurn: data.currentTurn,
+      isActive: data.isActive,
+      mirrors: data.mirrors,
+      players: data.players,
+      roomCode: data.roomCode,
+      roomName: data.roomName,
+      playerStyle: data.playerStyle,
+      rounds: data.rounds,
+      currRound: data.currRound,
+    });
     if (data.currRound === data.rounds + 1) {
       const maxScore = Math.max.apply(
         Math,
@@ -47,28 +59,14 @@ class Game extends Component {
         })
       );
       const winner = this.state.players.find(function (player) {
-        return player.score == maxScore;
+        return player.score === maxScore;
       });
-      if (this.props.userId === winner.id) {
-        this.props.user.wins += 1;
-      } else {
-        this.props.user.losses += 1;
+      console.log(winner);
+      if (winner) {
+        post("/api/addWin", { id: winner.id });
       }
       alertify.alert("Game over.", winner.name + " won the game!", () => {
         navigate("/");
-      });
-    } else {
-      this.setState({
-        board: data.board,
-        currentTurn: data.currentTurn,
-        isActive: data.isActive,
-        mirrors: data.mirrors,
-        players: data.players,
-        roomCode: data.roomCode,
-        roomName: data.roomName,
-        playerStyle: data.playerStyle,
-        rounds: data.rounds,
-        currRound: data.currRound,
       });
     }
     // console.log(this.state.players);
@@ -83,14 +81,14 @@ class Game extends Component {
           this.update(data);
           socket.on("updateBoard", (game) => {
             this.update(game);
-            console.log(game);
+            // console.log(game);
           });
         }
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
         errorSound.play();
-        alertify.alert("Error.", "You are not logged in!", () => {
+        alertify.alert("Error.", "Redirecting you to the Home Page.", () => {
           navigate("/");
         });
       });
@@ -203,6 +201,7 @@ class Game extends Component {
             gameId={this.props.gameId}
             playerStyle={this.state.playerStyle}
             currRound={this.state.currRound}
+            rounds={this.state.rounds}
           />
         </div>
         <div className="board">

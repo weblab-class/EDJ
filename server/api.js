@@ -90,7 +90,7 @@ router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
 router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id).then((user) => {
     const newUser = user;
-    console.log(newUser);
+    // console.log(newUser);
     Game.findOne({ isActive: false, roomCode: req.body.code })
       .then((game) => {
         if (game) {
@@ -260,37 +260,37 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                 let board = makeBoard.checkClass(mirrorsArr);
                 game.players[game.currentTurn].score += 1;
                 game.currRound += 1;
-                // if (game.currRound === game.rounds + 1) {
-                //   res.send({});
-                //   game.players.map((player) => {
-                //     socketManager.getSocketFromUserID(player.id).emit("updateBoard", game);
-                //   });
-                // } else {
-                for (player of game.players) {
-                  const location = locations[game.players.indexOf(player)];
-                  newPlayers.push({
-                    name: player.name,
-                    id: player.id,
-                    score: player.score,
-                    location: location,
-                  });
-                  let direction;
-                  if (location.x < 4) {
-                    direction = { x: 0, y: -1 };
-                  } else {
-                    direction = { x: 0, y: 1 };
+                if (game.currRound === game.rounds + 1) {
+                  game.isActive = false;
+                  // game.players.map((player) => {
+                  //   socketManager.getSocketFromUserID(player.id).emit("updateBoard", game);
+                  // });
+                } else {
+                  for (player of game.players) {
+                    const location = locations[game.players.indexOf(player)];
+                    newPlayers.push({
+                      name: player.name,
+                      id: player.id,
+                      score: player.score,
+                      location: location,
+                    });
+                    let direction;
+                    if (location.x < 4) {
+                      direction = { x: 0, y: -1 };
+                    } else {
+                      direction = { x: 0, y: 1 };
+                    }
+                    board = makeBoard.updateBoard(
+                      board,
+                      "Player" + String(game.players.indexOf(player)),
+                      location,
+                      direction
+                    );
                   }
-                  board = makeBoard.updateBoard(
-                    board,
-                    "Player" + String(game.players.indexOf(player)),
-                    location,
-                    direction
-                  );
+                  game.board = board;
+                  game.players = newPlayers;
+                  res.send({ message: "Round won." });
                 }
-                game.board = board;
-                game.players = newPlayers;
-                res.send({ message: "Round won." });
-                // }
               } else {
                 res.send({});
               }
@@ -310,6 +310,20 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.post("/addWin", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (String(user._id) === req.body.id) {
+        // if winner
+        user.wins += 1;
+      } else {
+        user.losses += 1;
+      }
+      user.save().then((data) => res.send(data));
+    })
+    .catch(console.log);
+});
+
 router.post("/changeName", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
@@ -323,15 +337,14 @@ router.post("/changeName", auth.ensureLoggedIn, (req, res) => {
 router.post("/newBoard", auth.ensureLoggedIn, (req, res) => {
   if (makeBoard.validate(req.body.board)) {
     User.findById(req.user._id).then((user) => {
-      const newBoard = {name: req.body.name, board: req.body.board};
+      const newBoard = { name: req.body.name, board: req.body.board };
       user.boards.push(newBoard);
       res.send(newBoard);
-    })
+    });
+  } else {
+    res.send({ message: "Not a valid board" });
   }
-  else {
-    res.send({message: "Not a valid board"})
-  }
-})
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
