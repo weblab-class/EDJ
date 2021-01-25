@@ -38,12 +38,21 @@ class Sidebar extends Component {
     this.closeMenu();
     navigate("/profile/" + this.props.userId);
   };
+  boards = () => {
+    this.closeMenu();
+    navigate("/custom/")
+  }
 
   isLogged = () => {
     if (this.props.userId) {
       return (
-        <div className="nav u-link" onClick={this.profile}>
-          Profile
+        <div className="parent">
+          <div className="nav u-link" onClick={this.profile}>
+            Profile
+          </div>
+          <div className="nav u-link" onClick={this.boards}>
+            Boards
+          </div>
         </div>
       );
     }

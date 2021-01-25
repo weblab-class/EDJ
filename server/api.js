@@ -30,8 +30,8 @@ const socketManager = require("./server-socket");
 
 const locations = [
   { x: 0, y: 0 },
-  { x: 0, y: 8 },
   { x: 8, y: 8 },
+  { x: 0, y: 8 },
   { x: 8, y: 0 },
 ];
 
