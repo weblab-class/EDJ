@@ -20,6 +20,7 @@ class HostGame extends Component {
       mirrors: 6,
       playerStyle: "",
       message: "",
+      rounds: 1,
     };
   }
 
@@ -57,6 +58,7 @@ class HostGame extends Component {
         roomCode: this.state.code,
         mirrors: this.state.mirrors,
         playerStyle: this.state.playerStyle,
+        rounds: this.state.rounds,
       };
       post("/api/newGame", body)
         .then((game) => {
@@ -108,6 +110,11 @@ class HostGame extends Component {
   updateMirrors = (event) => {
     event.persist();
     this.setState({ mirrors: Number(event.target.value) });
+  };
+
+  updateRounds = (event) => {
+    event.persist();
+    this.setState({ rounds: Number(event.target.value) });
   };
 
   isPopsicle = (event) => {
@@ -166,6 +173,21 @@ class HostGame extends Component {
             <option>12</option>
             <option>13</option>
             <option>14</option>
+          </select>
+        </div>
+        <div>
+          <label className="u-inlineBlock">Number of rounds:</label>
+          <select id="rounds" value={this.state.rounds} onChange={this.updateRounds}>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
           </select>
         </div>
         {/* <div> */}

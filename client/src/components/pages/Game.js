@@ -34,24 +34,44 @@ class Game extends Component {
       roomCode: "",
       roomName: "",
       playerStyle: "",
+      rounds: 1,
+      currRound: 1,
     };
   }
 
   update = (data) => {
-    this.setState({
-      board: data.board,
-      currentTurn: data.currentTurn,
-      isActive: data.isActive,
-      mirrors: data.mirrors,
-      players: data.players,
-      roomCode: data.roomCode,
-      roomName: data.roomName,
-      playerStyle: data.playerStyle,
-    });
-    console.log(this.state.players);
+    if (data.currRound === data.rounds + 1) {
+      const maxScore = Math.max.apply(
+        Math,
+        this.state.players.map(function (player) {
+          return player.score;
+        })
+      );
+      const winner = this.state.players.find(function (player) {
+        return player.score === maxScore;
+      });
+      alertify.alert("Game over.", winner.name + " won the game!", () => {
+        navigate("/");
+      });
+    } else {
+      this.setState({
+        board: data.board,
+        currentTurn: data.currentTurn,
+        isActive: data.isActive,
+        mirrors: data.mirrors,
+        players: data.players,
+        roomCode: data.roomCode,
+        roomName: data.roomName,
+        playerStyle: data.playerStyle,
+        rounds: data.rounds,
+        currRound: data.currRound,
+      });
+    }
+    // console.log(this.state.players);
   };
 
   componentDidMount() {
+    const errorSound = new Audio(errorTone);
     window.addEventListener("keydown", this.movePlayer);
     get("/api/checkGame", { _id: this.props.gameId })
       .then((data) => {
@@ -64,6 +84,8 @@ class Game extends Component {
         }
       })
       .catch((err) => {
+        // console.log(err);
+        errorSound.play();
         alertify.alert("Error.", "You are not logged in!", () => {
           navigate("/");
         });
@@ -88,7 +110,6 @@ class Game extends Component {
     const laserSound = new Audio(laser);
     const wonGame = new Audio(won);
     const alertSound = new Audio(alertTone);
-    const errorSound = new Audio(errorTone);
     moveSound.volume = 0.15;
     laserSound.volume = 0.5;
     wonGame.volume = 0.2;
@@ -134,7 +155,7 @@ class Game extends Component {
         post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction })
           .then((game) => {
             if (typeof game.message === "string") {
-              if (game.message === "Game won.") {
+              if (game.message === "Round won.") {
                 wonGame.play();
                 alertify.notify("You won!", "custom", 3, function () {
                   console.log("dismissed");
@@ -177,6 +198,7 @@ class Game extends Component {
             gameData={this.state}
             gameId={this.props.gameId}
             playerStyle={this.state.playerStyle}
+            currRound={this.state.currRound}
           />
         </div>
         <div className="board">
