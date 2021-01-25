@@ -4,7 +4,7 @@ import { navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { stack as Menu } from "react-burger-menu";
 
-const GOOGLE_CLIENT_ID = "473769754928-7ahknn038led2u1qif6aj95lka4k528i.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "787919045075-1l8kq4dvm5i4s525fjvrdnctpcrl70hm.apps.googleusercontent.com";
 
 import "./Sidebar.css";
 import { get, post } from "../../utilities";
