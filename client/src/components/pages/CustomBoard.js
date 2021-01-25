@@ -40,7 +40,7 @@ class CustomBoard extends Component {
                     <Blank board={this.state.board} cycle={this.cycle} />
                 </div>
                 <div className="details">
-                    <Details userId={this.props.userId} />
+                    <Details board={this.state.board} userId={this.props.userId} />
                 </div>
             </div>
           </div>

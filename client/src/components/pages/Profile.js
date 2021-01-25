@@ -13,14 +13,23 @@ class Profile extends Component {
       loading: true,
       nickname: "",
       changeName: false,
+<<<<<<< HEAD
       wins: undefined,
       losses: undefined,
+=======
+      boards: [],
+>>>>>>> 388c4de6f83366ad64549823df5cb39f3fec060d
     };
   }
 
   componentDidMount() {
     get("/api/user", { userId: this.props.userId }).then((user) => {
       this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
+    });
+    get("/api/getBoards").then((res) => {
+      this.setState({
+        boards: res.boards,
+      })
     });
   }
 
@@ -29,6 +38,12 @@ class Profile extends Component {
       this.submitName();
     }
   };
+
+  getCustomBoards = () => {
+    return this.state.boards.map((board) => {
+      return (<option key={board.name} value={board.name}>{board.name}</option>)
+    })
+  }
 
   changeName = (event) => {
     event.persist();
@@ -88,9 +103,7 @@ class Profile extends Component {
           <div className="flexColumn">
             <div className="title2">Custom Boards</div>
             <select>
-              <option>board1</option>
-              <option>board2</option>
-              <option>board3</option>
+              {this.getCustomBoards()}
             </select>
           </div>
         </div>
