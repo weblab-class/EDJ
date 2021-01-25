@@ -47,7 +47,7 @@ class Game extends Component {
         })
       );
       const winner = this.state.players.find(function (player) {
-        return player.score === maxScore;
+        return player.score == maxScore;
       });
       if (this.props.userId === winner.id) {
         this.props.user.wins += 1;

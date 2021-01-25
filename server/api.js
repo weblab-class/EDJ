@@ -260,37 +260,37 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                 let board = makeBoard.checkClass(mirrorsArr);
                 game.players[game.currentTurn].score += 1;
                 game.currRound += 1;
-                if (game.currRound === game.rounds + 1) {
-                  res.send({});
-                  game.players.map((player) => {
-                    socketManager.getSocketFromUserID(player.id).emit("updateBoard", game);
+                // if (game.currRound === game.rounds + 1) {
+                //   res.send({});
+                //   game.players.map((player) => {
+                //     socketManager.getSocketFromUserID(player.id).emit("updateBoard", game);
+                //   });
+                // } else {
+                for (player of game.players) {
+                  const location = locations[game.players.indexOf(player)];
+                  newPlayers.push({
+                    name: player.name,
+                    id: player.id,
+                    score: player.score,
+                    location: location,
                   });
-                } else {
-                  for (player of game.players) {
-                    const location = locations[game.players.indexOf(player)];
-                    newPlayers.push({
-                      name: player.name,
-                      id: player.id,
-                      score: player.score,
-                      location: location,
-                    });
-                    let direction;
-                    if (location.x < 4) {
-                      direction = { x: 0, y: -1 };
-                    } else {
-                      direction = { x: 0, y: 1 };
-                    }
-                    board = makeBoard.updateBoard(
-                      board,
-                      "Player" + String(game.players.indexOf(player)),
-                      location,
-                      direction
-                    );
+                  let direction;
+                  if (location.x < 4) {
+                    direction = { x: 0, y: -1 };
+                  } else {
+                    direction = { x: 0, y: 1 };
                   }
-                  game.board = board;
-                  game.players = newPlayers;
-                  res.send({ message: "Round won." });
+                  board = makeBoard.updateBoard(
+                    board,
+                    "Player" + String(game.players.indexOf(player)),
+                    location,
+                    direction
+                  );
                 }
+                game.board = board;
+                game.players = newPlayers;
+                res.send({ message: "Round won." });
+                // }
               } else {
                 res.send({});
               }
