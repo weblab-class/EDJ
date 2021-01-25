@@ -53,7 +53,7 @@ class Home extends Component {
   render() {
     return (
       <div className="u-center-screen">
-        <div className="u-title">Trickshot</div>
+        <div className="u-title">Trickshots</div>
         <div className="u-button-container">
           <div className="u-button u-link" onClick={this.validateHost}>
             Host game

@@ -19,23 +19,35 @@
   text-align: center;
   font-weight: bold;
   font-size: large;
-  padding-top: var(--xs);
+  /* padding-top: var(--xs); */
+}
+
+.value {
+  text-align: center;
+  font-size: large;
+  /* padding-bottom: var(--xs); */
+}
+
+hr {
+  width: 75%;
 }
 
 .player-name {
   font-size: 18px;
-  text-align: right;
+  text-align: center;
 }
 
 .field-container {
-  flex: 60%;
+  flex: 70%;
+  padding-left: 15px;
 }
 
 .mini-imgContainer {
-  flex: 40%;
+  flex: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-right: 15px;
 }
 
 .pokemondown0small {
@@ -140,14 +152,4 @@
   margin: var(--s) 0px var(--s) 0px;
   background-color: rgb(226, 226, 226);
   border-radius: 4px;
-}
-
-.value {
-  text-align: center;
-  font-size: large;
-  padding-bottom: var(--xs);
-}
-
-hr {
-  width: 75%;
 }

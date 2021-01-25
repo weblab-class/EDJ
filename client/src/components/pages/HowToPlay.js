@@ -77,7 +77,7 @@ class HowToPlay extends Component {
         <div className="title1">How to Play</div>
         <div className="instruction-box-container u-flex u-flex-justifyCenter u-flex-alignCenter">
           <div className="instruction-box">
-            Trickshot is a 2-4 player, turn-based game. You may either host a game or join a game
+            Trickshots is a 2-4 player, turn-based game. You may either host a game or join a game
             using a code, but you must be logged in before doing either. By hosting a game, you can
             choose the name of your game room and the number of mirrors on your game board. Once the
             game starts, the ordering of the players is randomly generated.
