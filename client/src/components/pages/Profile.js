@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { get } from "../../utilities";
 import { post } from "../../utilities";
-import user from "../../../../server/models/user.js";
 import Info from "../modules/Game/Info.js";
 import { PieChart } from "react-minimal-pie-chart";
 import "./Profile.css";
@@ -20,6 +19,7 @@ class Profile extends Component {
   componentDidMount() {
     get("/api/user", { userId: this.props.userId }).then((user) => {
       this.setState({ user: user, loading: false });
+      console.log(user);
     });
   }
 
@@ -72,8 +72,8 @@ class Profile extends Component {
               </div>
             </div>
             <div className="title2">Game History</div>
-            <label>wins:</label>
-            <label>losses:</label>
+            <label>wins: {this.state.user.wins}</label>
+            <label>losses: {this.state.user.wins}</label>
             <label>ratio:</label>
             {/* <PieChart
               data={[

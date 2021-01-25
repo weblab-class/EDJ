@@ -29,6 +29,7 @@ class App extends Component {
     super(props);
     this.state = {
       userId: undefined,
+      user: undefined,
     };
   }
 
@@ -36,7 +37,7 @@ class App extends Component {
     get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
-        this.setState({ userId: user._id });
+        this.setState({ userId: user._id, user: user });
       }
     });
   }
@@ -71,12 +72,12 @@ class App extends Component {
               handleLogout={this.handleLogout}
               userId={this.state.userId}
             />*/}
-            <Home path="/" userId={this.state.userId} />
+            <Home path="/" userId={this.state.userId} user={this.state.user} />
             <Game path="/game/:gameId" userId={this.state.userId} />
             <HowToPlay path="/howto/" />
             <HostGame path="/host/" />
             <JoinGame path="/join/" />
-            <CustomBoard path="/custom/" userId={this.state.userId}/>
+            <CustomBoard path="/custom/" userId={this.state.userId} />
             <Profile path="/profile/:userId" userId={this.state.userId} />
             <NotFound default />
           </Router>

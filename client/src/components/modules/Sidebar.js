@@ -40,8 +40,8 @@ class Sidebar extends Component {
   };
   boards = () => {
     this.closeMenu();
-    navigate("/custom/")
-  }
+    navigate("/custom/");
+  };
 
   isLogged = () => {
     if (this.props.userId) {
@@ -67,7 +67,7 @@ class Sidebar extends Component {
         onStateChange={(state) => this.handleStateChange(state)}
         disableAutoFocus
       >
-        <div className="title">Trickshot</div>
+        <div className="title">Trickshots</div>
         <div className="nav u-link" onClick={this.home}>
           Play
         </div>

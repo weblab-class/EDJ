@@ -18,7 +18,6 @@ import "alertifyjs/build/css/alertify.css";
 
 import "./Game.css";
 import { Socket } from "socket.io-client";
-import user from "../../../../server/models/user.js";
 import { navigate } from "@reach/router";
 
 class Game extends Component {
@@ -50,6 +49,11 @@ class Game extends Component {
       const winner = this.state.players.find(function (player) {
         return player.score === maxScore;
       });
+      if (this.props.userId === winner.id) {
+        this.props.user.wins += 1;
+      } else {
+        this.props.user.losses += 1;
+      }
       alertify.alert("Game over.", winner.name + " won the game!", () => {
         navigate("/");
       });
