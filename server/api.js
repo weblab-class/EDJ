@@ -321,16 +321,22 @@ router.post("/changeName", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/newBoard", auth.ensureLoggedIn, (req, res) => {
-  if (makeBoard.validate(req.body.board)) {
+  if (makeBoard.validate(req.body.board) && req.body.name !== "") {
     User.findById(req.user._id).then((user) => {
       const newBoard = {name: req.body.name, board: req.body.board};
       user.boards.push(newBoard);
-      res.send(newBoard);
-    })
+      user.save().then((data) => res.send(data))
+    }).catch(console.log)
   }
   else {
     res.send({message: "Not a valid board"})
   }
+})
+
+router.get("/getBoards", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.user._id).then((user) => {
+    res.send({boards: user.boards})
+  }).catch(console.log)
 })
 
 // anything else falls to this "not found" case

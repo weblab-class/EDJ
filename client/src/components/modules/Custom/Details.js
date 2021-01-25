@@ -23,7 +23,8 @@ class Details extends Component {
   }
 
   saveBoard = () => {
-      post("/api/newBoard").then((res) => {
+      const body = {name: this.state.name, board: this.props.board}
+      post("/api/newBoard", body).then((res) => {
           alert(res.message)
       })
   }

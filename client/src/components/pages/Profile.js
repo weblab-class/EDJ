@@ -13,6 +13,7 @@ class Profile extends Component {
       loading: true,
       nickname: "",
       changeName: false,
+      boards: [],
     };
   }
 
@@ -21,6 +22,11 @@ class Profile extends Component {
       this.setState({ user: user, loading: false });
       console.log(user);
     });
+    get("/api/getBoards").then((res) => {
+      this.setState({
+        boards: res.boards,
+      })
+    });
   }
 
   handleEnter = (event) => {
@@ -28,6 +34,12 @@ class Profile extends Component {
       this.submitName();
     }
   };
+
+  getCustomBoards = () => {
+    return this.state.boards.map((board) => {
+      return (<option key={board.name} value={board.name}>{board.name}</option>)
+    })
+  }
 
   changeName = (event) => {
     event.persist();
@@ -87,9 +99,7 @@ class Profile extends Component {
           <div className="flexColumn">
             <div className="title2">Custom Boards</div>
             <select>
-              <option>board1</option>
-              <option>board2</option>
-              <option>board3</option>
+              {this.getCustomBoards()}
             </select>
           </div>
         </div>
