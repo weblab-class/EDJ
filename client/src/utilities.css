@@ -47,6 +47,10 @@ form {
   height: 100%;
 }
 
+.u-width {
+  width: 100%;
+}
+
 .u-flex {
   display: flex;
  

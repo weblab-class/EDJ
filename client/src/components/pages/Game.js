@@ -18,7 +18,6 @@ import "alertifyjs/build/css/alertify.css";
 
 import "./Game.css";
 import { Socket } from "socket.io-client";
-import user from "../../../../server/models/user.js";
 import { navigate } from "@reach/router";
 
 class Game extends Component {
@@ -34,6 +33,8 @@ class Game extends Component {
       roomCode: "",
       roomName: "",
       playerStyle: "",
+      rounds: 1,
+      currRound: 1,
     };
   }
 
@@ -47,11 +48,32 @@ class Game extends Component {
       roomCode: data.roomCode,
       roomName: data.roomName,
       playerStyle: data.playerStyle,
+      rounds: data.rounds,
+      currRound: data.currRound,
     });
-    console.log(this.state.players);
+    if (data.currRound === data.rounds + 1) {
+      const maxScore = Math.max.apply(
+        Math,
+        this.state.players.map(function (player) {
+          return player.score;
+        })
+      );
+      const winner = this.state.players.find(function (player) {
+        return player.score === maxScore;
+      });
+      console.log(winner);
+      if (winner) {
+        post("/api/addWin", { id: winner.id });
+      }
+      alertify.alert("Game over.", winner.name + " won the game!", () => {
+        navigate("/");
+      });
+    }
+    // console.log(this.state.players);
   };
 
   componentDidMount() {
+    const errorSound = new Audio(errorTone);
     window.addEventListener("keydown", this.movePlayer);
     get("/api/checkGame", { _id: this.props.gameId })
       .then((data) => {
@@ -59,12 +81,14 @@ class Game extends Component {
           this.update(data);
           socket.on("updateBoard", (game) => {
             this.update(game);
-            console.log(game);
+            // console.log(game);
           });
         }
       })
       .catch((err) => {
-        alertify.alert("Error.", "You are not logged in!", () => {
+        console.log(err);
+        errorSound.play();
+        alertify.alert("Error.", "Redirecting you to the Home Page.", () => {
           navigate("/");
         });
       });
@@ -88,7 +112,6 @@ class Game extends Component {
     const laserSound = new Audio(laser);
     const wonGame = new Audio(won);
     const alertSound = new Audio(alertTone);
-    const errorSound = new Audio(errorTone);
     moveSound.volume = 0.15;
     laserSound.volume = 0.5;
     wonGame.volume = 0.2;
@@ -134,7 +157,7 @@ class Game extends Component {
         post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction })
           .then((game) => {
             if (typeof game.message === "string") {
-              if (game.message === "Game won.") {
+              if (game.message === "Round won.") {
                 wonGame.play();
                 alertify.notify("You won!", "custom", 3, function () {
                   console.log("dismissed");
@@ -177,6 +200,8 @@ class Game extends Component {
             gameData={this.state}
             gameId={this.props.gameId}
             playerStyle={this.state.playerStyle}
+            currRound={this.state.currRound}
+            rounds={this.state.rounds}
           />
         </div>
         <div className="board">

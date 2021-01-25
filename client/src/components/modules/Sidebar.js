@@ -3,8 +3,7 @@ import { Link } from "@reach/router";
 import { navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { stack as Menu } from "react-burger-menu";
-
-const GOOGLE_CLIENT_ID = "473769754928-7ahknn038led2u1qif6aj95lka4k528i.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "787919045075-1l8kq4dvm5i4s525fjvrdnctpcrl70hm.apps.googleusercontent.com";
 
 import "./Sidebar.css";
 import { get, post } from "../../utilities";
@@ -40,8 +39,8 @@ class Sidebar extends Component {
   };
   boards = () => {
     this.closeMenu();
-    navigate("/custom/")
-  }
+    navigate("/custom/");
+  };
 
   isLogged = () => {
     if (this.props.userId) {
@@ -67,7 +66,7 @@ class Sidebar extends Component {
         onStateChange={(state) => this.handleStateChange(state)}
         disableAutoFocus
       >
-        <div className="title">Trickshot</div>
+        <div className="title">Trickshots</div>
         <div className="nav u-link" onClick={this.home}>
           Play
         </div>

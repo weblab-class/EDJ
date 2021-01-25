@@ -73,6 +73,8 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
         players: [{ name: name, id: req.user._id, score: 0, location: locations[0] }],
         currentTurn: 0,
         playerStyle: req.body.playerStyle,
+        rounds: req.body.rounds,
+        currRound: 1,
       });
       newGame
         .save()
@@ -85,11 +87,10 @@ router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
   Game.findById(req.query._id).then((game) => res.send(game));
 });
 
-
 router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id).then((user) => {
     const newUser = user;
-    console.log(newUser);
+    // console.log(newUser);
     Game.findOne({ isActive: false, roomCode: req.body.code })
       .then((game) => {
         if (game) {
@@ -258,30 +259,38 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                 const mirrorsArr = makeBoard.createMirrors(game.mirrors);
                 let board = makeBoard.checkClass(mirrorsArr);
                 game.players[game.currentTurn].score += 1;
-                for (player of game.players) {
-                  const location = locations[game.players.indexOf(player)];
-                  newPlayers.push({
-                    name: player.name,
-                    id: player.id,
-                    score: player.score,
-                    location: location,
-                  });
-                  let direction;
-                  if (location.x < 4) {
-                    direction = { x: 0, y: -1 };
-                  } else {
-                    direction = { x: 0, y: 1 };
+                game.currRound += 1;
+                if (game.currRound === game.rounds + 1) {
+                  game.isActive = false;
+                  // game.players.map((player) => {
+                  //   socketManager.getSocketFromUserID(player.id).emit("updateBoard", game);
+                  // });
+                } else {
+                  for (player of game.players) {
+                    const location = locations[game.players.indexOf(player)];
+                    newPlayers.push({
+                      name: player.name,
+                      id: player.id,
+                      score: player.score,
+                      location: location,
+                    });
+                    let direction;
+                    if (location.x < 4) {
+                      direction = { x: 0, y: -1 };
+                    } else {
+                      direction = { x: 0, y: 1 };
+                    }
+                    board = makeBoard.updateBoard(
+                      board,
+                      "Player" + String(game.players.indexOf(player)),
+                      location,
+                      direction
+                    );
                   }
-                  board = makeBoard.updateBoard(
-                    board,
-                    "Player" + String(game.players.indexOf(player)),
-                    location,
-                    direction
-                  );
+                  game.board = board;
+                  game.players = newPlayers;
+                  res.send({ message: "Round won." });
                 }
-                game.board = board;
-                game.players = newPlayers;
-                res.send({ message: "Game won." });
               } else {
                 res.send({});
               }
@@ -301,12 +310,48 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.post("/addWin", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (String(user._id) === req.body.id) {
+        // if winner
+        user.wins += 1;
+      } else {
+        user.losses += 1;
+      }
+      user.save().then((data) => res.send(data));
+    })
+    .catch(console.log);
+});
+
 router.post("/changeName", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
       console.log(user);
       user.name = req.body.newName;
       user.save().then((data) => res.send(data));
+    })
+    .catch(console.log);
+});
+
+router.post("/newBoard", auth.ensureLoggedIn, (req, res) => {
+  if (makeBoard.validate(req.body.board) && req.body.name !== "") {
+    User.findById(req.user._id)
+      .then((user) => {
+        const newBoard = { name: req.body.name, board: req.body.board };
+        user.boards.push(newBoard);
+        user.save().then((data) => res.send(data));
+      })
+      .catch(console.log);
+  } else {
+    res.send({ message: "Not a valid board" });
+  }
+});
+
+router.get("/getBoards", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      res.send({ boards: user.boards });
     })
     .catch(console.log);
 });

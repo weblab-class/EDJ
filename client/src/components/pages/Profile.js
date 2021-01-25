@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { get } from "../../utilities";
 import { post } from "../../utilities";
-import user from "../../../../server/models/user.js";
 import Info from "../modules/Game/Info.js";
 import { PieChart } from "react-minimal-pie-chart";
 import "./Profile.css";
@@ -14,12 +13,20 @@ class Profile extends Component {
       loading: true,
       nickname: "",
       changeName: false,
+      wins: undefined,
+      losses: undefined,
+      boards: [],
     };
   }
 
   componentDidMount() {
     get("/api/user", { userId: this.props.userId }).then((user) => {
-      this.setState({ user: user, loading: false });
+      this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
+    });
+    get("/api/getBoards").then((res) => {
+      this.setState({
+        boards: res.boards,
+      });
     });
   }
 
@@ -27,6 +34,16 @@ class Profile extends Component {
     if (event.keyCode === 13) {
       this.submitName();
     }
+  };
+
+  getCustomBoards = () => {
+    return this.state.boards.map((board) => {
+      return (
+        <option key={board.name} value={board.name}>
+          {board.name}
+        </option>
+      );
+    });
   };
 
   changeName = (event) => {
@@ -75,8 +92,8 @@ class Profile extends Component {
             <div className="flexRow">
               <div className="flexColumn">
             <div className="title2">Game History</div>
-            <label>wins:</label>
-            <label>losses:</label>
+            <label>wins: {this.state.wins}</label>
+            <label>losses: {this.state.losses}</label>
             <label>ratio:</label>
             </div>
             <PieChart
@@ -91,11 +108,7 @@ class Profile extends Component {
           </div>
           <div className="flexColumn">
             <div className="title2">Custom Boards</div>
-            <select>
-              <option>board1</option>
-              <option>board2</option>
-              <option>board3</option>
-            </select>
+            <select>{this.getCustomBoards()}</select>
           </div>
         </div>
       </div>

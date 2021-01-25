@@ -51,6 +51,7 @@ class Info extends Component {
         <div className="Room-info u-flex-justifySpaceEvenly">
           <Card field="Room Name" value={this.props.roomName} />
           <Card field="Room Code" value={this.props.roomCode} />
+          <Card field="Round No." value={this.props.currRound + " / " + this.props.rounds} />
         </div>
         <div className="status-container u-flex-justifySpaceEvenly">{this.displayLogic()}</div>
       </div>

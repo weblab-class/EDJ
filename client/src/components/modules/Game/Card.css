@@ -19,7 +19,17 @@
   text-align: center;
   font-weight: bold;
   font-size: large;
-  padding-top: var(--xs);
+  /* padding-top: var(--xs); */
+}
+
+.value {
+  text-align: center;
+  font-size: large;
+  /* padding-bottom: var(--xs); */
+}
+
+hr {
+  width: 75%;
 }
 
 .player-name {
@@ -142,14 +152,4 @@
   margin: var(--s) 0px var(--s) 0px;
   background-color: rgb(226, 226, 226);
   border-radius: 4px;
-}
-
-.value {
-  text-align: center;
-  font-size: large;
-  padding-bottom: var(--xs);
-}
-
-hr {
-  width: 75%;
 }
