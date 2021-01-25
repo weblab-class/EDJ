@@ -55,6 +55,7 @@ class Profile extends Component {
     // if (this.state.nickname === "") {
     return (
       <div className="u-center">
+        
         <div className="title1">{this.state.user.name}</div>
         <div className="flexRow">
           <div className="flexColumn">
@@ -71,18 +72,22 @@ class Profile extends Component {
                 Submit
               </div>
             </div>
+            <div className="flexRow">
+              <div className="flexColumn">
             <div className="title2">Game History</div>
             <label>wins:</label>
             <label>losses:</label>
             <label>ratio:</label>
-            {/* <PieChart
+            </div>
+            <PieChart
+              radius={40}
               data={[
                 { title: "One", value: 10, color: "#E38627" },
                 { title: "Two", value: 15, color: "#C13C37" },
                 { title: "Three", value: 20, color: "#6A2135" },
               ]}
-            /> */}
-            ;
+            /> 
+          </div>
           </div>
           <div className="flexColumn">
             <div className="title2">Custom Boards</div>
