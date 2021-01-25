@@ -92,9 +92,9 @@ class Profile extends Component {
             <div className="flexRow">
               <div className="flexColumn statsBox">
             <div className="title2">Game History</div>
-            <label>Wins:{this.state.user.wins}</label>
+            <label>Wins:  {this.state.user.wins}</label>
             <label>Losses: {this.state.losses}</label>
-            <label>Ratio:      {Math.round(5/10)}</label>
+            <label>Ratio:      {Math.round(this.state.wins/this.state.user.losses)}</label>
             </div>
             <PieChart
               radius={40}
@@ -106,8 +106,8 @@ class Profile extends Component {
                 fontWeight: "300",
               }}
               data={[
-                { title: "Wins", value: 10, color: "#45d8b8" },
-                { title: "Losses", value: 5, color: "#756565" },
+                { title: "Wins", value: this.state.wins, color: "#45d8b8" },
+                { title: "Losses", value: this.state.losses, color: "#756565" },
               ]}
             /> 
           </div>
