@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
-import { post } from "../../utilities.js";
+import { get, post } from "../../utilities.js";
 import { navigate } from "@reach/router";
 
 import errorTone from "../modules/Game/message.mp3";
@@ -16,7 +16,8 @@ class HostGame extends Component {
       code: code,
       toDisplay: code,
       roomName: "",
-      mirrors: 6,
+      boardType: "Random",
+      boards: [],
       playerStyle: "",
       message: "",
       rounds: 1,
@@ -24,6 +25,11 @@ class HostGame extends Component {
   }
 
   componentDidMount = () => {
+    get("/api/getBoards").then((res) => {
+      this.setState({
+        boards: res.boards,
+      });
+    });
     window.addEventListener("keydown", this.handleEnter);
   };
 
@@ -55,7 +61,7 @@ class HostGame extends Component {
       const body = {
         roomName: this.state.roomName,
         roomCode: this.state.code,
-        mirrors: this.state.mirrors,
+        boardType: this.state.boardType,
         playerStyle: this.state.playerStyle,
         rounds: this.state.rounds,
       };
@@ -106,9 +112,9 @@ class HostGame extends Component {
     });
   };
 
-  updateMirrors = (event) => {
+  updateBoardType = (event) => {
     event.persist();
-    this.setState({ mirrors: Number(event.target.value) });
+    this.setState({ boardType: String(event.target.value) });
   };
 
   updateRounds = (event) => {
@@ -139,6 +145,16 @@ class HostGame extends Component {
       return "error-message";
     }
     return "";
+  };  
+  
+  getCustomBoards = () => {
+    return this.state.boards.map((board) => {
+      return (
+        <option key={board.name} value={board.name}>
+          {board.name}
+        </option>
+      );
+    });
   };
 
   render() {
@@ -155,23 +171,10 @@ class HostGame extends Component {
           ></input>
         </div>
         <div>
-          <label className="u-inlineBlock">Number of mirrors:</label>
-          <select id="mirrors" value={this.state.mirrors} onChange={this.updateMirrors}>
-            {/* <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option> */}
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-            <option>11</option>
-            <option>12</option>
-            <option>13</option>
-            <option>14</option>
+          <label className="u-inlineBlock">Choose a board:</label>
+          <select id="mirrors" value={this.state.boardType} onChange={this.updateBoardType}>
+            <option>Random</option>
+            {this.getCustomBoards()}
           </select>
         </div>
         <div>

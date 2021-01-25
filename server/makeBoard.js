@@ -112,6 +112,38 @@ const checkClass = (mirrorsArray) => {
   return board;
 };
 
+const makeFromTemplate = (board) => {
+  for (let i=0;i<9;i++) {
+    for (let j=0; j<9;j++) {
+      switch (board[i][j]) {
+        case "-2":
+          board[i][j] = {tileType: "Vert-wall"};
+          break;
+        case "-1":
+          board[i][j] = {tileType: "Hor-wall"};
+          break;
+        case "0":
+          if (i === 4 && j === 4) {
+            board[i][j] = {tileType: "goal"}
+          }
+          else {
+            board[i][j] = {tileType: ""};
+          }
+          break;
+        case "1":
+          board[i][j] = {tileType: "Left-mirror"};
+          break;
+        case "2":
+          board[i][j] = {tileType: "Right-mirror"};
+          break;
+        default:
+          break;
+      }
+    }
+  }
+  return board;
+}
+
 const isValid = (space, board) => {
   let bounds = space.x >= 0 && space.x <= 8 && space.y >= 0 && space.y <= 8;
   if (!bounds) {
@@ -166,6 +198,7 @@ const resetLight = (board) => {
 };
 
 module.exports = {
+  makeFromTemplate,
   validate,
   fire,
   setLight,
