@@ -18,16 +18,20 @@
   font-size: 30pt;
   padding: var(--s);
   padding-left: var(--m);
+  padding-top: 10px;
 }
 
 .flexRow {
   display: flex;
   flex-direction: row;
+  
 }
 .flexColumn {
   display: flex;
   flex-direction: column;
   margin: 20px 50px;
+  height: 100%;
+  width:100%;
 }
 
 .button {
@@ -44,6 +48,12 @@
   background-color: #d7d7d7;
 }
 
+.statsBox{
+  background-color:rgb(221, 183, 182);
+  border-radius: 10px;
+  margin: 20px;
+  padding: 10px;
+}
 #change-user {
   padding: 20px;
   border: 0;

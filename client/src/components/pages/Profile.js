@@ -90,18 +90,24 @@ class Profile extends Component {
               </div>
             </div>
             <div className="flexRow">
-              <div className="flexColumn">
+              <div className="flexColumn statsBox">
             <div className="title2">Game History</div>
-            <label>wins: {this.state.wins}</label>
-            <label>losses: {this.state.losses}</label>
-            <label>ratio:</label>
+            <label>Wins:{this.state.user.wins}</label>
+            <label>Losses: {this.state.losses}</label>
+            <label>Ratio:      {Math.round(5/10)}</label>
             </div>
             <PieChart
               radius={40}
+              label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
+              labelStyle={{
+                fontSize: '10px',
+                fontFamily: "Nunito",
+                fill: "#ffffff",
+                fontWeight: "300",
+              }}
               data={[
-                { title: "One", value: 10, color: "#E38627" },
-                { title: "Two", value: 15, color: "#C13C37" },
-                { title: "Three", value: 20, color: "#6A2135" },
+                { title: "Wins", value: 10, color: "#45d8b8" },
+                { title: "Losses", value: 5, color: "#756565" },
               ]}
             /> 
           </div>
