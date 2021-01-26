@@ -188,7 +188,9 @@ class Profile extends Component {
         />
       );
     }
-
+    if (this.state.loading) {
+      return <div></div>;
+    }
     const emptyBoard = Array(9)
       .fill()
       .map(() => Array(9).fill(0));
