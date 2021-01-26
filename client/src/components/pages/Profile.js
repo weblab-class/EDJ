@@ -26,16 +26,18 @@ class Profile extends Component {
       this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
     });
     get("/api/getBoards").then((res) => {
-      this.setState({
-        boards: res.boards,
-      });
+      if (res.boards.length !== 0) {
+        this.setState({
+          boards: res.boards,
+          board: res.boards[0].board.map((row) => row.map((str) => (str = Number(str)))),
+        });
+      } else {
+        this.setState({
+          boards: res.boards,
+        });
+      }
     });
-    let newBoard = Array(9)
-      .fill()
-      .map(() => Array(9).fill(0));
-    this.setState({
-      board: newBoard,
-    });
+    console.log(this.state.board);
   }
 
   handleEnter = (event) => {
@@ -66,11 +68,17 @@ class Profile extends Component {
   submitName = () => {
     if (this.state.nickname !== "") {
       post("/api/changeName", { newName: this.state.nickname }).then((newUser) => {
-        console.log("profile user: ");
-        console.log(newUser);
         this.setState({ user: newUser });
       });
     }
+  };
+
+  displayBoard = (event) => {
+    const boardName = event.target.value;
+    const board = this.state.boards
+      .filter((board) => board.name === boardName)[0]
+      .board.map((row) => row.map((str) => (str = Number(str))));
+    this.setState({ board: board });
   };
 
   render() {
@@ -103,6 +111,10 @@ class Profile extends Component {
     if (this.state.loading) {
       return <div>Loading...</div>;
     }
+    const emptyBoard = Array(9)
+      .fill()
+      .map(() => Array(9).fill(0));
+
     return (
       <div className="u-center">
         <div className="title1">{this.state.user.name}</div>
@@ -132,7 +144,7 @@ class Profile extends Component {
                 </div>
                 {/* <label>Ratio: {Math.round(this.state.wins / this.state.user.losses)}</label> */}
               </div>
-              <div className="u-flexColumn">
+              <div className="u-flexColumn u-flex-justifyCenter">
                 {pieChart}
                 <div className="flexRow keyBox">
                   <label>wins</label>
@@ -144,11 +156,13 @@ class Profile extends Component {
               {/* </div> */}
             </div>
           </div>
-          <div className="flexColumn">
+          <div className="flexColumn u-flex-justifyCenter">
             <div className="title2">Custom Boards</div>
-            <select>{this.getCustomBoards()}</select>
-            <div className="blankBoard">
-              <Blank board={this.state.board} />
+            <select onChange={this.displayBoard}>{this.getCustomBoards()}</select>
+            <div className="holder u-flex u-flex-justifyCenter u-flex-alignCenter">
+              <div className="blankBoard">
+                <Blank board={this.state.board ? this.state.board : emptyBoard} />
+              </div>
             </div>
           </div>
         </div>

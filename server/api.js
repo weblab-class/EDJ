@@ -357,7 +357,7 @@ router.post("/newBoard", auth.ensureLoggedIn, (req, res) => {
       })
       .catch(console.log);
   } else {
-    res.send({ message: "Not a valid board" });
+    res.send({ message: "Not a valid board." });
   }
 });
 
