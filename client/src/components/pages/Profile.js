@@ -5,6 +5,7 @@ import Info from "../modules/Game/Info.js";
 import { PieChart } from "react-minimal-pie-chart";
 import "./Profile.css";
 import Blank from "../modules/Custom/Blank.js";
+import alertify from "alertifyjs";
 
 class Profile extends Component {
   constructor(props) {
@@ -17,18 +18,30 @@ class Profile extends Component {
       wins: undefined,
       losses: undefined,
       boards: [],
+      boardObj: {},
       board: undefined,
     };
   }
 
   componentDidMount() {
-    get("/api/user", { userId: this.props.userId }).then((user) => {
-      this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
-    });
+    get("/api/whoami")
+      .then((user) => {
+        console.log(user);
+        if (user._id) {
+          this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
+        } else {
+          alertify.alert("Error.", "You are not logged in.");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     get("/api/getBoards").then((res) => {
       if (res.boards.length !== 0) {
         this.setState({
           boards: res.boards,
+          boardObj: res.boards[0],
           board: res.boards[0].board.map((row) => row.map((str) => (str = Number(str)))),
         });
       } else {
@@ -37,7 +50,6 @@ class Profile extends Component {
         });
       }
     });
-    console.log(this.state.board);
   }
 
   handleEnter = (event) => {
@@ -75,10 +87,22 @@ class Profile extends Component {
 
   displayBoard = (event) => {
     const boardName = event.target.value;
-    const board = this.state.boards
-      .filter((board) => board.name === boardName)[0]
-      .board.map((row) => row.map((str) => (str = Number(str))));
-    this.setState({ board: board });
+    const boardObj = this.state.boards.filter((board) => board.name === boardName)[0];
+    const board = boardObj.board.map((row) => row.map((str) => (str = Number(str))));
+    this.setState({ board: board, boardObj: boardObj });
+  };
+
+  deleteBoard = (event) => {
+    if (this.state.boardObj !== {}) {
+      post("/api/deleteBoard", { boardObj: this.state.boardObj })
+        .then((user) => {
+          console.log(user);
+          this.setState({ user: user, boards: user.boards });
+        })
+        .catch(console.log);
+    } else {
+      alertify.alert("Error.", "Please select a board to delete.");
+    }
   };
 
   render() {
@@ -208,7 +232,7 @@ class Profile extends Component {
             <div className="title2">Custom Boards</div>
             <div className="u-flex u-flex-justifyCenter u-flex-alignCenter">
               <select onChange={this.displayBoard}>{this.getCustomBoards()}</select>
-              <div className="u-inlineBlock button u-link" onClick={this.deleteBoard}>
+              <div className="button u-link" id="delete-board" onClick={this.deleteBoard}>
                 Delete Board
               </div>
             </div>

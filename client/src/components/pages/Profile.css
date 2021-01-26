@@ -23,6 +23,7 @@
   display: flex;
   flex-direction: row;
 }
+
 .flexColumn {
   display: flex;
   flex-direction: column;
@@ -91,12 +92,17 @@
 }
 
 select {
-  font-size: 25pt;
+  font-size: 18pt;
   width: 40%;
   background-color: #eeeeee;
   border-radius: 10px;
   font-family: "Nunito";
   margin: 0px 0px 0px 0px;
-  padding: 5px;
+  padding: 7px;
   box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.414);
+}
+
+#delete-board {
+  font-size: 24px;
+  width: 30%;
 }
