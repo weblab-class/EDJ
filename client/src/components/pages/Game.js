@@ -40,6 +40,7 @@ class Game extends Component {
 
   update = (data) => {
     if (data.currRound === data.rounds + 1) {
+      console.log("byeee");
       this.setState({ board: data.board, players: data.players, isActive: data.isActive });
       const maxScore = Math.max.apply(
         Math,
@@ -47,15 +48,16 @@ class Game extends Component {
       );
       const winners = data.players.filter((player) => player.score === maxScore);
       console.log(winners);
-      post("/api/addWin", { winnersArr: winners })
-        .then((user) => {})
-        .catch(console.log);
-      let winnersStr = winners[0].name;
-      for (const winner of winners.slice(1)) {
-        winnersStr += " and " + winner.name;
-      }
-      alertify.alert("Game over.", winnersStr + " won the game!", () => {
-        navigate("/");
+      post("/api/addWin", { winnersArr: winners }).then((user) => {
+        let winnersStr = winners[0].name;
+        for (const winner of winners.slice(1)) {
+          winnersStr += " and " + winner.name;
+        }
+        alertify
+          .alert("Game over.", winnersStr + " won the game!", () => {
+            navigate("/");
+          })
+          .catch(console.log);
       });
     } else {
       this.setState({
@@ -70,6 +72,7 @@ class Game extends Component {
         currRound: data.currRound,
       });
     }
+    console.log(data);
   };
 
   componentDidMount() {
@@ -158,7 +161,7 @@ class Game extends Component {
             if (typeof game.message === "string") {
               if (game.message === "Round won.") {
                 wonGame.play();
-                alertify.notify("You won!", "custom", 3, function () {
+                alertify.notify("You won the round!", "custom", 3, function () {
                   console.log("dismissed");
                 });
               } else {
