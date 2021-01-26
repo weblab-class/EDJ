@@ -66,6 +66,32 @@ class Profile extends Component {
   };
 
   render() {
+    let pieChart;
+    if (this.state.wins !== 0 && this.state.losses !== 0) {
+      pieChart = (
+        <PieChart
+          radius={40}
+          label={({ dataEntry }) => `${Math.round(dataEntry.percentage)}%`}
+          labelStyle={{
+            fontSize: "8px",
+            fontFamily: "Nunito",
+            fill: "#ffffff",
+            fontWeight: "300",
+          }}
+          labelPosition={65}
+          data={[
+            { title: "Wins", value: this.state.wins, color: "#45d8b8" },
+            { title: "Losses", value: this.state.losses, color: "#756565" },
+          ]}
+          lengthAngle={360}
+          animate
+        />
+      );
+    } else {
+      pieChart = (
+        <PieChart radius={40} data={[{ title: "Wins", value: 100, color: "#45d8b8" }]}></PieChart>
+      );
+    }
     if (this.state.loading) {
       return <div>Loading...</div>;
     }
@@ -99,23 +125,7 @@ class Profile extends Component {
                 {/* <label>Ratio: {Math.round(this.state.wins / this.state.user.losses)}</label> */}
               </div>
               <div className="u-flexColumn">
-                <PieChart
-                  radius={40}
-                  label={({ dataEntry }) => `${Math.round(dataEntry.percentage)}%`}
-                  labelStyle={{
-                    fontSize: "8px",
-                    fontFamily: "Nunito",
-                    fill: "#ffffff",
-                    fontWeight: "300",
-                  }}
-                  labelPosition={65}
-                  data={[
-                    { title: "Wins", value: this.state.wins, color: "#45d8b8" },
-                    { title: "Losses", value: this.state.losses, color: "#756565" },
-                  ]}
-                  lengthAngle={360}
-                  animate
-                />
+                {pieChart}
                 <div className="flexRow keyBox">
                   <label>wins</label>
                   <div className="winKey"> word </div>
