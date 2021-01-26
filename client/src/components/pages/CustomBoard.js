@@ -8,6 +8,7 @@ import { get } from "../../utilities.js";
 import "./CustomBoard.css";
 import alertify from "alertifyjs";
 import errorTone from "../modules/Game/message.mp3";
+import { navigate } from "@reach/router";
 
 class CustomBoard extends Component {
   constructor(props) {
@@ -26,11 +27,13 @@ class CustomBoard extends Component {
     this.setState({
       board: newBoard,
     });
-    get("/api/whoami").then((user) => {
-      if (!user._id) {
-        alertify.alert("Error.", "You are not logged in.");
-      }
-    });
+    get("/api/user")
+      .then((user) => {})
+      .catch((err) => {
+        alertify.alert("Error.", "You are not logged in.", () => {
+          navigate("/");
+        });
+      });
   }
 
   cycle = (event, pos, val, editable) => {
