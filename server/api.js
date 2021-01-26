@@ -41,7 +41,7 @@ router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
   if (!req.user) {
     // not logged in
-    return res.send({});
+    res.send({});
   } else {
     res.send(req.user);
   }
@@ -357,7 +357,7 @@ router.post("/newBoard", auth.ensureLoggedIn, (req, res) => {
       })
       .catch(console.log);
   } else {
-    res.send({ message: "Not a valid board" });
+    res.send({ message: "Not a valid board." });
   }
 });
 
@@ -365,6 +365,17 @@ router.get("/getBoards", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
       res.send({ boards: user.boards });
+    })
+    .catch(console.log);
+});
+
+router.post("/deleteBoard", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      // const newBoards = user.boards.filter((board) => board._id !== req.body.id);
+      // user.boards = newBoards;
+      delete user.boards[user.boards.indexOf(req.body.boardObj)];
+      user.save().then((data) => res.send(data));
     })
     .catch(console.log);
 });

@@ -1,8 +1,12 @@
 import React, { Component } from "react";
-import { get, post } from "../../../utilities.js";
+import { get, post } from "../../../utilities";
 
 import Card from "../Game/Card.js";
 import Slideshow from "./Slideshow.js";
+
+import alertify from "alertifyjs";
+import "alertifyjs/build/css/alertify.css";
+import errorTone from "../Game/message.mp3";
 
 import "./Details.css";
 
@@ -15,7 +19,8 @@ class Details extends Component {
     };
   }
 
-  updateName = (event) => {
+  updateNameDetails = (event) => {
+    this.props.updateName(event);
     event.persist();
     this.setState({
       name: event.target.value,
@@ -23,9 +28,17 @@ class Details extends Component {
   };
 
   saveBoard = () => {
+    const errorSound = new Audio(errorTone);
     const body = { name: this.state.name, board: this.props.board };
     post("/api/newBoard", body).then((res) => {
-      alert(res.message);
+      if (res.message) {
+        errorSound.play();
+        alertify.alert("Error.", res.message);
+      } else {
+        alertify.notify("Saved!", "custom", 3, function () {
+          console.log("dismissed");
+        });
+      }
     });
   };
 
@@ -57,11 +70,13 @@ class Details extends Component {
               className="Board-name-bar"
               id="board-name"
               type="text"
-              onChange={this.updateName}
+              onChange={this.updateNameDetails}
             ></input>
           </div>
           <div className="row-container u-flex u-flex-justifySpaceEvenly u-flex-alignCenter">
-            <div className="u-button u-link">Load</div>
+            <div className="u-button u-link" onClick={this.props.loadBoard}>
+              Load
+            </div>
             <div className="u-button u-link" onClick={this.saveBoard}>
               Save
             </div>
