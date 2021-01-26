@@ -161,7 +161,7 @@ class Game extends Component {
             if (typeof game.message === "string") {
               if (game.message === "Round won.") {
                 wonGame.play();
-                alertify.notify("You won!", "custom", 3, function () {
+                alertify.notify("You won the round!", "custom", 3, function () {
                   console.log("dismissed");
                 });
               } else {

@@ -1,28 +1,42 @@
 .Details-container {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .Details-body {
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 2px 3px 5px #3f3f3f;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 2px 3px 5px #3f3f3f;
 }
 
 .row-container {
-    height: auto;
-    width: 100%;
-    padding: var(--s) 0px;
+  height: auto;
+  width: 100%;
+  padding: var(--s) 0px;
 }
 
 .icon {
-    width: 40%;
-    padding-bottom: 40%;
-    height: 100%;
+  flex: 30%;
+  margin-bottom: 10px;
+  height: 100%;
+  margin-left: 10px;
 }
 
 .Board-name-bar {
-    width: 90%;
+  width: 90%;
+  padding: 10px 0px;
+  border: 0;
+  margin: 7px 0px;
+  box-shadow: 0px 0px 5px 4px #86464674;
+  border-radius: 10px;
+  font-size: 16pt;
+  font-family: "Nunito";
+}
+
+.instructions-text {
+  flex: 70%;
+  padding: 0px 10px;
+  height: 11vh;
 }
