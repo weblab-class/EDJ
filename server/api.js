@@ -26,6 +26,7 @@ router.get("/user", (req, res) => {
 });
 //initialize socket
 const socketManager = require("./server-socket");
+const user = require("./models/user");
 //const { make } = require("nicknamecore-js/fn/object");
 
 const locations = [
@@ -75,7 +76,6 @@ router.post("/newGame", auth.ensureLoggedIn, (req, res) => {
         roomCode: req.body.roomCode,
         board: board,
         isActive: false,
-        mirrors: req.body.mirrors, // number of mirrors
         players: [{ name: name, id: req.user._id, score: 0, location: locations[0] }],
         currentTurn: 0,
         playerStyle: req.body.playerStyle,
@@ -96,7 +96,6 @@ router.get("/checkGame", auth.ensureLoggedIn, (req, res) => {
 router.post("/joinGame", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id).then((user) => {
     const newUser = user;
-    // console.log(newUser);
     Game.findOne({ isActive: false, roomCode: req.body.code })
       .then((game) => {
         if (game) {
@@ -262,14 +261,12 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
               if (new_x === 4 && new_y === 4) {
                 // game won
                 let newPlayers = [];
-                const mirrorsArr = makeBoard.createMirrors(game.mirrors);
-                let board = makeBoard.checkClass(mirrorsArr);
                 game.players[game.currentTurn].score += 1;
                 game.currRound += 1;
                 if (game.currRound === game.rounds + 1) {
                   game.isActive = false;
                 } else {
-                  for (player of game.players) {
+                  for (const player of game.players) {
                     const location = locations[game.players.indexOf(player)];
                     newPlayers.push({
                       name: player.name,
@@ -284,18 +281,31 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
                       direction = { x: 0, y: 1 };
                     }
                     board = makeBoard.updateBoard(
-                      board,
+                      game.board,
                       "Player" + String(game.players.indexOf(player)),
                       location,
                       direction
                     );
+                    game.board = makeBoard.updateBoard(game.board, "", player.location, {
+                      x: direction_x,
+                      y: direction_y,
+                    });
+                    game.board = makeBoard.updateBoard(
+                      game.board,
+                      "goal",
+                      { x: 4, y: 4 },
+                      {
+                        x: direction_x,
+                        y: direction_y,
+                      }
+                    );
                   }
                   game.board = board;
                   game.players = newPlayers;
-                  res.send({ message: "Round won." });
                 }
+                res.send({ message: "Round won." });
               } else {
-                res.send({});
+                res.send({ x: new_x, y: new_y });
               }
               game.currentTurn = (game.currentTurn + 1) % game.players.length;
               game.save().then((data) => {
@@ -310,14 +320,15 @@ router.post("/movePlayer", auth.ensureLoggedIn, (req, res) => {
         res.send({ message: "No games found." });
       }
     })
-    .catch((err) => console.log(err));
+    .catch(console.log);
 });
 
 router.post("/addWin", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
-      if (String(user._id) === req.body.id) {
-        // if winner
+      const isWinner =
+        req.body.winnersArr.filter((player) => player.id === req.user._id).length !== 0;
+      if (isWinner) {
         user.wins += 1;
       } else {
         user.losses += 1;
@@ -330,7 +341,6 @@ router.post("/addWin", auth.ensureLoggedIn, (req, res) => {
 router.post("/changeName", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
-      console.log(user);
       user.name = req.body.newName;
       user.save().then((data) => res.send(data));
     })

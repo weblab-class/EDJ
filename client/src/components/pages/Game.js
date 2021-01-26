@@ -39,37 +39,37 @@ class Game extends Component {
   }
 
   update = (data) => {
-    this.setState({
-      board: data.board,
-      currentTurn: data.currentTurn,
-      isActive: data.isActive,
-      mirrors: data.mirrors,
-      players: data.players,
-      roomCode: data.roomCode,
-      roomName: data.roomName,
-      playerStyle: data.playerStyle,
-      rounds: data.rounds,
-      currRound: data.currRound,
-    });
     if (data.currRound === data.rounds + 1) {
+      this.setState({ board: data.board, players: data.players, isActive: data.isActive });
       const maxScore = Math.max.apply(
         Math,
-        this.state.players.map(function (player) {
-          return player.score;
-        })
+        data.players.map((player) => player.score)
       );
-      const winner = this.state.players.find(function (player) {
-        return player.score === maxScore;
-      });
-      console.log(winner);
-      if (winner) {
-        post("/api/addWin", { id: winner.id });
+      const winners = data.players.filter((player) => player.score === maxScore);
+      console.log(winners);
+      post("/api/addWin", { winnersArr: winners })
+        .then((user) => {})
+        .catch(console.log);
+      let winnersStr = winners[0].name;
+      for (const winner of winners.slice(1)) {
+        winnersStr += " and " + winner.name;
       }
-      alertify.alert("Game over.", winner.name + " won the game!", () => {
+      alertify.alert("Game over.", winnersStr + " won the game!", () => {
         navigate("/");
       });
+    } else {
+      this.setState({
+        board: data.board,
+        currentTurn: data.currentTurn,
+        isActive: data.isActive,
+        players: data.players,
+        roomCode: data.roomCode,
+        roomName: data.roomName,
+        playerStyle: data.playerStyle,
+        rounds: data.rounds,
+        currRound: data.currRound,
+      });
     }
-    // console.log(this.state.players);
   };
 
   componentDidMount() {
@@ -81,7 +81,6 @@ class Game extends Component {
           this.update(data);
           socket.on("updateBoard", (game) => {
             this.update(game);
-            // console.log(game);
           });
         }
       })

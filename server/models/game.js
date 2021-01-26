@@ -12,7 +12,6 @@ const GameSchema = new mongoose.Schema({
       },
     ],
   ],
-  mirrors: Number,
   isActive: Boolean,
   players: [{ name: String, id: String, score: Number, location: { x: Number, y: Number } }],
   currentTurn: Number,
