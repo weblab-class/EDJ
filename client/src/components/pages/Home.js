@@ -62,6 +62,7 @@ class Home extends Component {
             Join game
           </div>
         </div>
+        <img src="pages/playerIcon.png"/>
       </div>
     );
   }
