@@ -26,6 +26,11 @@ class CustomBoard extends Component {
     this.setState({
       board: newBoard,
     });
+    get("/api/whoami").then((user) => {
+      if (!user._id) {
+        alertify.alert("Error.", "You are not logged in.");
+      }
+    });
   }
 
   cycle = (event, pos, val, editable) => {

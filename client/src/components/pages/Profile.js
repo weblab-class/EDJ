@@ -6,6 +6,7 @@ import { PieChart } from "react-minimal-pie-chart";
 import "./Profile.css";
 import Blank from "../modules/Custom/Blank.js";
 import alertify from "alertifyjs";
+import errorTone from "../modules/Game/message.mp3";
 
 class Profile extends Component {
   constructor(props) {
@@ -26,7 +27,6 @@ class Profile extends Component {
   componentDidMount() {
     get("/api/whoami")
       .then((user) => {
-        console.log(user);
         if (user._id) {
           this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
         } else {
@@ -93,14 +93,27 @@ class Profile extends Component {
   };
 
   deleteBoard = (event) => {
-    if (this.state.boardObj !== {}) {
-      post("/api/deleteBoard", { boardObj: this.state.boardObj })
+    const errorSound = new Audio(errorTone);
+    if (
+      !(Object.keys(this.state.boardObj).length === 0 && this.state.boardObj.constructor === Object)
+    ) {
+      const newBoards = this.state.boards.filter((board) => board._id !== this.state.boardObj._id);
+      if (newBoards.length !== 0) {
+        this.setState({
+          boards: newBoards,
+          boardObj: newBoards[0],
+          board: newBoards[0].board.map((row) => row.map((str) => (str = Number(str)))),
+        });
+      } else {
+        this.setState({ boards: newBoards, boardObj: {}, board: undefined });
+      }
+      post("/api/deleteBoard", { newBoards: newBoards })
         .then((user) => {
           console.log(user);
-          this.setState({ user: user, boards: user.boards });
         })
         .catch(console.log);
     } else {
+      errorSound.play();
       alertify.alert("Error.", "Please select a board to delete.");
     }
   };

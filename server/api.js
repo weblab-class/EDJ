@@ -374,7 +374,8 @@ router.post("/deleteBoard", auth.ensureLoggedIn, (req, res) => {
     .then((user) => {
       // const newBoards = user.boards.filter((board) => board._id !== req.body.id);
       // user.boards = newBoards;
-      delete user.boards[user.boards.indexOf(req.body.boardObj)];
+      // delete user.boards[user.boards.indexOf(req.body.boardObj)];
+      user.boards = req.body.newBoards;
       user.save().then((data) => res.send(data));
     })
     .catch(console.log);
