@@ -4,6 +4,7 @@ import { post } from "../../utilities";
 import Info from "../modules/Game/Info.js";
 import { PieChart } from "react-minimal-pie-chart";
 import "./Profile.css";
+import Blank from "../modules/Custom/Blank.js";
 
 class Profile extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Profile extends Component {
       wins: undefined,
       losses: undefined,
       boards: [],
+      board: undefined,
     };
   }
 
@@ -27,6 +29,12 @@ class Profile extends Component {
       this.setState({
         boards: res.boards,
       });
+    });
+    let newBoard = Array(9)
+      .fill()
+      .map(() => Array(9).fill(0));
+    this.setState({
+      board: newBoard,
     });
   }
 
@@ -118,8 +126,8 @@ class Profile extends Component {
               <div className="u-flexColumn">
                 <div className="title2">Game History</div>
                 <div className="gamesInfo">
-                  <label>Wins: {this.state.wins}</label>
-                  <label>Losses: {this.state.losses}</label>
+                  <label>Won games: {this.state.wins}</label>
+                  <label>Lost games: {this.state.losses}</label>
                   <label>Total games: {this.state.wins + this.state.losses}</label>
                 </div>
                 {/* <label>Ratio: {Math.round(this.state.wins / this.state.user.losses)}</label> */}
@@ -139,6 +147,9 @@ class Profile extends Component {
           <div className="flexColumn">
             <div className="title2">Custom Boards</div>
             <select>{this.getCustomBoards()}</select>
+            <div className="blankBoard">
+              <Blank board={this.state.board} />
+            </div>
           </div>
         </div>
       </div>

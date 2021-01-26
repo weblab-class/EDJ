@@ -84,3 +84,8 @@
   flex-direction: column;
   justify-content: space-evenly;
 }
+
+.blankBoard {
+  height: 55vh;
+  width: 100%;
+}
