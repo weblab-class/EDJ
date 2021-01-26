@@ -103,9 +103,54 @@ class Profile extends Component {
           animate
         />
       );
+    } else if (this.state.wins === 0 && this.state.losses !== 0) {
+      pieChart = (
+        <PieChart
+          radius={40}
+          label={({ dataEntry }) => `${Math.round(dataEntry.percentage)}%`}
+          labelStyle={{
+            fontSize: "8px",
+            fontFamily: "Nunito",
+            fill: "#ffffff",
+            fontWeight: "300",
+          }}
+          labelPosition={0}
+          data={[{ title: "Losses", value: this.state.losses, color: "#756565" }]}
+          lengthAngle={360}
+          animate
+        />
+      );
+    } else if (this.state.wins !== 0 && this.state.losses === 0) {
+      pieChart = (
+        <PieChart
+          radius={40}
+          label={({ dataEntry }) => `${Math.round(dataEntry.percentage)}%`}
+          labelStyle={{
+            fontSize: "8px",
+            fontFamily: "Nunito",
+            fill: "#ffffff",
+            fontWeight: "300",
+          }}
+          labelPosition={0}
+          data={[{ title: "Wins", value: this.state.wins, color: "#45d8b8" }]}
+          lengthAngle={360}
+          animate
+        />
+      );
     } else {
       pieChart = (
-        <PieChart radius={40} data={[{ title: "Wins", value: 100, color: "#45d8b8" }]}></PieChart>
+        <PieChart
+          label={({ dataEntry }) => "No games played."}
+          labelStyle={{
+            fontSize: "8px",
+            fontFamily: "Nunito",
+            fill: "#ffffff",
+            fontWeight: "300",
+          }}
+          labelPosition={0}
+          radius={40}
+          data={[{ title: "Wins", value: 100, color: "#756565" }]}
+        ></PieChart>
       );
     }
     if (this.state.loading) {
