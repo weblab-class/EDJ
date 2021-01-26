@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get, post } from "../../../utilities.js";
+import { get, post } from "../../../utilities";
 
 import Card from "../Game/Card.js";
 import Slideshow from "./Slideshow.js";
@@ -19,7 +19,8 @@ class Details extends Component {
     };
   }
 
-  updateName = (event) => {
+  updateNameDetails = (event) => {
+    this.props.updateName(event);
     event.persist();
     this.setState({
       name: event.target.value,
@@ -69,11 +70,13 @@ class Details extends Component {
               className="Board-name-bar"
               id="board-name"
               type="text"
-              onChange={this.updateName}
+              onChange={this.updateNameDetails}
             ></input>
           </div>
           <div className="row-container u-flex u-flex-justifySpaceEvenly u-flex-alignCenter">
-            <div className="u-button u-link">Load</div>
+            <div className="u-button u-link" onClick={this.props.loadBoard}>
+              Load
+            </div>
             <div className="u-button u-link" onClick={this.saveBoard}>
               Save
             </div>

@@ -3,7 +3,11 @@ import React, { Component } from "react";
 import Blank from "../modules/Custom/Blank.js";
 import Details from "../modules/Custom/Details.js";
 
+import { get } from "../../utilities.js";
+
 import "./CustomBoard.css";
+import alertify from "alertifyjs";
+import errorTone from "../modules/Game/message.mp3";
 
 class CustomBoard extends Component {
   constructor(props) {
@@ -11,6 +15,7 @@ class CustomBoard extends Component {
 
     this.state = {
       board: [],
+      name: "",
     };
   }
 
@@ -34,8 +39,35 @@ class CustomBoard extends Component {
     return false;
   };
 
+  loadBoard = () => {
+    const errorSound = new Audio(errorTone);
+    if (this.state.name === "") {
+      errorSound.play();
+      alertify.alert("Error.", "Please input a board name.");
+    } else {
+      get("/api/getBoards")
+        .then((boardsObj) => {
+          const board = boardsObj.boards.filter((bd) => bd.name === this.state.name)[0];
+          if (board) {
+            console.log(board);
+            const numBoard = board.board.map((row) => row.map((val) => Number(val)));
+            this.setState({ board: numBoard });
+          } else {
+            alertify.alert("Error.", `There is no board named "${this.state.name}."`);
+          }
+        })
+        .catch(console.log);
+    }
+  };
+
+  updateName = (event) => {
+    event.persist();
+    this.setState({
+      name: event.target.value,
+    });
+  };
+
   render() {
-    console.log(this.state.board);
     return (
       <div className="blank-container u-flex u-flex-justifyCenter u-flex-alignCenter">
         <div className="holder u-flex u-flex-justifyCenter u-flex-alignCenter">
@@ -43,7 +75,12 @@ class CustomBoard extends Component {
             <Blank board={this.state.board} cycle={this.cycle} />
           </div>
           <div className="details">
-            <Details board={this.state.board} userId={this.props.userId} />
+            <Details
+              board={this.state.board}
+              userId={this.props.userId}
+              loadBoard={this.loadBoard}
+              updateName={this.updateName}
+            />
           </div>
         </div>
       </div>
