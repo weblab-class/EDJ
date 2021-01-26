@@ -83,7 +83,7 @@ class Profile extends Component {
 
   render() {
     let pieChart;
-    if (this.state.wins !== 0 && this.state.losses !== 0) {
+    if (!(this.state.wins === 0 && this.state.losses === 0)) {
       pieChart = (
         <PieChart
           radius={40}
