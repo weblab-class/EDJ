@@ -7,6 +7,7 @@ import "./Profile.css";
 import Blank from "../modules/Custom/Blank.js";
 import alertify from "alertifyjs";
 import errorTone from "../modules/Game/message.mp3";
+import { navigate } from "@reach/router";
 
 class Profile extends Component {
   constructor(props) {
@@ -25,18 +26,15 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    get("/api/whoami")
+    get("/api/user")
       .then((user) => {
-        if (user._id) {
-          this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
-        } else {
-          alertify.alert("Error.", "You are not logged in.");
-        }
+        this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
       })
       .catch((err) => {
-        console.log(err);
+        alertify.alert("Error.", "You are not logged in.", () => {
+          navigate("/");
+        });
       });
-
     get("/api/getBoards").then((res) => {
       if (res.boards.length !== 0) {
         this.setState({
@@ -136,7 +134,6 @@ class Profile extends Component {
         ></PieChart>
       );
     } else if (this.state.wins === 0) {
-      console.log("hi");
       pieChart = (
         <PieChart
           radius={40}
@@ -154,7 +151,6 @@ class Profile extends Component {
         />
       );
     } else if (this.state.losses === 0) {
-      console.log("hello");
       pieChart = (
         <PieChart
           radius={40}
@@ -191,9 +187,6 @@ class Profile extends Component {
           animate
         />
       );
-    }
-    if (this.state.loading) {
-      return <div>Loading...</div>;
     }
 
     const emptyBoard = Array(9)

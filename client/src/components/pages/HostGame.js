@@ -161,7 +161,7 @@ class HostGame extends Component {
     return (
       <div className="u-center-screen">
         <Link to="/" id="u-back-button" className="back-button u-button u-link">
-          back{" "}
+          back
         </Link>
         <div className="u-title">HOST GAME</div>
         <div>

@@ -21,7 +21,7 @@ const auth = require("./auth");
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
 router.get("/user", (req, res) => {
-  const id = req.query.userId;
+  const id = req.user._id;
   User.findById(id).then((user) => res.send(user));
 });
 //initialize socket
@@ -351,9 +351,16 @@ router.post("/newBoard", auth.ensureLoggedIn, (req, res) => {
   if (makeBoard.validate(req.body.board) && req.body.name !== "") {
     User.findById(req.user._id)
       .then((user) => {
-        const newBoard = { name: req.body.name, board: req.body.board };
-        user.boards.push(newBoard);
-        user.save().then((data) => res.send(data));
+        const boardExists = user.boards.filter((bd) => bd.name === req.body.name).length !== 0;
+        if (boardExists) {
+          res.send({
+            message: `You already have a board named "${req.body.name}." Please choose another name.`,
+          });
+        } else {
+          const newBoard = { name: req.body.name, board: req.body.board };
+          user.boards.push(newBoard);
+          user.save().then((data) => res.send(data));
+        }
       })
       .catch(console.log);
   } else {
@@ -372,9 +379,6 @@ router.get("/getBoards", auth.ensureLoggedIn, (req, res) => {
 router.post("/deleteBoard", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
-      // const newBoards = user.boards.filter((board) => board._id !== req.body.id);
-      // user.boards = newBoards;
-      // delete user.boards[user.boards.indexOf(req.body.boardObj)];
       user.boards = req.body.newBoards;
       user.save().then((data) => res.send(data));
     })
