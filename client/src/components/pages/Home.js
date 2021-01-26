@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { Link } from "@reach/router";
 import { navigate } from "@reach/router";
+import logo from '../modules/Game/Gifs/green_r.gif'; 
+import logo2 from '../modules/Game/Gifs/pink_r.gif'; 
+import logo3 from '../modules/Game/Gifs/purple_r.gif'; 
+import logo4 from '../modules/Game/Gifs/yellow_r.gif'; 
+
 
 import alertify from "alertifyjs";
 import "alertifyjs/build/css/alertify.css";
@@ -52,6 +57,7 @@ class Home extends Component {
 
   render() {
     return (
+     
       <div className="u-center-screen">
         <div className="u-title">Trickshots</div>
         <div className="u-button-container">
@@ -62,8 +68,14 @@ class Home extends Component {
             Join game
           </div>
         </div>
-        <img src="pages/playerIcon.png"/>
+        <div className="u-flex animationClass2">
+        <img className="animationClass" src={logo}/>
+        <img className="animationClass" src={logo2}/>
+        <img className="animationClass" src={logo4}/>
+        <img className="animationClass" src={logo3}/>
+        </div>
       </div>
+        
     );
   }
 }
