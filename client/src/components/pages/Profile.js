@@ -83,27 +83,23 @@ class Profile extends Component {
 
   render() {
     let pieChart;
-    if (!(this.state.wins === 0 && this.state.losses === 0)) {
+    if (this.state.wins === 0 && this.state.losses === 0) {
       pieChart = (
         <PieChart
-          radius={40}
-          label={({ dataEntry }) => `${Math.round(dataEntry.percentage)}%`}
+          label={({ dataEntry }) => "No games played."}
           labelStyle={{
             fontSize: "8px",
             fontFamily: "Nunito",
             fill: "#ffffff",
             fontWeight: "300",
           }}
-          labelPosition={65}
-          data={[
-            { title: "Wins", value: this.state.wins, color: "#45d8b8" },
-            { title: "Losses", value: this.state.losses, color: "#756565" },
-          ]}
-          lengthAngle={360}
-          animate
-        />
+          labelPosition={0}
+          radius={40}
+          data={[{ title: "Wins", value: 100, color: "#756565" }]}
+        ></PieChart>
       );
-    } else if (this.state.wins === 0 && this.state.losses !== 0) {
+    } else if (this.state.wins === 0) {
+      console.log("hi");
       pieChart = (
         <PieChart
           radius={40}
@@ -120,7 +116,8 @@ class Profile extends Component {
           animate
         />
       );
-    } else if (this.state.wins !== 0 && this.state.losses === 0) {
+    } else if (this.state.losses === 0) {
+      console.log("hello");
       pieChart = (
         <PieChart
           radius={40}
@@ -140,17 +137,22 @@ class Profile extends Component {
     } else {
       pieChart = (
         <PieChart
-          label={({ dataEntry }) => "No games played."}
+          radius={40}
+          label={({ dataEntry }) => `${Math.round(dataEntry.percentage)}%`}
           labelStyle={{
             fontSize: "8px",
             fontFamily: "Nunito",
             fill: "#ffffff",
             fontWeight: "300",
           }}
-          labelPosition={0}
-          radius={40}
-          data={[{ title: "Wins", value: 100, color: "#756565" }]}
-        ></PieChart>
+          labelPosition={65}
+          data={[
+            { title: "Wins", value: this.state.wins, color: "#45d8b8" },
+            { title: "Losses", value: this.state.losses, color: "#756565" },
+          ]}
+          lengthAngle={360}
+          animate
+        />
       );
     }
     if (this.state.loading) {
