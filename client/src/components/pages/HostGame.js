@@ -145,8 +145,8 @@ class HostGame extends Component {
       return "error-message";
     }
     return "";
-  };  
-  
+  };
+
   getCustomBoards = () => {
     return this.state.boards.map((board) => {
       return (
@@ -171,14 +171,16 @@ class HostGame extends Component {
           ></input>
         </div>
         <div>
-          <label className="u-inlineBlock">Choose a board:</label>
-          <select id="mirrors" value={this.state.boardType} onChange={this.updateBoardType}>
-            <option>Random</option>
-            {this.getCustomBoards()}
-          </select>
+          <div className="options-block u-width u-flex u-flex-justifyCenter u-flex-alignCenter">
+            <label>Choose a board:</label>
+            <select id="mirrors" value={this.state.boardType} onChange={this.updateBoardType}>
+              <option>Random</option>
+              {this.getCustomBoards()}
+            </select>
+          </div>
         </div>
-        <div>
-          <label className="u-inlineBlock">Number of rounds:</label>
+        <div className="options-block u-width u-flex u-flex-justifyCenter u-flex-alignCenter">
+          <label>Number of rounds:</label>
           <select id="rounds" value={this.state.rounds} onChange={this.updateRounds}>
             <option>1</option>
             <option>2</option>

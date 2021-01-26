@@ -73,7 +73,7 @@
   padding: 20px;
   border: 0;
   margin: 7px 0px;
-  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0px 0 15px 4px rgba(0, 0, 0, 0.166);
   border-radius: 10px;
   font-size: 18pt;
 }
@@ -88,4 +88,15 @@
 .blankBoard {
   height: 54vh;
   width: 54vh;
+}
+
+select {
+  font-size: 25pt;
+  width: 40%;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  font-family: "Nunito";
+  margin: 0px 0px 0px 0px;
+  padding: 5px;
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.414);
 }

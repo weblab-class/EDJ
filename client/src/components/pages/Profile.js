@@ -158,6 +158,7 @@ class Profile extends Component {
     if (this.state.loading) {
       return <div>Loading...</div>;
     }
+
     const emptyBoard = Array(9)
       .fill()
       .map(() => Array(9).fill(0));
@@ -205,7 +206,12 @@ class Profile extends Component {
           </div>
           <div className="flexColumn u-flex-justifyCenter">
             <div className="title2">Custom Boards</div>
-            <select onChange={this.displayBoard}>{this.getCustomBoards()}</select>
+            <div className="u-flex u-flex-justifyCenter u-flex-alignCenter">
+              <select onChange={this.displayBoard}>{this.getCustomBoards()}</select>
+              <div className="u-inlineBlock button u-link" onClick={this.deleteBoard}>
+                Delete Board
+              </div>
+            </div>
             <div className="holder u-flex u-flex-justifyCenter u-flex-alignCenter">
               <div className="blankBoard">
                 <Blank board={this.state.board ? this.state.board : emptyBoard} />

@@ -6,9 +6,34 @@ label {
   font-weight: 600;
 }
 
-select {
-  font-size: 18pt;
-  margin: 0px 0px 20px 0px;
+#rounds {
+  font-size: 16pt;
+  text-align: center;
+  width: 12%;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  font-family: "Nunito";
+  padding: 5px;
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.414);
+}
+
+#mirrors {
+  flex: 20%;
+  font-size: 16pt;
+  text-align: center;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  font-family: "Nunito";
+  padding: 5px;
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.414);
+}
+
+#board-label {
+  flex: 80%;
+}
+
+.options-block {
+  margin-bottom: 20px;
 }
 
 p {
