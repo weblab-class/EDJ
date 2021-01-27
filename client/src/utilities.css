@@ -53,7 +53,6 @@ form {
 
 .u-flex {
   display: flex;
- 
 }
 
 .u-flexColumn {
@@ -150,9 +149,9 @@ form {
   background-color: #d7d7d7;
 }
 
-#u-back-button{
+.u-back-button {
   font-size: 12px;
-  padding:10px;
+  padding: 10px;
   text-align: left;
   height: 15px;
 }

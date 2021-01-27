@@ -6,6 +6,8 @@ import { PieChart } from "react-minimal-pie-chart";
 import "./Profile.css";
 import Blank from "../modules/Custom/Blank.js";
 import alertify from "alertifyjs";
+import errorTone from "../modules/Game/message.mp3";
+import { navigate } from "@reach/router";
 
 class Profile extends Component {
   constructor(props) {
@@ -24,19 +26,15 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    get("/api/whoami")
+    get("/api/user")
       .then((user) => {
-        console.log(user);
-        if (user._id) {
-          this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
-        } else {
-          alertify.alert("Error.", "You are not logged in.");
-        }
+        this.setState({ user: user, loading: false, wins: user.wins, losses: user.losses });
       })
       .catch((err) => {
-        console.log(err);
+        alertify.alert("Error.", "You are not logged in.", () => {
+          navigate("/");
+        });
       });
-
     get("/api/getBoards").then((res) => {
       if (res.boards.length !== 0) {
         this.setState({
@@ -93,14 +91,27 @@ class Profile extends Component {
   };
 
   deleteBoard = (event) => {
-    if (this.state.boardObj !== {}) {
-      post("/api/deleteBoard", { boardObj: this.state.boardObj })
+    const errorSound = new Audio(errorTone);
+    if (
+      !(Object.keys(this.state.boardObj).length === 0 && this.state.boardObj.constructor === Object)
+    ) {
+      const newBoards = this.state.boards.filter((board) => board._id !== this.state.boardObj._id);
+      if (newBoards.length !== 0) {
+        this.setState({
+          boards: newBoards,
+          boardObj: newBoards[0],
+          board: newBoards[0].board.map((row) => row.map((str) => (str = Number(str)))),
+        });
+      } else {
+        this.setState({ boards: newBoards, boardObj: {}, board: undefined });
+      }
+      post("/api/deleteBoard", { newBoards: newBoards })
         .then((user) => {
           console.log(user);
-          this.setState({ user: user, boards: user.boards });
         })
         .catch(console.log);
     } else {
+      errorSound.play();
       alertify.alert("Error.", "Please select a board to delete.");
     }
   };
@@ -123,7 +134,6 @@ class Profile extends Component {
         ></PieChart>
       );
     } else if (this.state.wins === 0) {
-      console.log("hi");
       pieChart = (
         <PieChart
           radius={40}
@@ -141,7 +151,6 @@ class Profile extends Component {
         />
       );
     } else if (this.state.losses === 0) {
-      console.log("hello");
       pieChart = (
         <PieChart
           radius={40}
@@ -180,9 +189,8 @@ class Profile extends Component {
       );
     }
     if (this.state.loading) {
-      return <div>Loading...</div>;
+      return <div></div>;
     }
-
     const emptyBoard = Array(9)
       .fill()
       .map(() => Array(9).fill(0));

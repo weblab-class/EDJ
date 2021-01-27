@@ -7,6 +7,7 @@ import Slideshow from "./Slideshow.js";
 import alertify from "alertifyjs";
 import "alertifyjs/build/css/alertify.css";
 import errorTone from "../Game/message.mp3";
+import won from "../Game/game_won.mp3";
 
 import "./Details.css";
 
@@ -29,12 +30,15 @@ class Details extends Component {
 
   saveBoard = () => {
     const errorSound = new Audio(errorTone);
+    const wonSound = new Audio(won);
+    wonSound.volume = 0.2;
     const body = { name: this.state.name, board: this.props.board };
     post("/api/newBoard", body).then((res) => {
       if (res.message) {
         errorSound.play();
         alertify.alert("Error.", res.message);
       } else {
+        wonSound.play();
         alertify.notify("Saved!", "custom", 3, function () {
           console.log("dismissed");
         });

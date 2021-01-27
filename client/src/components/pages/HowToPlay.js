@@ -77,10 +77,11 @@ class HowToPlay extends Component {
         <div className="title1">How to Play</div>
         <div className="instruction-box-container u-flex u-flex-justifyCenter u-flex-alignCenter">
           <div className="instruction-box">
-            Trickshots is a 2-4 player, turn-based game. You may either host a game or join a game
+            Trickshots is a 2-4 player turn-based game. You may either host a game or join a game
             using a code, but you must be logged in before doing either. By hosting a game, you can
-            choose the name of your game room and the number of mirrors on your game board. Once the
-            game starts, the ordering of the players is randomly generated.
+            choose the name of your game room and the number of rounds in your game. You can also
+            select between one of your custom game boards and a randomly generated game board. Once
+            the game starts, the ordering of the players is randomly generated.
             <ol>
               <li>
                 Press the arrow keys to rotate your player. You may do this both during your turn
@@ -94,7 +95,7 @@ class HowToPlay extends Component {
                 Press the spacebar to shoot a laser. You can shoot other players directly, or by
                 reflecting off of mirror(s) at 90 degree angles.
               </li>
-              <li>Get to the goal (center of the game board) without dying to win the game.</li>
+              <li>Get to the goal (center of the game board) without dying to win the round.</li>
             </ol>
           </div>
         </div>

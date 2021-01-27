@@ -218,3 +218,75 @@ p {
   border-radius: 10px;
   font-size: 18pt;
 }
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  margin-left: 15px;
+  /* border-bottom: 1px dotted black; If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: rgba(226, 226, 226, 0.841);
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -108px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgb(140, 140, 140) transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+#tooltip-img {
+  height: 20px;
+}
+
+/* unvisited link */
+a:link {
+  color: rgb(130, 86, 86);
+}
+
+/* visited link */
+a:visited {
+  color: rgb(207, 158, 158);
+}
+
+/* mouse over link */
+a:hover {
+  color: rgb(106, 58, 58);
+}
+
+/* selected link */
+a:active {
+  color: rgb(106, 58, 58);
+}
