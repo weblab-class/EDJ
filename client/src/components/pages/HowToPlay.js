@@ -55,24 +55,23 @@ class HowToPlay extends Component {
 
   buttonClickUp = (event) => {
     this.setState({ orientation: "up" });
-    this.setState({shoot:"_"});
   };
   buttonClickDown = (event) => {
     this.setState({ orientation: "down" });
-    this.setState({shoot:"_"});
   };
   buttonClickRight = (event) => {
     this.setState({ orientation: "right" });
-    this.setState({shoot:"_"});
   };
   buttonClickLeft = (event) => {
     this.setState({ orientation: "left" });
-    this.setState({shoot:"_"});
   };
+
   buttonClickSpace = (event) => {
     this.setState({ shoot: "shoot_" });
+    setTimeout(() => {
+      this.setState({ shoot: "_" });
+    }, 500);
   };
- 
 
   isPopsicle = (event) => {
     event.persist();
@@ -148,7 +147,7 @@ class HowToPlay extends Component {
                 </div>
               </div>
               <div className="u-flex">
-                <button className="key" onClick={() => this.buttonClickSpace()}>
+                <button className="key" onClick={this.buttonClickSpace}>
                   [ SPACE ]
                 </button>
                 <p>shoot</p>
