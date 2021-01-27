@@ -56,16 +56,6 @@ class Profile extends Component {
     }
   };
 
-  getCustomBoards = () => {
-    return this.state.boards.map((board) => {
-      return (
-        <option key={board.name} value={board.name}>
-          {board.name}
-        </option>
-      );
-    });
-  };
-
   changeName = (event) => {
     event.persist();
     this.setState((prevState) => {
@@ -87,6 +77,16 @@ class Profile extends Component {
         console.log("dismissed");
       });
     }
+  };
+
+  getCustomBoards = () => {
+    return this.state.boards.map((board) => {
+      return (
+        <option key={board.name} value={board.name}>
+          {board.name}
+        </option>
+      );
+    });
   };
 
   displayBoard = (event) => {

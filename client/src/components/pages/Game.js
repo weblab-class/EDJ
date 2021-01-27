@@ -16,8 +16,8 @@ import ScoreBoard from "../modules/Game/ScoreBoard.js";
 import alertify from "alertifyjs";
 import "alertifyjs/build/css/alertify.css";
 
-import useWindowSize from 'react-use/lib/useWindowSize'
-import Confetti from 'react-confetti'
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
 
 import "./Game.css";
 import { Socket } from "socket.io-client";
@@ -44,7 +44,12 @@ class Game extends Component {
 
   update = (data) => {
     if (data.currRound === data.rounds + 1) {
-      this.setState({ board: data.board, players: data.players, isActive: data.isActive, gameOver: true});
+      this.setState({
+        board: data.board,
+        players: data.players,
+        isActive: data.isActive,
+        gameOver: true,
+      });
       const maxScore = Math.max.apply(
         Math,
         data.players.map((player) => player.score)
@@ -73,7 +78,7 @@ class Game extends Component {
         playerStyle: data.playerStyle,
         rounds: data.rounds,
         currRound: data.currRound,
-        gameOver : false,
+        gameOver: false,
       });
     }
     console.log(data);
@@ -227,11 +232,11 @@ class Game extends Component {
           />
         </div>
         <Confetti
-        run = {this.state.gameOver}
-      width={1200}
-      height={500}
-      colors = {['#f8b4b4','#f79494','#ffe9e9','#ffe9a1','#ffd752','#f8c82a',"#ffffff"]}
-    />
+          run={this.state.gameOver}
+          width={1200}
+          height={500}
+          colors={["#f8b4b4", "#f79494", "#ffe9e9", "#ffe9a1", "#ffd752", "#f8c82a", "#ffffff"]}
+        />
       </div>
     );
   }

@@ -51,11 +51,6 @@ const createMirrors = (mirrorsNum) => {
       continue;
     }
 
-    // check for self
-    // if (containsObj(mirrorsArray, randomLoc)) {
-    //   continue;
-    // }
-
     // x coordinate modulo 2 (divisible by 2 --> left-facing mirror)
     const leftMirror = mirrorsArray.length % 2 === 0;
     mirrorsArray.push({ location: randomLoc, leftMirror: leftMirror });
@@ -77,7 +72,13 @@ const updateBoard = (board, value, location, direction) => {
 };
 
 const validate = (board) => {
-  return (board[0][0] == "0" && board[0][8] == "0" && board[8][0] == "0" && board[8][8] == "0" && board[4][4] == "0");
+  return (
+    board[0][0] == "0" &&
+    board[0][8] == "0" &&
+    board[8][0] == "0" &&
+    board[8][8] == "0" &&
+    board[4][4] == "0"
+  );
 };
 
 const checkClass = (mirrorsArray) => {
@@ -163,7 +164,6 @@ const fire = (pos, dir, board) => {
   };
   let path = [pos];
   let newSpace = sum(path[0], dir);
-  //console.log(pos, dir, newSpace);
   while (isValid(newSpace, board)) {
     if (board[newSpace.x][newSpace.y].tileType === "Right-mirror") {
       dir = rightMirror(dir);
