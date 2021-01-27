@@ -15,7 +15,7 @@ import alertTone from "../modules/Game/message.mp3";
 
 import "./Home.css";
 
-const GOOGLE_CLIENT_ID = "473769754928-7ahknn038led2u1qif6aj95lka4k528i.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "787919045075-1l8kq4dvm5i4s525fjvrdnctpcrl70hm.apps.googleusercontent.com";
 
 
 class Home extends Component {
