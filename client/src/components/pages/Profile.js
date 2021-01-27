@@ -76,9 +76,15 @@ class Profile extends Component {
   };
 
   submitName = () => {
+    const errorSound = new Audio(errorTone);
     if (this.state.nickname !== "") {
       post("/api/changeName", { newName: this.state.nickname }).then((newUser) => {
         this.setState({ user: newUser });
+      });
+    } else {
+      errorSound.play();
+      alertify.alert("Error.", "Username is empty.", () => {
+        console.log("dismissed");
       });
     }
   };
@@ -112,7 +118,9 @@ class Profile extends Component {
         .catch(console.log);
     } else {
       errorSound.play();
-      alertify.alert("Error.", "Please select a board to delete.");
+      alertify.alert("Error.", "Please select a board to delete.", () => {
+        console.log("dismissed");
+      });
     }
   };
 
@@ -243,7 +251,7 @@ class Profile extends Component {
             </div>
             <div className="holder u-flex u-flex-justifyCenter u-flex-alignCenter">
               <div className="blankBoard">
-                <Blank board={this.state.board ? this.state.board : emptyBoard} editable={false}/>
+                <Blank board={this.state.board ? this.state.board : emptyBoard} editable={false} />
               </div>
             </div>
           </div>

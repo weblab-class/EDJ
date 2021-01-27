@@ -119,6 +119,7 @@ class Game extends Component {
     alertSound.volume = 0.3;
     const player = this.state.players.filter((player) => this.props.userId === player.id)[0];
     if (event.key === " " && player.id === this.state.players[this.state.currentTurn].id) {
+      this.setState({ isMoving: true });
       post("/api/laser", {
         id: this.props.gameId,
         dir: this.state.board[player.location.x][player.location.y].inputDirection,
