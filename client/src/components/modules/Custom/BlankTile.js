@@ -39,19 +39,25 @@ class BlankTile extends Component {
     }
   };
 
+  properTile = () => {
+      if (this.props.editable) {
+          return (<div
+            className={(this.isEditable() ? (this.props.editable ? "allowed " : "") : "NA ") + "blankTile-body u-flex u-flex-justifyCenter u-flex-alignCenter"}
+            onClick={(e) => this.props.cycle(e, this.props.pos, 1, this.isEditable())}
+            onContextMenu={(e) => this.props.cycle(e, this.props.pos, -1, this.isEditable())}
+          ><div className={this.getType()}></div></div>)
+      }
+      else {
+          return (<div
+            className={(this.isEditable() ? (this.props.editable ? "allowed " : "") : "NA ") + "blankTile-body u-flex u-flex-justifyCenter u-flex-alignCenter"}
+          ><div className={this.getType()}></div></div>)
+      }
+  }
+
   render() {
     return (
       <div className="blankTile-container u-flex u-flex-justifyCenter u-flex-alignCenter">
-        <div
-          className={
-            (this.isEditable() ? "allowed " : "NA ") +
-            "blankTile-body u-flex u-flex-justifyCenter u-flex-alignCenter"
-          }
-          onClick={(e) => this.props.cycle(e, this.props.pos, 1, this.isEditable())}
-          onContextMenu={(e) => this.props.cycle(e, this.props.pos, -1, this.isEditable())}
-        >
-          <div className={this.getType()}></div>
-        </div>
+        {this.properTile()}
       </div>
     );
   }

@@ -80,7 +80,7 @@ class CustomBoard extends Component {
       <div className="blank-container u-flex u-flex-justifyCenter u-flex-alignCenter">
         <div className="holder u-flex u-flex-justifyCenter u-flex-alignCenter">
           <div className="blank">
-            <Blank board={this.state.board} cycle={this.cycle} />
+            <Blank board={this.state.board} cycle={this.cycle} editable={true}/>
           </div>
           <div className="details">
             <Details
