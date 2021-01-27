@@ -77,7 +77,7 @@ class JoinGame extends Component {
   render() {
     return (
       <div className="u-center-screen">
-        <Link to="/" id="u-back-button" className="back-button u-button u-link">
+        <Link to="/" id="back-button" className="u-back-button u-button u-link">
           back{" "}
         </Link>
         <div className="u-title">JOIN GAME</div>

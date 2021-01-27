@@ -13,7 +13,8 @@
   font-size: 12px;
 }
 
-.back-button {
+#back-button {
+  color: black;
   position: absolute;
   left: 83px;
   top: 22px;

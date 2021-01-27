@@ -270,3 +270,23 @@ p {
 #tooltip-img {
   height: 20px;
 }
+
+/* unvisited link */
+a:link {
+  color: rgb(130, 86, 86);
+}
+
+/* visited link */
+a:visited {
+  color: rgb(207, 158, 158);
+}
+
+/* mouse over link */
+a:hover {
+  color: rgb(106, 58, 58);
+}
+
+/* selected link */
+a:active {
+  color: rgb(106, 58, 58);
+}
