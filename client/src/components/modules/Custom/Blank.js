@@ -18,6 +18,7 @@ class Blank extends Component {
             pos={{ x: i, y: j }}
             data={this.props.board[i][j]}
             cycle={this.props.cycle}
+            editable={this.props.editable}
           />
         );
       }

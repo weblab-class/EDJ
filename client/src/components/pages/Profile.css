@@ -5,6 +5,7 @@
   padding-right: var(--l);
   padding-left: var(--l);
   margin: var(--m);
+  margin-bottom: 0px;
   background-color: rgb(232, 199, 199, 1);
   border-radius: 10px;
   color: --white;
@@ -28,6 +29,7 @@
   display: flex;
   flex-direction: column;
   margin: 20px 50px;
+  margin-top: 0px;
   height: 100%;
   width: 100%;
 }
@@ -49,7 +51,7 @@
 .statsBox {
   background-color: rgb(221, 183, 182);
   border-radius: 10px;
-  margin-top: 40px;
+  margin-top: var(--m);
   padding: 10px;
 }
 
@@ -104,5 +106,6 @@ select {
 
 #delete-board {
   font-size: 24px;
-  width: 30%;
+  width: auto;
+  margin-left: var(--m);
 }

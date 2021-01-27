@@ -238,12 +238,12 @@ class Profile extends Component {
             <div className="u-flex u-flex-justifyCenter u-flex-alignCenter">
               <select onChange={this.displayBoard}>{this.getCustomBoards()}</select>
               <div className="button u-link" id="delete-board" onClick={this.deleteBoard}>
-                Delete Board
+                Delete
               </div>
             </div>
             <div className="holder u-flex u-flex-justifyCenter u-flex-alignCenter">
               <div className="blankBoard">
-                <Blank board={this.state.board ? this.state.board : emptyBoard} />
+                <Blank board={this.state.board ? this.state.board : emptyBoard} editable={false}/>
               </div>
             </div>
           </div>
