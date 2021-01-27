@@ -33,17 +33,17 @@ hr {
 }
 
 .player-name {
-  font-size: 18px;
   text-align: center;
 }
 
 .field-container {
-  flex: 70%;
+  width: 70%;
+  font-size: 1vw;
   padding-left: 15px;
 }
 
 .mini-imgContainer {
-  flex: 30%;
+  width: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
