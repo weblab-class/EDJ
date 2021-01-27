@@ -56,6 +56,28 @@ class Home extends Component {
   render() {
     return (
       <div className="u-center-screen">
+        <div className="login-sidebar">
+          <div className="login-container" id="login-home">
+            <div className="login">
+              {this.props.userId ? (
+                <GoogleLogout
+                  clientId={GOOGLE_CLIENT_ID}
+                  buttonText="Logout"
+                  onLogoutSuccess={this.props.handleLogout}
+                  onFailure={(err) => console.log(err)}
+                />
+              ) : (
+                <GoogleLogin
+                  clientId={GOOGLE_CLIENT_ID}
+                  buttonText="Login"
+                  onSuccess={this.props.handleLogin}
+                  onFailure={(err) => console.log(err)}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
         <div className="u-title">Trickshots</div>
         <div className="u-button-container">
           <div className="u-button u-link" onClick={this.validateHost}>
@@ -70,25 +92,6 @@ class Home extends Component {
           <img className="animationClass" src={logo2} />
           <img className="animationClass" src={logo4} />
           <img className="animationClass" src={logo3} />
-        </div>
-        <div className="login-container" id="login-home">
-          <div className="login">
-            {this.props.userId ? (
-              <GoogleLogout
-                clientId={GOOGLE_CLIENT_ID}
-                buttonText="Logout"
-                onLogoutSuccess={this.props.handleLogout}
-                onFailure={(err) => console.log(err)}
-              />
-            ) : (
-              <GoogleLogin
-                clientId={GOOGLE_CLIENT_ID}
-                buttonText="Login"
-                onSuccess={this.props.handleLogin}
-                onFailure={(err) => console.log(err)}
-              />
-            )}
-          </div>
         </div>
       </div>
     );
