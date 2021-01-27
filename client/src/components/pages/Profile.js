@@ -213,7 +213,6 @@ class Profile extends Component {
                 Submit
               </div>
             </div>
-            {/* <div className="flexRow"> */}
             <div className="statsBox flexRow">
               <div className="u-flexColumn">
                 <div className="title2">Game History</div>
@@ -222,7 +221,6 @@ class Profile extends Component {
                   <label>Lost games: {this.state.losses}</label>
                   <label>Total games: {this.state.wins + this.state.losses}</label>
                 </div>
-                {/* <label>Ratio: {Math.round(this.state.wins / this.state.user.losses)}</label> */}
               </div>
               <div className="u-flexColumn u-flex-justifyCenter">
                 {pieChart}
@@ -233,7 +231,6 @@ class Profile extends Component {
                   <div className="loseKey"> word </div>
                 </div>
               </div>
-              {/* </div> */}
             </div>
           </div>
           <div className="flexColumn u-flex-justifyCenter">

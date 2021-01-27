@@ -134,50 +134,51 @@ class Game extends Component {
       alertify.notify("Not your turn!", "custom", 3, function () {
         console.log("dismissed");
       });
-    }
-    const x = player.location.x;
-    const y = player.location.y;
-    const direction_x = this.state.board[x][y].inputDirection.x;
-    const direction_y = this.state.board[x][y].inputDirection.y;
-    const up = { x: 0, y: 1 };
-    const down = { x: 0, y: -1 };
-    const right = { x: 1, y: 0 };
-    const left = { x: -1, y: 0 };
-    let direction = { x: 0, y: 0 };
-    if (event.key === "ArrowUp") {
-      direction = up;
-    } else if (event.key === "ArrowDown") {
-      direction = down;
-    } else if (event.key === "ArrowRight") {
-      direction = right;
-    } else if (event.key === "ArrowLeft") {
-      direction = left;
-    }
-    if (!(direction.x === 0 && direction.y === 0)) {
-      if (direction_x === direction.x && direction_y === direction.y && this.state.isActive) {
-        post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction })
-          .then((game) => {
-            if (typeof game.message === "string") {
-              if (game.message === "Round won.") {
-                wonGame.play();
-                alertify.notify("You won the round!", "custom", 3, function () {
-                  console.log("dismissed");
-                });
+    } else {
+      const x = player.location.x;
+      const y = player.location.y;
+      const direction_x = this.state.board[x][y].inputDirection.x;
+      const direction_y = this.state.board[x][y].inputDirection.y;
+      const up = { x: 0, y: 1 };
+      const down = { x: 0, y: -1 };
+      const right = { x: 1, y: 0 };
+      const left = { x: -1, y: 0 };
+      let direction = { x: 0, y: 0 };
+      if (event.key === "ArrowUp") {
+        direction = up;
+      } else if (event.key === "ArrowDown") {
+        direction = down;
+      } else if (event.key === "ArrowRight") {
+        direction = right;
+      } else if (event.key === "ArrowLeft") {
+        direction = left;
+      }
+      if (!(direction.x === 0 && direction.y === 0)) {
+        if (direction_x === direction.x && direction_y === direction.y && this.state.isActive) {
+          post("/api/movePlayer", { roomCode: this.state.roomCode, direction: direction })
+            .then((game) => {
+              if (typeof game.message === "string") {
+                if (game.message === "Round won.") {
+                  wonGame.play();
+                  alertify.notify("You won the round!", "custom", 3, function () {
+                    console.log("dismissed");
+                  });
+                } else {
+                  alertSound.play();
+                  alertify.notify(game.message, "custom", 3, function () {
+                    console.log("dismissed");
+                  });
+                }
               } else {
-                alertSound.play();
-                alertify.notify(game.message, "custom", 3, function () {
-                  console.log("dismissed");
-                });
+                moveSound.play();
               }
-            } else {
-              moveSound.play();
-            }
-          })
-          .catch(console.log);
-      } else {
-        this.setState({
-          board: this.updateDirection(this.state.board, { i: x, j: y }, direction),
-        });
+            })
+            .catch(console.log);
+        } else {
+          this.setState({
+            board: this.updateDirection(this.state.board, { i: x, j: y }, direction),
+          });
+        }
       }
     }
   };

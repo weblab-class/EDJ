@@ -3,6 +3,9 @@ import { Link } from "@reach/router";
 import { post } from "../../utilities.js";
 import { navigate } from "@reach/router";
 
+import alertify from "alertifyjs";
+import "alertifyjs/build/css/alertify.css";
+
 import errorTone from "../modules/Game/message.mp3";
 
 import "./JoinGame.css";
@@ -13,7 +16,6 @@ class JoinGame extends Component {
 
     this.state = {
       code: "",
-      message: "",
     };
   }
 
@@ -40,13 +42,6 @@ class JoinGame extends Component {
     });
   };
 
-  viewError = () => {
-    if (this.state.message !== "") {
-      return "error-message";
-    }
-    return "";
-  };
-
   handleClick = () => {
     const errorSound = new Audio(errorTone);
     post("/api/joinGame", { code: this.state.code })
@@ -56,21 +51,21 @@ class JoinGame extends Component {
           navigate("/game/" + String(data._id));
         } else {
           errorSound.play();
-          this.setState({ message: "No valid games found." });
-          setTimeout(() => {
-            this.setState({ message: "" });
-          }, 2000);
+          alertify.notify("No valid games found.", "custom", 3, function () {
+            console.log("dismissed");
+          });
         }
       })
       .catch((err) => {
         errorSound.play();
-        this.setState({
-          message:
-            "You are not logged in. Click on the menu icon in the upper left corner to log in.",
-        });
-        setTimeout(() => {
-          this.setState({ message: "" });
-        }, 3000);
+        alertify.notify(
+          "You must be logged in to host or join a game. Click on the menu icon in the upper left corner to log in.",
+          "custom",
+          5,
+          function () {
+            console.log("dismissed");
+          }
+        );
       });
   };
 
@@ -87,7 +82,6 @@ class JoinGame extends Component {
           placeholder="Enter code here..."
           onChange={this.handleChange}
         ></input>
-        <div className={this.viewError()}>{this.state.message}</div>
         <div className="u-button u-link" onClick={this.handleClick}>
           Join!
         </div>

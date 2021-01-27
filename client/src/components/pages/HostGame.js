@@ -4,6 +4,8 @@ import { get, post } from "../../utilities.js";
 import { navigate } from "@reach/router";
 
 import errorTone from "../modules/Game/message.mp3";
+import alertify from "alertifyjs";
+import "alertifyjs/build/css/alertify.css";
 
 import "./HostGame.css";
 //import { post } from "../../../../server/api";
@@ -19,7 +21,6 @@ class HostGame extends Component {
       boardType: "Random",
       boards: [],
       playerStyle: "",
-      message: "",
       rounds: 1,
     };
   }
@@ -47,16 +48,14 @@ class HostGame extends Component {
     const errorSound = new Audio(errorTone);
     if (this.state.roomName === "") {
       errorSound.play();
-      this.setState({ message: "You must name the room!" });
-      setTimeout(() => {
-        this.setState({ message: "" });
-      }, 2000);
+      alertify.notify("You must name the room!", "custom", 3, function () {
+        console.log("dismissed");
+      });
     } else if (this.state.playerStyle === "") {
       errorSound.play();
-      this.setState({ message: "You must choose a player style!" });
-      setTimeout(() => {
-        this.setState({ message: "" });
-      }, 2000);
+      alertify.notify("You must choose a player style!", "custom", 3, function () {
+        console.log("dismissed");
+      });
     } else {
       const body = {
         roomName: this.state.roomName,
@@ -72,13 +71,14 @@ class HostGame extends Component {
         })
         .catch((err) => {
           errorSound.play();
-          this.setState({
-            message:
-              "You are not logged in. Click on the menu icon in the upper left corner to log in.",
-          });
-          setTimeout(() => {
-            this.setState({ message: "" });
-          }, 3000);
+          alertify.notify(
+            "You must be logged in to host or join a game. Click on the menu icon in the upper left corner to log in.",
+            "custom",
+            5,
+            function () {
+              console.log("dismissed");
+            }
+          );
         });
     }
   };
@@ -140,13 +140,6 @@ class HostGame extends Component {
     }
   };
 
-  viewError = () => {
-    if (this.state.message !== "") {
-      return "error-message";
-    }
-    return "";
-  };
-
   getCustomBoards = () => {
     return this.state.boards.map((board) => {
       return (
@@ -175,7 +168,6 @@ class HostGame extends Component {
           <div id="host-button" className="u-button u-link u-inlineBlock" onClick={this.hostgame}>
             Host!
           </div>
-          <div className={this.viewError() + " u-inlineBlock"}>{this.state.message}</div>
         </div>
         <div>
           <div className="options-block u-width u-flex u-flex-justifyCenter u-flex-alignCenter">
