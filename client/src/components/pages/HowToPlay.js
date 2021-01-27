@@ -10,6 +10,7 @@ class HowToPlay extends Component {
     this.state = {
       orientation: "down",
       playerStyle: "pokemon",
+      shoot: "_",
     };
   }
 
@@ -46,20 +47,32 @@ class HowToPlay extends Component {
       event.preventDefault();
       this.buttonClickRight(event);
     }
+    if (event.keyCode == 32) {
+      event.preventDefault();
+      this.buttonClickSpace(event);
+    }
   };
 
   buttonClickUp = (event) => {
     this.setState({ orientation: "up" });
+    this.setState({shoot:"_"});
   };
   buttonClickDown = (event) => {
     this.setState({ orientation: "down" });
+    this.setState({shoot:"_"});
   };
   buttonClickRight = (event) => {
     this.setState({ orientation: "right" });
+    this.setState({shoot:"_"});
   };
   buttonClickLeft = (event) => {
     this.setState({ orientation: "left" });
+    this.setState({shoot:"_"});
   };
+  buttonClickSpace = (event) => {
+    this.setState({ shoot: "shoot_" });
+  };
+ 
 
   isPopsicle = (event) => {
     event.persist();
@@ -135,7 +148,7 @@ class HowToPlay extends Component {
                 </div>
               </div>
               <div className="u-flex">
-                <button className="key" onKeyPress={this.buttonClick}>
+                <button className="key" onClick={() => this.buttonClickSpace()}>
                   [ SPACE ]
                 </button>
                 <p>shoot</p>
@@ -143,7 +156,7 @@ class HowToPlay extends Component {
             </div>
 
             <div className="u-flexColumn u-height">
-              <div className="player-container">
+              <div className={this.state.shoot + "player-container"}>
                 <div className={this.state.playerStyle + "_" + this.state.orientation + "0"}></div>
               </div>
               <div className="choose-container u-flex-justifySpaceEvenly">
