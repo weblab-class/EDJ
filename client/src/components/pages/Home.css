@@ -65,5 +65,8 @@
 
 #login-home {
   position: absolute;
-  left: -690px;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  height: auto
 }
