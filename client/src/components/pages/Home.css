@@ -1,26 +1,25 @@
 .animationClass {
   height: 8%;
   width: 8%;
-  margin-left:10px;
+  margin-left: 10px;
   animation: runMan 12s infinite;
   animation-timing-function: linear;
 }
 
-.animationClass2{
+.animationClass2 {
   animation: two 0.5s infinite;
 }
 
-
-@keyframes two{
-  0%{
+@keyframes two {
+  0% {
     transform: translateY(0px);
   }
-  50%{
+  50% {
     transform: translateY(2px);
   }
 }
 
-@keyframes runMan{
+@keyframes runMan {
   0% {
     /*transform: scaleX(1);*/
     transform: translateX(100px);
@@ -28,17 +27,14 @@
   50% {
     transform: translateX(700%);
   }
-  50.01%{
-   
+  50.01% {
     transform: translateX(700%) scaleX(-1);
   }
-  100%{
+  100% {
     /*transform: scaleX(-1);*/
     transform: translateX(100px) scaleX(-1);
-   
   }
 }
-
 
 .button-container {
   margin: 2cm;
@@ -67,3 +63,7 @@
   background-color: #c4c4c4;
 }
 
+#login-home {
+  position: absolute;
+  left: -690px;
+}

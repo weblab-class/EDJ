@@ -85,7 +85,7 @@ class HowToPlay extends Component {
 
   render() {
     return (
-      <div>
+      <div className="howtoplay-container">
         <div className="title1">How to Play</div>
         <div className="instruction-box-container u-flex u-flex-justifyCenter u-flex-alignCenter">
           <div className="instruction-box">

@@ -1,3 +1,11 @@
+.howtoplay-container {
+  /* height: 100vh; */
+  width: 100vw;
+  overflow: auto;
+  float: left;
+  background-color: rgb(251, 239, 239);
+}
+
 .img {
   max-height: 70%;
   max-width: 70%;
@@ -10,14 +18,12 @@ p {
   margin: 30px 20px;
 }
 
-
 .instruction-box-container {
   width: 100%;
   height: auto;
 }
 
 .instruction-box {
-  /* width: 90%; calc(100% - 64px); */
   height: auto;
   margin: 0px 90px 0px 90px;
   border-radius: 10px;
@@ -40,16 +46,13 @@ p {
 .bottom-half-box {
   background-color: rgb(240, 216, 216);
   padding: 10px 0px 50px 0px;
-  margin: 20px 90px 100px 90px;
+  margin: 20px 90px 20px 90px;
   border-radius: 15px;
-  /* height: 100%; */
 }
 
 .control-box {
   padding: 5px 40px;
   margin-right: 20px;
-  /* margin-top: 10px; */
-  /* margin-bottom: 10px; */
   border-radius: 10px;
   font-size: 18pt;
   background-color: rgb(211, 180, 180);

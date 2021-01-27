@@ -63,6 +63,10 @@ p {
   cursor: pointer;
 }
 
+#host-button {
+  margin-bottom: 50px;
+}
+
 .player-style-container {
   height: 100px;
   width: 100%;

@@ -40,7 +40,6 @@ class Game extends Component {
 
   update = (data) => {
     if (data.currRound === data.rounds + 1) {
-      console.log("byeee");
       this.setState({ board: data.board, players: data.players, isActive: data.isActive });
       const maxScore = Math.max.apply(
         Math,
@@ -48,17 +47,17 @@ class Game extends Component {
       );
       const winners = data.players.filter((player) => player.score === maxScore);
       console.log(winners);
-      post("/api/addWin", { winnersArr: winners }).then((user) => {
-        let winnersStr = winners[0].name;
-        for (const winner of winners.slice(1)) {
-          winnersStr += " and " + winner.name;
-        }
-        alertify
-          .alert("Game over.", winnersStr + " won the game!", () => {
+      post("/api/addWin", { winnersArr: winners })
+        .then((user) => {
+          let winnersStr = winners[0].name;
+          for (const winner of winners.slice(1)) {
+            winnersStr += " and " + winner.name;
+          }
+          alertify.alert("Game over.", winnersStr + " won the game!", () => {
             navigate("/");
-          })
-          .catch(console.log);
-      });
+          });
+        })
+        .catch(console.log);
     } else {
       this.setState({
         board: data.board,
