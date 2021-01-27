@@ -62,3 +62,11 @@
   color: #000000;
   background-color: #c4c4c4;
 }
+
+#login-home {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  height: auto;
+}
