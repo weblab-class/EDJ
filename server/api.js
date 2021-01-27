@@ -363,7 +363,11 @@ router.post("/newBoard", auth.ensureLoggedIn, (req, res) => {
         }
       })
       .catch(console.log);
-  } else {
+  } 
+  else if (req.body.name === "") {
+    res.send({ message: "Please input a board name." })
+  }
+  else {
     res.send({ message: "Not a valid board." });
   }
 });

@@ -77,7 +77,7 @@ const updateBoard = (board, value, location, direction) => {
 };
 
 const validate = (board) => {
-  return true;
+  return (board[0][0] == "0" && board[0][8] == "0" && board[8][0] == "0" && board[8][8] == "0" && board[4][4] == "0");
 };
 
 const checkClass = (mirrorsArray) => {
