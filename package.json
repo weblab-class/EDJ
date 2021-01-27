@@ -24,7 +24,7 @@
     "@react-hook/window-size": "^3.0.7",
     "@rooks/use-window-size": "^4.6.1",
     "alertifyjs": "^1.13.1",
-    "confetti-js": "^0.0.18",
+    "confetti-js": "0.0.18",
     "connect-ensure-login": "^0.1.1",
     "core-js": "^3.8.1",
     "dotenv": "^8.2.0",

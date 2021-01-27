@@ -11,9 +11,12 @@ import alertify from "alertifyjs";
 import "alertifyjs/build/css/alertify.css";
 import alertTone from "../modules/Game/message.mp3";
 
+
+
 import "./Home.css";
 
 const GOOGLE_CLIENT_ID = "473769754928-7ahknn038led2u1qif6aj95lka4k528i.apps.googleusercontent.com";
+
 
 class Home extends Component {
   constructor(props) {
@@ -53,6 +56,7 @@ class Home extends Component {
       );
     }
   };
+ 
   render() {
     return (
       <div className="u-center-screen">
@@ -82,6 +86,7 @@ class Home extends Component {
         <div className="u-button-container">
           <div className="u-button u-link" onClick={this.validateHost}>
             Host game
+           
           </div>
           <div className="u-button u-link" onClick={this.validateJoin}>
             Join game
