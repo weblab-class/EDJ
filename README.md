@@ -10,8 +10,8 @@ Stop other players from reaching the goal first by firing your laser at them. Bo
 
 - Host games and send codes so your friends can join
 - 2 player styles to choose from
- - Cute multicolored popsicles (original art and animations)
- - Pokémon sprites
+  - Cute multicolored popsicles (original art and animations)
+  - Pokémon sprites
 - Don't like the randomized boards? Make and save your own custom boards
 - View your win record and saved boards on the Profile page
 - Set a nickname to be shown in-game
