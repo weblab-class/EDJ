@@ -53,7 +53,7 @@ class HostGame extends Component {
       }, 2000);
     } else if (this.state.playerStyle === "") {
       errorSound.play();
-      this.setState({ message: "You must choose a player state!" });
+      this.setState({ message: "You must choose a player style!" });
       setTimeout(() => {
         this.setState({ message: "" });
       }, 2000);
@@ -172,6 +172,10 @@ class HostGame extends Component {
             className="u-inlineBlock"
             onChange={this.updateName}
           ></input>
+          <div id="host-button" className="u-button u-link u-inlineBlock" onClick={this.hostgame}>
+            Host!
+          </div>
+          <div className={this.viewError() + " u-inlineBlock"}>{this.state.message}</div>
         </div>
         <div>
           <div className="options-block u-width u-flex u-flex-justifyCenter u-flex-alignCenter">
@@ -191,22 +195,20 @@ class HostGame extends Component {
                 the <a href="/custom/">Boards page</a>.
               </span>
             </div>
+            <label>Number of rounds:</label>
+            <select id="rounds" value={this.state.rounds} onChange={this.updateRounds}>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+            </select>
           </div>
-        </div>
-        <div className="options-block u-width u-flex u-flex-justifyCenter u-flex-alignCenter">
-          <label>Number of rounds:</label>
-          <select id="rounds" value={this.state.rounds} onChange={this.updateRounds}>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-          </select>
         </div>
         {/* <div> */}
         <label className="u-inlineBlock">Player style:</label>
@@ -228,10 +230,6 @@ class HostGame extends Component {
         <p>Click the code below to copy to clipboard.</p>
         <div className="hostgame-link code-box" id="code" onClick={this.clickCode}>
           {this.state.toDisplay}
-        </div>
-        <div className={this.viewError()}>{this.state.message}</div>
-        <div id="host-button" className="u-button u-link" onClick={this.hostgame}>
-          Host!
         </div>
       </div>
     );

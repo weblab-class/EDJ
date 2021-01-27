@@ -18,6 +18,7 @@ class Slideshow extends Component {
   }
 
   componentDidMount() {
+    this.setState({value: this.props.type})
     setInterval(() => this.update(this.props.type), 3000);
   }
 
