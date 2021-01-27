@@ -180,6 +180,17 @@ class HostGame extends Component {
               <option>Random</option>
               {this.getCustomBoards()}
             </select>
+            <div className="tooltip">
+              <img
+                id="tooltip-img"
+                src="https://everythinggoesdance.com/wp-content/uploads/2014/07/Very-Basic-Info-icon.png"
+              ></img>
+              <span className="tooltiptext">
+                You can preview your boards at the{" "}
+                <a href={"/profile/" + this.props.userId}>Profile page</a> or make custom boards at
+                the <a href="/custom/">Boards page</a>.
+              </span>
+            </div>
           </div>
         </div>
         <div className="options-block u-width u-flex u-flex-justifyCenter u-flex-alignCenter">
