@@ -22,17 +22,17 @@
 @keyframes runMan {
   0% {
     /*transform: scaleX(1);*/
-    transform: translateX(100px);
+    transform: translateX(200px);
   }
   50% {
-    transform: translateX(700%);
+    transform: translateX(600%);
   }
   50.01% {
-    transform: translateX(700%) scaleX(-1);
+    transform: translateX(600%) scaleX(-1);
   }
   100% {
     /*transform: scaleX(-1);*/
-    transform: translateX(100px) scaleX(-1);
+    transform: translateX(200px) scaleX(-1);
   }
 }
 
